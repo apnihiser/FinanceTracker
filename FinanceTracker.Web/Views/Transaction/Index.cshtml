@@ -1,0 +1,236 @@
+﻿@model IEnumerable<FinanceTracker.Web.Models.TransactionFullDisplayModel>
+
+@{
+    ViewData["Title"] = "Transaction Page";
+}
+
+<!--Title-->
+<div class="col-12 text-center">
+    <p class="title">@ViewData["Title"]</p>
+</div>
+
+<!--Month Controls-->
+<div class="col-12 text-center topSpace-md">
+    <div>
+        <span>
+            <a href="#"
+                  ><svg
+                    version="1.1"
+                    id="Layer_1a"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 512 512"
+                    style="enable-background: new 0 0 512 512"
+                    xml:space="preserve"
+                    class="me-3 controls controlsIcon--left iconSize"
+                  >
+                    <style type="text/css">
+                      .st0 {
+                        fill: #41b653;
+                      }
+                      .st1 {
+                        fill: #ffffff;
+                      }
+                    </style>
+                    <g>
+                      <circle class="st0" cx="256" cy="256" r="256" />
+                      <path
+                        class="st1"
+                        d="M473.4,180.06H275.88V124.1c0-6.8-7.36-11.05-13.25-7.65L34.18,248.35c-5.89,3.4-5.89,11.9,0,15.3
+                   l228.45,131.9c5.89,3.4,13.25-0.85,13.25-7.65v-55.96H473.4c4.86,0,8.83-3.97,8.83-8.83V188.89
+                   C482.24,184.03,478.26,180.06,473.4,180.06z"
+                      />
+                    </g></svg
+                ></a>
+
+            August 2022
+
+            <a href="#">
+                <svg
+                version="1.1"
+                id="Layer_1b"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                viewBox="0 0 512 512"
+                style="enable-background: new 0 0 512 512"
+                xml:space="preserve"
+                class="imgRotate180 ms-3 controls controlsIcon--right iconSize">
+                    <style type="text/css">
+                        .st0 {
+                        fill: #41b653;
+                        }
+                        .st1 {
+                        fill: #ffffff;
+                        }
+                    </style>
+                    <g>
+                        <circle class="st0" cx="256" cy="256" r="256" />
+                        <path
+                        class="st1"
+                        d="M473.4,180.06H275.88V124.1c0-6.8-7.36-11.05-13.25-7.65L34.18,248.35c-5.89,3.4-5.89,11.9,0,15.3
+                           l228.45,131.9c5.89,3.4,13.25-0.85,13.25-7.65v-55.96H473.4c4.86,0,8.83-3.97,8.83-8.83V188.89
+                           C482.24,184.03,478.26,180.06,473.4,180.06z" />
+                    </g>
+                </svg>
+            </a>
+        </span>
+    </div>
+</div>
+
+<!--Transaction Table-->
+<div class="table-responsive topSpace-md">
+    <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
+        <thead class="table-dark">
+            <tr class="fw-bold">
+                <td>@Html.DisplayNameFor(model => model.AccountName)</td>
+                <td>@Html.DisplayNameFor(model => model.ProviderName)</td>
+                <td>@Html.DisplayNameFor(model => model.Service)</td>
+                <td>@Html.DisplayNameFor(model => model.AmountDue)</td>
+                <td>@Html.DisplayNameFor(model => model.DueDate)</td>
+                <td colspan="3">@Html.DisplayNameFor(model => model.Status)</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 1;
+
+                foreach (var transaction in @Model)
+                {
+                    <!-- Table Row Template -->
+                    <tr>
+                        <td>@transaction.AccountName</td>
+                        <td>@transaction.ProviderName</td>
+                        <td>@transaction.Service</td>
+                        <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
+                        <td>@transaction.DueDate</td>
+                        <td>@transaction.Status</td>
+                        <td>
+                            <input
+                                class="btn btn-warning"
+                                type="submit"
+                                value="EDIT"
+                                data-bs-toggle="modal"
+                                data-bs-target="@($"#editModal_{count}")" />
+                            </td>
+                            <td>
+                            <input
+                                class="btn btn-danger"
+                                type="submit"
+                                value="DELETE"
+                                data-bs-toggle="modal"
+                                data-bs-target="@($"#deleteModal_{count}")" />
+                        </td>
+                    </tr>
+                
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Transaction</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+                            
+                                    <partial name="/Views/Shared/_TransactionEditFormPartial.cshtml" for="@transaction"/>
+                                
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Record?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    count++;
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div class="col-12 text-end">
+    <input
+        class="btn btn-success"
+        type="submit"
+        value="ADD TRANSACTION"
+        data-bs-toggle="modal"
+        data-bs-target="#addModal_1"
+    />
+</div>
+
+<div class="table-responsive topSpace-lg">
+    <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
+        <thead>
+            <tr>
+                <th class="table-dark">MONTHLY TOTALS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ACCOUNTS TOTAL: $129.20</td>
+            </tr>
+            <tr>
+                <td>BILL: $50.35</td>
+            </tr>
+            <tr>
+                <td>DUE: $129.22</td>
+            </tr>
+            <tr>
+                <td>PAST DUE: $95.00</td>
+            </tr>
+            <tr>
+                <td>UNRECONCILED: $25.35</td>
+            </tr>
+            <tr>
+                <td>RECONCILED: $78.60</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-body">
+                    
+                    <partial name="~/Views/Shared/_TransactionCreateFormPartial.cshtml" model="new TransactionFullDisplayModel {}" />
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+        

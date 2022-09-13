@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <title>Dollar Tracker</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+
+    <!-- Convert this to an external style sheet -->
+    <link href="css/site.css" rel="stylesheet" />
+  </head>
+
+  <body class="d-flex flex-column h-100 font">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <img
+          src="/img/icons8-currency-exchange-48.png"
+          alt="logo"
+          class="me-3"
+        />
+        <a class="navbar-brand" href="#">Dollar Tracker</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Summary</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDarkDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Management
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="navbarDarkDropdownMenuLink"
+              >
+                <li><a class="dropdown-item" href="#">Payors</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Addresses</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Providers</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-shrink-0">
+      <div class="container-sm">
+        <div class="row topSpace-xl">
+          <!--Title-->
+          <div class="col-12 text-center">
+            <h1>MONTH SUMMARY</h1>
+          </div>
+
+          <!--Month Controls-->
+          <div class="col-12 text-center topSpace-md">
+            <div>
+              <span>
+                <a href="#"
+                  ><svg
+                    version="1.1"
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 512 512"
+                    style="enable-background: new 0 0 512 512"
+                    xml:space="preserve"
+                    class="me-3 controls controlsIcon--left iconSize"
+                  >
+                    <style type="text/css">
+                      .st0 {
+                        fill: #41b653;
+                      }
+                      .st1 {
+                        fill: #ffffff;
+                      }
+                    </style>
+                    <g>
+                      <circle class="st0" cx="256" cy="256" r="256" />
+                      <path
+                        class="st1"
+                        d="M473.4,180.06H275.88V124.1c0-6.8-7.36-11.05-13.25-7.65L34.18,248.35c-5.89,3.4-5.89,11.9,0,15.3
+                   l228.45,131.9c5.89,3.4,13.25-0.85,13.25-7.65v-55.96H473.4c4.86,0,8.83-3.97,8.83-8.83V188.89
+                   C482.24,184.03,478.26,180.06,473.4,180.06z"
+                      />
+                    </g></svg></a>
+
+                August 2022
+
+                <a href="#"
+                  ><svg
+                    version="1.1"
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 512 512"
+                    style="enable-background: new 0 0 512 512"
+                    xml:space="preserve"
+                    class="imgRotate180 ms-3 controls controlsIcon--right iconSize"
+                  >
+                    <style type="text/css">
+                      .st0 {
+                        fill: #41b653;
+                      }
+                      .st1 {
+                        fill: #ffffff;
+                      }
+                    </style>
+                    <g>
+                      <circle class="st0" cx="256" cy="256" r="256" />
+                      <path
+                        class="st1"
+                        d="M473.4,180.06H275.88V124.1c0-6.8-7.36-11.05-13.25-7.65L34.18,248.35c-5.89,3.4-5.89,11.9,0,15.3
+                   l228.45,131.9c5.89,3.4,13.25-0.85,13.25-7.65v-55.96H473.4c4.86,0,8.83-3.97,8.83-8.83V188.89
+                   C482.24,184.03,478.26,180.06,473.4,180.06z"
+                      />
+                    </g></svg
+                ></a>
+              </span>
+            </div>
+          </div>
+
+          <!--Transaction Table-->
+          <div class="table-responsive topSpace-md">
+            <table
+              class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover"
+            >
+              <thead class="table-dark">
+                <tr class="fw-bold">
+                  <td>PAYEE</td>
+                  <td>SERVICE</td>
+                  <td>DUE</td>
+                  <td>DUE BY</td>
+                  <td colspan="3">STATUS</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TIME WARNER</td>
+                  <td>CABLE</td>
+                  <td>$69.00</td>
+                  <td>08/25/2022</td>
+                  <td>DUE</td>
+                  <td>
+                    <input
+                      class="btn btn-warning"
+                      type="submit"
+                      value="EDIT"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editModal_1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="btn btn-danger"
+                      type="submit"
+                      value="DELETE"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteModal_1"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>TIME WARNER</td>
+                  <td>CABLE</td>
+                  <td>$69.00</td>
+                  <td>08/25/2022</td>
+                  <td>DUE</td>
+                  <td>
+                    <input
+                      class="btn btn-warning"
+                      type="submit"
+                      value="EDIT"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editModal_2"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="btn btn-danger"
+                      type="submit"
+                      value="DELETE"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteModal_2"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>TIME WARNER</td>
+                  <td>CABLE</td>
+                  <td>$69.00</td>
+                  <td>08/25/2022</td>
+                  <td>DUE</td>
+                  <td>
+                    <input
+                      class="btn btn-warning"
+                      type="submit"
+                      value="EDIT"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editModal_3"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="btn btn-danger"
+                      type="submit"
+                      value="DELETE"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteModal_3"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-12 text-end">
+            <input
+              class="btn btn-success"
+              type="submit"
+              value="ADD TRANSACTION"
+              data-bs-toggle="modal"
+              data-bs-target="#addModal_1"
+            />
+          </div>
+
+          <div class="table-responsive topSpace-lg">
+            <table
+              class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover"
+            >
+              <thead>
+                <tr>
+                  <th class="table-dark">MONTHLY TOTALS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ACCOUNTS TOTAL: $129.20</td>
+                </tr>
+                <tr>
+                  <td>BILL: $50.35</td>
+                </tr>
+                <tr>
+                  <td>DUE: $129.22</td>
+                </tr>
+                <tr>
+                  <td>PAST DUE: $95.00</td>
+                </tr>
+                <tr>
+                  <td>UNRECONCILED: $25.35</td>
+                </tr>
+                <tr>
+                  <td>RECONCILED: $78.60</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Edit Modal 1-->
+          <div
+            class="modal fade"
+            id="editModal_1"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Edit Transaction
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="payee" class="form-label">Payee</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="payee"
+                      placeholder="Payee"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="service" class="form-label">Service</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="service"
+                      placeholder="Service"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="due">Due</label>
+                    <input
+                      type="text"
+                      placeholder="due"
+                      class="form-control"
+                      id="due"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="dueBy" class="form-label">Due By</label>
+                    <input id="dueBy" type="date" class="form-control" />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <input
+                      id="status"
+                      type="text"
+                      class="form-control"
+                      placeholder="Status"
+                    />
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Modal 2-->
+          <div
+            class="modal fade"
+            id="editModal_2"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Modal 3-->
+          <div
+            class="modal fade"
+            id="editModal_3"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Modal 1-->
+          <div
+            class="modal fade"
+            id="deleteModal_1"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Delete Record?
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="payee" class="form-label">Payee</label>
+                    <input
+                      readonly
+                      class="form-control form-control-plaintext"
+                      type="text"
+                      id="payee"
+                      placeholder="Payee"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="service" class="form-label">Service</label>
+                    <input
+                      readonly
+                      class="form-control form-control-plaintext"
+                      type="text"
+                      id="payee"
+                      placeholder="Service"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="due">Due</label>
+                    <input
+                      readonly
+                      type="text"
+                      placeholder="due"
+                      class="form-control form-control-plaintext"
+                      id="due"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="dueBy" class="form-label">Due By</label>
+                    <input
+                      readonly
+                      id="dueBy"
+                      readonly
+                      type="date"
+                      class="form-control form-control-plaintext"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <input
+                      readonly
+                      id="status"
+                      type="text"
+                      class="form-control form-control-plaintext"
+                      placeholder="Status"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-danger">DELETE</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Modal 2-->
+          <div
+            class="modal fade"
+            id="deleteModal_2"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Modal 3-->
+          <div
+            class="modal fade"
+            id="deleteModal_3"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Modal 1-->
+          <div
+            class="modal fade"
+            id="addModal_1"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Add Transaction
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="payee" class="form-label">Payee</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="payee"
+                        placeholder="Payee"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="service" class="form-label">Service</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="service"
+                        placeholder="Service"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label" for="due">Due</label>
+                      <input
+                        type="text"
+                        placeholder="due"
+                        class="form-control"
+                        id="due"
+                      />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="dueBy" class="form-label">Due By</label>
+                      <input id="dueBy" type="date" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="status" class="form-label">Status</label>
+                      <input
+                        id="status"
+                        type="text"
+                        class="form-control"
+                        placeholder="Status"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container-fluid text-center">
+        <span class="text-muted">For Purposes of Adam Nihiser's Portfolio</span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+﻿@model FinanceTracker.Web.Models.AccountSelectListViewModel
+@addTagHelper *, FinanceTracker.Web
+
+
+<select class="form-select" asp-for="Name" asp-items="@Model.Accounts"></select>

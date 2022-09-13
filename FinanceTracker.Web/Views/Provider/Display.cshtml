@@ -1,0 +1,43 @@
+﻿@model FinanceTracker.Web.Models.ProviderDisplayModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Display Provider Page";
+}
+
+<h1>@ViewData["title"]</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="mb-3">
+        <input asp-for="Id" hidden></input>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Title"></label>
+        <input class="form-control" asp-for="Title"></input>
+        <span asp-validation-for="Title"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Service"></label>
+        <input class="form-control" asp-for="Service"></input>
+        <span asp-validation-for="Service"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Url"></label>
+        <input class="form-control" asp-for="Url"></input>
+        <span asp-validation-for="Url"></span>
+    </div>
+
+    <div>
+        <a class="btn btn-info" asp-action="Index">BACK</a>
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">DELETE</a>
+        <button class="btn btn-success" asp-action="Update" type="submit">UPDATE</button>
+    </div>
+</form>

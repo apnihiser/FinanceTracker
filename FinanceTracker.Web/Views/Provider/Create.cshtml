@@ -1,0 +1,47 @@
+﻿@model FinanceTracker.Web.Models.ProviderDisplayModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Create New Provider";
+}
+
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="Post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+    <div class="mb-3">
+        <label class="form-label" asp-for="PayorId"></label>
+        <input class="form-control" asp-for="PayorId"></input>
+        <span asp-validation-for="PayorId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Service"></label>
+        <input class="form-control" asp-for="Service"></input>
+        <span asp-validation-for="Service" class="text-danger"></span>
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label" asp-for="Title"></label>
+        <input class="form-control" asp-for="Title"></input>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Url"></label>
+        <input class="form-control" asp-for="Url"></input>
+        <span asp-validation-for="Url" class="text-danger"></span>
+    </div>
+
+    <div>
+        <a asp-action="Index" class="btn btn-info">BACK</a>
+        <button class="btn btn-success" type="submit">SUBMIT</button>
+    </div>
+    
+</form>
+

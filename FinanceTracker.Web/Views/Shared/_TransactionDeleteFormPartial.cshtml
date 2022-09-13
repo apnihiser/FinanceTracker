@@ -1,0 +1,44 @@
+﻿@model FinanceTracker.Web.Models.TransactionFullDisplayModel
+
+<form asp-action="Delete" method="post">
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input hidden asp-for="Id"></input>
+
+    <div class="mb-3">
+        <label asp-for="AccountId" class="form-label"></label>
+        <input asp-for="AccountId" readonly class="form-control form-control-plaintext" type="text" />
+        <span asp-validation-for="AccountId"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PayeeId" class="form-label"></label>
+        <input asp-for="PayeeId" readonly class="form-control form-control-plaintext" type="text" />
+        <span asp-validation-for="PayeeId"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AmountDue" class="form-label"></label>
+        <input asp-for="AmountDue" readonly class="form-control form-control-plaintext" type="text" />
+        <span asp-validation-for="AmountDue"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DueDate" class="form-label"></label>
+        <input asp-for="DueDate" readonly class="form-control form-control-plaintext" type="text" />
+        <span asp-validation-for="DueDate"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <input asp-for="Status" readonly class="form-control form-control-plaintext" type="text" />
+        <span asp-validation-for="Status"></span>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-danger" value="DELETE"></input>
+    </div>
+
+</form>

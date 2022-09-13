@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FinanceTracker.Web.Models.PayorDisplayModel>
+
+@{
+    ViewData["Title"] = "Payor Index Page";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="d-grid gap-2">
+    <div class="table-responsive topSpace-md">
+        <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Id)</td>                    <th>@Html.DisplayNameFor(model => model.FirstName)</td>
+                    <th colspan="2">@Html.DisplayNameFor(model => model.LastName)</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>
+                            <a class="btn btn-info" asp-action="Display" asp-route-id="@item.Id">DETAILS</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-info">BACK</a>
+    <a class="btn btn-success" asp-action="Create">CREATE</a>
+</div>

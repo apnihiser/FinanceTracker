@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FinanceTracker.Web.Models.ProviderDisplayModel>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Providers Index Page";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="d-grid gap-2">
+    <div class="table-responsive topSpace-md">
+        <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                    <th>@Html.DisplayNameFor(model => model.Service)</th>
+                    <th colspan="2">@Html.DisplayNameFor(model => model.Url)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Service</td>
+                        <td>@item.Url</td>
+                        <td>
+                            <a class="btn btn-info" asp-action="Display" asp-route-id="@item.Id">DETAILS</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn btn-info" asp-Controller="Home" asp-action="Index">BACK</a>
+    <a class="btn btn-success" asp-action="Create">CREATE</a>
+</div>
+
+

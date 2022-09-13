@@ -1,0 +1,44 @@
+﻿@model FinanceTracker.Web.Models.TransactionFullDisplayModel
+
+<form asp-action="Edit" method="post">
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input hidden asp-for="Id"></input>
+    
+    <div class="mb-3">
+        <label asp-for="AccountId" class="form-label"></label>
+        @await Component.InvokeAsync("AccountSelectList")
+        <span asp-validation-for="AccountId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PayeeId" class="form-label"></label>
+        @await Component.InvokeAsync("ProviderSelectList")
+        <span asp-validation-for="PayeeId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AmountDue" class="form-label"></label>
+        <input asp-for="AmountDue" class="form-control" type="text" />
+        <span asp-validation-for="AmountDue" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DueDate" class="form-label"></label>
+        <input asp-for="DueDate" class="form-control" type="text" />
+        <span asp-validation-for="DueDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <input asp-for="Status" class="form-control" type="text" />
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Save Changes"></input>
+    </div>
+
+</form>

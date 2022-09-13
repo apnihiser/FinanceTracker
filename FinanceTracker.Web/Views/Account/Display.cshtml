@@ -1,0 +1,60 @@
+﻿@model FinanceTracker.Web.Models.FullAccountViewModel
+
+@{
+    ViewData["Title"] = "Account Details";
+}
+
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+@if(Model is null)
+{
+    <h3>No record found...</h3>
+    <a class="btn btn-info" asp-action="Index"></a>
+}
+else
+{
+    <form method="Post" asp-action="Update">
+
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <input hidden asp-for="Id"></input>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="HolderId"></label>
+            <select class="form-select" asp-for="HolderId" asp-items='@ViewBag.UserSelectList!'></select>
+            <span asp-validation-for="Title"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Title"></label>
+            <input class="form-control" asp-for="Title"></input>
+            <span asp-validation-for="Title"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Description"></label>
+            <input class="form-control" asp-for="Description"></input>
+            <span asp-validation-for="Description"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Type"></label>
+            <input class="form-control" asp-for="Type"></input>
+            <span asp-validation-for="Type"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Balance"></label>
+            <input class="form-control" asp-for="Balance"></input>
+            <span asp-validation-for="Balance"></span>
+        </div>
+
+        <a class="btn btn-info" asp-action="Index">BACK</a>
+        <input type="submit" class="btn btn-success" value="UPDATE" />
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.Id">DELETE</a>
+    </form>   
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
