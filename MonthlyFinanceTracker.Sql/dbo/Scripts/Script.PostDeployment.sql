@@ -1,19 +1,9 @@
 ﻿/* TEST DATA */
 
---IF NOT EXISTS(SELECT 1 FROM dbo.Payor)
---BEGIN
---    INSERT INTO dbo.Payor (FirstName,LastName)
---    VALUES ('Adam','Nihiser')
---          ,('Shannon','Workman')
---          ,('Joe','Fabitz')
---          ,('Sue','Storm')
---          ,('George','Wiseman')
---END
-
-IF NOT EXISTS(SELECT 1 from dbo.[AspNetUsers])
+IF NOT EXISTS(SELECT 1 from dbo.[ApplicationUser])
 BEGIN
-    INSERT INTO dbo.AspNetUsers (
-        [Id],
+    INSERT INTO dbo.ApplicationUser (
+        [ApplicationUserId],
         [UserName],
         [NormalizedUserName],
         [Email],
