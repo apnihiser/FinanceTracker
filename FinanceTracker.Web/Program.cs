@@ -6,6 +6,7 @@ using FinanceTracker.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using FinanceTracker.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
+using FinanceTracker.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,16 +17,17 @@ builder.Services.AddSingleton(new ConnectionStringData
 });
 
 builder.Services.AddScoped<IDatabaseAccess, SqlServerDb>();
-builder.Services.AddScoped<IPayorData, PayorData>();
 builder.Services.AddScoped<IProviderData, ProviderData>();
 builder.Services.AddScoped<IAccountData, AccountData>();
 builder.Services.AddScoped<ITransactionData, TransactionData>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddDefaultUI()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUserIdentity, ApplicationRole>()
+    .AddUserStore<UserStore>()
+    .AddDefaultTokenProviders()
+    .AddSignInManager<SignInManager<ApplicationUserIdentity>>()
+    .AddDefaultUI();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 

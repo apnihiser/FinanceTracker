@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
@@ -21,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanceTracker.DataAccess\FinanceTracker.DataAccess.csproj" />
+    <ProjectReference Include="..\FinanceTracker.Identity\FinanceTracker.Identity.csproj" />
   </ItemGroup>
 
 </Project>
