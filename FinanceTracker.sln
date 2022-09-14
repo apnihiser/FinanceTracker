@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceTracker.DataAccess",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceTracker.Web", "FinanceTracker.Web\FinanceTracker.Web.csproj", "{9C40C387-DCC2-4898-A0F8-580BAECF5751}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceTracker.Identity", "FinanceTracker.Identity\FinanceTracker.Identity.csproj", "{86747BFE-7E71-42AC-A716-FDE26F82F4CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceTracker.Identity", "FinanceTracker.Identity\FinanceTracker.Identity.csproj", "{86747BFE-7E71-42AC-A716-FDE26F82F4CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
