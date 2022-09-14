@@ -5,8 +5,8 @@ BEGIN
 	FROM dbo.[Transaction] t
 	INNER JOIN dbo.[Provider] pr
 	ON t.PayeeId = pr.Id
-	INNER JOIN dbo.[Payor] pa
-	ON pr.PayorId = pa.Id
+	INNER JOIN dbo.[ApplicationUser] pa
+	ON pr.UserId = pa.ApplicationUserId
 	INNER JOIN dbo.[Account] a
-	ON pa.Id = a.HolderId
+	ON pa.ApplicationUserId = a.ApplicationUserId
 END

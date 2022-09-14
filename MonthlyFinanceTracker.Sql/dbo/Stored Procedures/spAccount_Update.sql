@@ -4,7 +4,7 @@
 	@Description nvarchar(100),
 	@Type nvarchar(50),
 	@Balance money,
-	@HolderId int
+	@ApplicationUserId int
 AS
 BEGIN
 	Update dbo.Account
@@ -12,6 +12,6 @@ BEGIN
 	   ,[Description] = @Description
 	   ,[Type] = @Type
 	   ,[Balance] = @Balance
-	   ,[HolderId] = @HolderId
+	   ,[ApplicationUserId] = @ApplicationUserId
 	WHERE Id = @Id;
 END

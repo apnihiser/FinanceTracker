@@ -5,5 +5,5 @@
     [Description] NVARCHAR(100) NOT NULL, 
     [Type] NVARCHAR(50) NOT NULL, 
     [Balance] MONEY NOT NULL, 
-    [UserId] INT NOT NULL
+    [ApplicationUserId] INT NOT NULL
 )

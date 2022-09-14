@@ -2,13 +2,17 @@
 	@NormalizedUsername VARCHAR(20)
 AS
 BEGIN
-	SELECT [ApplicationUserId], 
-		   [Username],
-		   [NormalizedUsername], 
+	SELECT [ApplicationUserId],
+		   [Fullname],
+		   [UserName],
+		   [NormalizedUserName],
 		   [Email],
 		   [NormalizedEmail],
-		   [Fullname],
-		   [PasswordHash]
+		   [EmailConfirmed],
+		   [PasswordHash],
+		   [PhoneNumber],
+		   [PhoneNumberConfirmed],
+		   [TwoFactorEnabled]
 	FROM ApplicationUser
 	WHERE [NormalizedUsername] = @NormalizedUsername
 END

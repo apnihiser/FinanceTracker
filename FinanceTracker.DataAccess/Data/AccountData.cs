@@ -43,7 +43,7 @@ namespace FinanceTracker.DataAccess.Data
             p.Add("Description", description);
             p.Add("Type", type);
             p.Add("Balance", balance);
-            p.Add("HolderId", holderId);
+            p.Add("ApplicationUserId", holderId);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
             await _db.SaveData("dbo.spAccount_Insert", p, _connectionString.Name);

@@ -8,7 +8,7 @@ namespace FinanceTracker.Web.Utility
         public static string Admin = "Admin";
         public static string User = "User";
 
-        public static List<SelectListItem> ConvertToSelectList(List<PayorModel> payors)
+        public static List<SelectListItem> ConvertToSelectList(List<ApplicationUser> payors)
         {
             List<SelectListItem> selectList = new();
 
@@ -16,8 +16,8 @@ namespace FinanceTracker.Web.Utility
             {
                 selectList.Add(new SelectListItem
                 {
-                    Text = $"{x.FirstName} {x.LastName}",
-                    Value = x.Id.ToString()
+                    Text = $"{x.Fullname}",
+                    Value = x.ApplicationUserId.ToString()
                 });
             });
 

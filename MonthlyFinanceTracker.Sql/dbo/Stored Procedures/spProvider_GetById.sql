@@ -2,7 +2,7 @@
 	@Id int
 AS
 BEGIN
-	SELECT [Id], [Title], [Service], [URL], [PayorId]
+	SELECT [Id], [Title], [Service], [URL], [UserId]
 	FROM dbo.Provider
 	WHERE Id = @Id;
 END

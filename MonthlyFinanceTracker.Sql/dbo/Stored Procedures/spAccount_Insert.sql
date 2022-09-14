@@ -4,11 +4,11 @@
 	@Description nvarchar(100),
 	@Type nvarchar(50),
 	@Balance money,
-	@HolderId int
+	@ApplicationUserId int
 AS
 BEGIN
-	INSERT INTO dbo.Account ([Title],[Description],[Type],[Balance],[HolderId])
-	VALUES (@Title,@Description,@Type,@Balance,@HolderId)
+	INSERT INTO dbo.Account ([Title],[Description],[Type],[Balance],[ApplicationUserId])
+	VALUES (@Title,@Description,@Type,@Balance,@ApplicationUserId)
 
 	SET @Id = SCOPE_IDENTITY();
 END

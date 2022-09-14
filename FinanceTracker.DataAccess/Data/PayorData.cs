@@ -21,15 +21,15 @@ namespace FinanceTracker.DataAccess.Data
             _connectionString = connectionString;
         }
 
-        public async Task<List<PayorModel>> GetAllPayors()
+        public async Task<List<ApplicationUser>> GetAllPayors()
         {
-            var rows = await _db.LoadData<PayorModel, dynamic>("dbo.spPayor_GetAll", new { }, _connectionString.Name);
+            var rows = await _db.LoadData<ApplicationUser, dynamic>("dbo.spPayor_GetAll", new { }, _connectionString.Name);
             return rows.ToList();
         }
 
-        public async Task<PayorModel?> GetPayorById(int id)
+        public async Task<ApplicationUser?> GetPayorById(int id)
         {
-            var row = await _db.LoadData<PayorModel, dynamic>("spPayor_GetById", new { Id = id }, _connectionString.Name);
+            var row = await _db.LoadData<ApplicationUser, dynamic>("spPayor_GetById", new { Id = id }, _connectionString.Name);
 
             return row.FirstOrDefault();
         }

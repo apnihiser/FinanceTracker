@@ -2,7 +2,7 @@
 	@Id int
 AS
 BEGIN
-	SELECT [Id], [Title], [Description], [Type], [Balance], [HolderId]
-	FROM dbo.Account
+	SELECT [Id], [Title], [Description], [Type], [Balance], [ApplicationUserId]
+	FROM [dbo].[Account]
 	WHERE Id = @Id
 END
