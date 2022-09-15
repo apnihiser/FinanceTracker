@@ -106,7 +106,7 @@ namespace FinanceTracker.Identity
         public async Task<IdentityResult> UpdateAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
             await _db.SaveData(
-                "dbo.spAccountUser_UpdateById", 
+                "dbo.spApplicationUser_UpdateById", 
                 new 
                 {
                     ApplicationUserId = user.ApplicationUserId,

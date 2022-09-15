@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spAccountUser_UpdateById]
+﻿CREATE PROCEDURE [dbo].[spApplicationUser_UpdateById]
 	    @ApplicationUserId INT,
         @Fullname NVARCHAR(30),
         @Username NVARCHAR(20),

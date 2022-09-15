@@ -88,8 +88,13 @@
     <Build Include="dbo\Stored Procedures\spApplicationUser_DeleteById.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationUser_GetById.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationUser_FindByName.sql" />
-    <Build Include="dbo\Stored Procedures\spAccountUser_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationUser_UpdateById.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationUser_FindByNormalizedEmail.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationRole_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationRole_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationRole_DeleteById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationRole_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationRole_GetByNormalizedName.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />
