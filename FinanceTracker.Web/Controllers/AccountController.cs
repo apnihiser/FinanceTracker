@@ -10,12 +10,12 @@ namespace FinanceTracker.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountData _accountData;
-        private readonly IPayorData _payorData;
+        //private readonly IPayorData _payorData;
 
-        public AccountController(IAccountData accountData, IPayorData payorData)
+        public AccountController(IAccountData accountData/*, IPayorData payorData*/)
         {
             _accountData = accountData;
-            _payorData = payorData;
+            //_payorData = payorData;
         }
 
         public async Task<IActionResult> Index()
@@ -55,9 +55,9 @@ namespace FinanceTracker.Web.Controllers
             }
 
             FullAccountModel account = await _accountData.GetFullAccountByHolderId(id);
-            List<PayorModel> payors = await _payorData.GetAllPayors();
+            //List<PayorModel> payors = await _payorData.GetAllPayors();
 
-            if (account is null || payors is null)
+            if (account is null/* || payors is null*/)
             {
                 return RedirectToAction("Index");
             }
@@ -72,23 +72,23 @@ namespace FinanceTracker.Web.Controllers
                 HolderId = account.HolderId
             };
 
-            List<SelectListItem> selectList = ConvertToSelectList(payors);
+            //List<SelectListItem> selectList = ConvertToSelectList(payors);
 
-            ViewBag.UserSelectList = selectList;
+            //ViewBag.UserSelectList = selectList;
 
             return View(displayAccount);
         }
 
-        public async Task<IActionResult> Create()
-        {
-            List<PayorModel> payors = await _payorData.GetAllPayors();
+        //public async Task<IActionResult> Create()
+        //{
+        //    List<PayorModel> payors = await _payorData.GetAllPayors();
 
-            List<SelectListItem> selectList = ConvertToSelectList(payors);
+        //    List<SelectListItem> selectList = ConvertToSelectList(payors);
 
-            ViewBag.UserSelectList = selectList;
+        //    ViewBag.UserSelectList = selectList;
 
-            return View();
-        }
+        //    return View();
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

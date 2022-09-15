@@ -118,7 +118,7 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.Name = Input.Name;
+                user.Fullname = Input.Name;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

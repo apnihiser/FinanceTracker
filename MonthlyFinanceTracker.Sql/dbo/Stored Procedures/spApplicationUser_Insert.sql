@@ -3,10 +3,12 @@
 AS
 BEGIN
 	INSERT INTO [dbo].[ApplicationUser] (
+										 [Fullname],
 										 [Username],
 										 [NormalizedUsername],
 										 [Email],
 										 [NormalizedEmail],
+										 [EmailConfirmed],
 										 [Fullname],
 										 [PasswordHash])
 	SELECT [Username],

@@ -1,8 +1,12 @@
-﻿using FinanceTracker.DataAccess.Models;
+﻿using Dapper;
+using FinanceTracker.DataAccess.Data;
+using FinanceTracker.DataAccess.Database;
+using FinanceTracker.DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,201 +14,220 @@ using System.Threading.Tasks;
 namespace FinanceTracker.Identity
 {
     public class UserStore : IUserStore<ApplicationUserIdentity>, 
-                             IUserEmailStore<ApplicationUser>, 
+                             IUserEmailStore<ApplicationUserIdentity>, 
                              IUserPhoneNumberStore<ApplicationUserIdentity>, 
                              IUserTwoFactorStore<ApplicationUserIdentity>, 
                              IUserPasswordStore<ApplicationUserIdentity>
+                             
     {
-        private readonly IConfiguration _config;
+        private readonly IDatabaseAccess _db;
+        private readonly ConnectionStringData _connectionString;
 
-        public UserStore(IConfiguration config)
+        public UserStore(IDatabaseAccess db, ConnectionStringData connectionString)
         {
-            _config = config;
+            _db = db;
+            _connectionString = connectionString;
         }
 
-        public Task<IdentityResult> CreateAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        // userstore methods
+        public async Task<IdentityResult> CreateAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            DynamicParameters p = new();
+            p.Add("Fullname", user.Fullname);
+            p.Add("Username", user.Username);
+            p.Add("NormalizedUsername", user.NormalizedUsername);
+            p.Add("Email", user.Email);
+            p.Add("NormalizedEmail", user.NormalizedEmail);
+            p.Add("EmailConfirmed", user.EmailConfirmed);
+            p.Add("PasswordHash", user.PasswordHash);
+            p.Add("PhoneNumber", user.PhoneNumber);
+            p.Add("PhoneNumberConfirmed", user.PhoneNumberConfirmed);
+            p.Add("TwoFactorEnabled", user.TwoFactorEnabled);
+            p.Add("ApplicationUserId", DbType.Int32, direction: ParameterDirection.InputOutput);
+
+            await _db.SaveData("dbo.spApplicationUser_Insert", p, _connectionString.Name, cancellationToken);
+
+            return IdentityResult.Success;
         }
 
-        public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public async Task<IdentityResult> DeleteAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
+            await _db.SaveData("dbo.spApplicationUser_DeleteById", user, _connectionString.Name, cancellationToken);
 
-        public Task<IdentityResult> DeleteAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IdentityResult> DeleteAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return IdentityResult.Success;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // nothing to dispose
         }
 
-        public Task<ApplicationUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        public async Task<ApplicationUserIdentity> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var output = await _db.LoadData<ApplicationUserIdentity, dynamic>("dbo.spApplicationUser_GetById", new { Id = userId }, _connectionString.Name, cancellationToken);
+
+            return output.First();
         }
 
-        public Task<ApplicationUserIdentity> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public async Task<ApplicationUserIdentity> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
+            var output = await _db.LoadData<ApplicationUserIdentity, dynamic>("dbo.spApplicationUser_FindByName", new { NormalizedUsername = normalizedUserName }, _connectionString.Name, cancellationToken);
 
-        public Task<ApplicationUserIdentity> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetEmailConfirmedAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetNormalizedEmailAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return output.First();
         }
 
         public Task<string> GetNormalizedUserNameAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetPasswordHashAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetPhoneNumberAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetPhoneNumberConfirmedAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> GetTwoFactorEnabledAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(user.NormalizedUsername);
         }
 
         public Task<string> GetUserIdAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(user.ApplicationUserId.ToString());
         }
 
         public Task<string> GetUserNameAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> GetUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> HasPasswordAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetEmailAsync(ApplicationUser user, string email, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetEmailConfirmedAsync(ApplicationUser user, bool confirmed, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetNormalizedEmailAsync(ApplicationUser user, string normalizedEmail, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(user.Username);
         }
 
         public Task SetNormalizedUserNameAsync(ApplicationUserIdentity user, string normalizedName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task SetNormalizedUserNameAsync(ApplicationUser user, string normalizedName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPasswordHashAsync(ApplicationUserIdentity user, string passwordHash, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPhoneNumberAsync(ApplicationUserIdentity user, string phoneNumber, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetPhoneNumberConfirmedAsync(ApplicationUserIdentity user, bool confirmed, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetTwoFactorEnabledAsync(ApplicationUserIdentity user, bool enabled, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            user.NormalizedUsername = normalizedName;
+            return Task.FromResult(0);
         }
 
         public Task SetUserNameAsync(ApplicationUserIdentity user, string userName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            user.Username = userName;
+            return Task.FromResult(0);
         }
 
-        public Task SetUserNameAsync(ApplicationUser user, string userName, CancellationToken cancellationToken)
+        public async Task<IdentityResult> UpdateAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _db.SaveData(
+                "dbo.spAccountUser_UpdateById", 
+                new 
+                {
+                    ApplicationUserId = user.ApplicationUserId,
+                    Fullname = user.Fullname,
+                    Username = user.Username,
+                    NormalizedUsername = user.NormalizedUsername,
+                    Email = user.Email,
+                    NormalizedEmail = user.NormalizedEmail,
+                    EmailConfirmed = user.EmailConfirmed,
+                    PasswordHash = user.PasswordHash,
+                    PhoneNumber = user.PhoneNumber,
+                    PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                    TwoFactorEnabled = user.TwoFactorEnabled,
+                },
+                _connectionString.Name,
+                cancellationToken);
+
+            return IdentityResult.Success;
         }
 
-        public Task<IdentityResult> UpdateAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+
+        // emailstore methods
+        public Task SetEmailAsync(ApplicationUserIdentity user, string email, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            user.Email = email;
+
+            return Task.FromResult(0);
         }
 
-        public Task<IdentityResult> UpdateAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public Task<string> GetEmailAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.Email);
         }
 
-        Task<ApplicationUser> IUserStore<ApplicationUser>.FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public Task<bool> GetEmailConfirmedAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.EmailConfirmed);
         }
 
-        Task<ApplicationUser> IUserStore<ApplicationUser>.FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+        public Task SetEmailConfirmedAsync(ApplicationUserIdentity user, bool confirmed, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            user.EmailConfirmed = confirmed;
+            return Task.FromResult(0);
+        }
+
+        public async Task<ApplicationUserIdentity> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        {
+            var output = await _db.LoadData<ApplicationUserIdentity, dynamic>("dbo.spApplicationUser_FindByNormalizedEmail", new { NormalizedEmail = normalizedEmail }, _connectionString.Name, cancellationToken);
+
+            return output.First();
+        }
+
+        public Task<string> GetNormalizedEmailAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.NormalizedEmail);
+        }
+
+        public Task SetNormalizedEmailAsync(ApplicationUserIdentity user, string normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.NormalizedEmail = normalizedEmail;
+
+            return Task.FromResult(0);
+        }
+
+
+        // phonenumberstore methods
+        public Task SetPhoneNumberAsync(ApplicationUserIdentity user, string phoneNumber, CancellationToken cancellationToken)
+        {
+            user.PhoneNumber = phoneNumber;
+
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetPhoneNumberAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PhoneNumber);
+        }
+
+        public Task<bool> GetPhoneNumberConfirmedAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PhoneNumberConfirmed);
+        }
+
+        public Task SetPhoneNumberConfirmedAsync(ApplicationUserIdentity user, bool confirmed, CancellationToken cancellationToken)
+        {
+            user.PhoneNumberConfirmed = confirmed;
+
+            return Task.FromResult(0);
+        }
+
+
+        // TwoFactorStore Methods
+        public Task SetTwoFactorEnabledAsync(ApplicationUserIdentity user, bool enabled, CancellationToken cancellationToken)
+        {
+            user.TwoFactorEnabled = enabled;
+
+            return Task.FromResult(0);
+        }
+
+        public Task<bool> GetTwoFactorEnabledAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.TwoFactorEnabled);
+        }
+
+
+        // passwordstore methods
+        public Task SetPasswordHashAsync(ApplicationUserIdentity user, string passwordHash, CancellationToken cancellationToken)
+        {
+            user.PasswordHash = passwordHash;
+
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetPasswordHashAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash);
+        }
+
+        public Task<bool> HasPasswordAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash is not null);
         }
     }
 }

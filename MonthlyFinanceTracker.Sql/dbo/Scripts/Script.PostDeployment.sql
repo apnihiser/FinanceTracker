@@ -3,103 +3,67 @@
 IF NOT EXISTS(SELECT 1 from dbo.[ApplicationUser])
 BEGIN
     INSERT INTO dbo.ApplicationUser (
-        [ApplicationUserId],
+        [Fullname],
         [UserName],
         [NormalizedUserName],
         [Email],
         [NormalizedEmail],
         [EmailConfirmed],
         [PasswordHash],
-        [SecurityStamp],
-        [ConcurrencyStamp],
         [PhoneNumber],
         [PhoneNumberConfirmed],
-        [TwoFactorEnabled],
-        [LockoutEnd],
-        [LockoutEnabled],
-        [AccessFailedCount],
-        [Name])
+        [TwoFactorEnabled])
     Values 
-        ('8d398019-a30b-4342-8975-1fe1decfb92a',
-         'test01@gmail.com',
-         'TEST01@GMAIL.COM',
-         'test01@gmail.com',
-         'TEST01@GMAIL.COM',
+        ('test 01',
+         'test01@test.com',
+         'TEST01@TEST.COM',
+         'test01@test.com',
+         'TEST01@TEST.COM',
          'True',
          'AQAAAAEAACcQAAAAEKKM+a4iuZmbmtEVIjRiUqTZDoJ3mUvpWjTUH2hxhv9selIdpQtqPxIeTdEycVNzKQ==',
-         'VIL2WHOIWESQK7QVBB5JQMZQSITP7NRF',
-         '2422f49c-ba8d-426b-bf57-6ee316875943',
-         NULL,
-         'False',
-         'False',
-         NULL,
+         '440-444-4444',
          'True',
-         0,
-         'Test Fire'),
-        ('8d398019-a30b-4342-8975-1fe1decfb92b',
-         'test02@gmail.com',
-         'TEST02@GMAIL.COM',
-         'test02@gmail.com',
-         'TEST02@GMAIL.COM',
+         'True'),
+         ('test 02',
+         'test02@test.com',
+         'TEST02@TEST.COM',
+         'test02@test.com',
+         'TEST02@TEST.COM',
          'True',
          'AQAAAAEAACcQAAAAEKKM+a4iuZmbmtEVIjRiUqTZDoJ3mUvpWjTUH2hxhv9selIdpQtqPxIeTdEycVNzKQ==',
-         'VIL2WHOIWESQK7QVBB5JQMZQSITP7NRF',
-         '2422f49c-ba8d-426b-bf57-6ee316875943',
-         NULL,
-         'False',
-         'False',
-         NULL,
+         '440-444-4444',
          'True',
-         0,
-         'Test Spark'),
-         ('8d398019-a30b-4342-8975-1fe1decfb92c',
-         'test03@gmail.com',
-         'TEST03@GMAIL.COM',
-         'test03@gmail.com',
-         'TEST03@GMAIL.COM',
+         'True'),
+         ('test 03',
+         'test03@test.com',
+         'TEST03@TEST.COM',
+         'test03@test.com',
+         'TEST03@TEST.COM',
          'True',
          'AQAAAAEAACcQAAAAEKKM+a4iuZmbmtEVIjRiUqTZDoJ3mUvpWjTUH2hxhv9selIdpQtqPxIeTdEycVNzKQ==',
-         'VIL2WHOIWESQK7QVBB5JQMZQSITP7NRF',
-         '2422f49c-ba8d-426b-bf57-6ee316875943',
-         NULL,
-         'False',
-         'False',
-         NULL,
+         '440-444-4444',
          'True',
-         0,
-         'Test Earth'),
-         ('8d398019-a30b-4342-8975-1fe1decfb92d',
-         'test04@gmail.com',
-         'TEST04@GMAIL.COM',
-         'test04@gmail.com',
-         'TEST04@GMAIL.COM',
+         'True'),
+         ('test 04',
+         'test04@test.com',
+         'TEST04@TEST.COM',
+         'test04@test.com',
+         'TEST04@TEST.COM',
          'True',
          'AQAAAAEAACcQAAAAEKKM+a4iuZmbmtEVIjRiUqTZDoJ3mUvpWjTUH2hxhv9selIdpQtqPxIeTdEycVNzKQ==',
-         'VIL2WHOIWESQK7QVBB5JQMZQSITP7NRF',
-         '2422f49c-ba8d-426b-bf57-6ee316875943',
-         NULL,
-         'False',
-         'False',
-         NULL,
+         '440-444-4444',
          'True',
-         0,
-         'Test Air'),
-         ('8d398019-a30b-4342-8975-1fe1decfb92e',
-         'test05@gmail.com',
-         'TEST05@GMAIL.COM',
-         'test05@gmail.com',
-         'TEST05@GMAIL.COM',
+         'True'),
+         ('test 05',
+         'test05@test.com',
+         'TEST05@TEST.COM',
+         'test05@test.com',
+         'TEST05@TEST.COM',
          'True',
          'AQAAAAEAACcQAAAAEKKM+a4iuZmbmtEVIjRiUqTZDoJ3mUvpWjTUH2hxhv9selIdpQtqPxIeTdEycVNzKQ==',
-         'VIL2WHOIWESQK7QVBB5JQMZQSITP7NRF',
-         '2422f49c-ba8d-426b-bf57-6ee316875943',
-         NULL,
-         'False',
-         'False',
-         NULL,
+         '440-444-4444',
          'True',
-         0,
-         'Test Light')
+         'True')
 END
 
 IF NOT EXISTS(SELECT 1 FROM dbo.[Provider])
@@ -110,11 +74,11 @@ BEGIN
     DECLARE @UserId4 int;
     DECLARE @UserId5 int;
 
-    SELECT @UserId1 = Id FROM dbo.[AspNetUsers] WHERE [UserName] = 'Test01';
-    SELECT @UserId2 = Id FROM dbo.[AspNetUsers] WHERE [UserName] = 'Test02';
-    SELECT @UserId3 = Id FROM dbo.[AspNetUsers] WHERE [UserName] = 'Test03';
-    SELECT @UserId4 = Id FROM dbo.[AspNetUsers] WHERE [UserName] = 'Test04';
-    SELECT @UserId5 = Id FROM dbo.[AspNetUsers] WHERE [UserName] = 'Test05';
+    SELECT @UserId1 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test01';
+    SELECT @UserId2 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test02';
+    SELECT @UserId3 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test03';
+    SELECT @UserId4 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test04';
+    SELECT @UserId5 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test05';
 
     INSERT INTO dbo.[Provider] ([Title],[Service],[URL],[UserId])
     VALUES ('Cable Company','Cable','http://Comcast.com',@UserId1)
@@ -123,7 +87,7 @@ BEGIN
           ,('Local Municipality','Utilities','http://FirstEnergy.com', @UserId4)
           ,('Netflix','Movie Streaming','http://Netflix.com', @UserId5)
 
-    INSERT INTO dbo.[Account] ([Title],[Description],[Type],[Balance],[UserId])
+    INSERT INTO dbo.[Account] ([Title],[Description],[Type],[Balance],[ApplicationUserId])
     VALUES ('Credit Union','Local Credit Union Checking','Checking',5596.65,@UserId1)
           ,('Discover Card','Primary Credit Card','Credit',256.55,@UserId2)
           ,('Chase','Grocery Rewards Card','Credit',25.68,@UserId3)

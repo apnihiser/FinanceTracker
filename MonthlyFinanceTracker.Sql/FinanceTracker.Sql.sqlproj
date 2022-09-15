@@ -81,13 +81,15 @@
     <Build Include="dbo\Stored Procedures\spFullAccount_GetById.sql" />
     <Build Include="dbo\Stored Procedures\spFullTransaction_GetAll.sql" />
     <Build Include="dbo\Type\ApplicationUser.sql" />
-    <Build Include="dbo\Stored Procedures\spApplicationUser_GetByUsername.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationUser_Insert.sql" />
-    <Build Include="dbo\Stored Procedures\spApplicationUser_DeleteByUsername.sql" />
-    <Build Include="dbo\Stored Procedures\spApplicationUser_UpdateByUsername.sql" />
     <Build Include="dbo\Tables\ApplicationUser.sql" />
     <Build Include="dbo\Tables\ApplicationRole.sql" />
     <Build Include="dbo\Tables\ApplicationUserRole.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationUser_DeleteById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationUser_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationUser_FindByName.sql" />
+    <Build Include="dbo\Stored Procedures\spAccountUser_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\spApplicationUser_FindByNormalizedEmail.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />
@@ -96,6 +98,6 @@
     <PostDeploy Include="dbo\Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MonthlyFinanceTracker.Sql.publish.xml" />
+    <None Include="FinanceTracker.Sql.publish.xml" />
   </ItemGroup>
 </Project>
