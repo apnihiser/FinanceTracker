@@ -74,11 +74,11 @@ BEGIN
     DECLARE @UserId4 int;
     DECLARE @UserId5 int;
 
-    SELECT @UserId1 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test01';
-    SELECT @UserId2 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test02';
-    SELECT @UserId3 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test03';
-    SELECT @UserId4 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test04';
-    SELECT @UserId5 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [UserName] = 'test05';
+    SELECT @UserId1 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST01@TEST.COM';
+    SELECT @UserId2 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST02@TEST.COM';
+    SELECT @UserId3 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST03@TEST.COM';
+    SELECT @UserId4 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST04@TEST.COM';
+    SELECT @UserId5 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST05@TEST.COM';
 
     INSERT INTO dbo.[Provider] ([Title],[Service],[URL],[UserId])
     VALUES ('Cable Company','Cable','http://Comcast.com',@UserId1)

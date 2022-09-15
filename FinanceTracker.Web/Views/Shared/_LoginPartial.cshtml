@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using FinanceTracker.DataAccess.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUserIdentity> SignInManager
+@inject UserManager<ApplicationUserIdentity> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

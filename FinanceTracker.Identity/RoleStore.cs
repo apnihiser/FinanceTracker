@@ -51,7 +51,7 @@ namespace FinanceTracker.Identity
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // nothing to dispose
         }
 
         public Task<string> GetRoleIdAsync(ApplicationRole role, CancellationToken cancellationToken)

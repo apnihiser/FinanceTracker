@@ -32,20 +32,32 @@ namespace FinanceTracker.Identity
         // userstore methods
         public async Task<IdentityResult> CreateAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)
         {
-            DynamicParameters p = new();
-            p.Add("Fullname", user.Fullname);
-            p.Add("Username", user.Username);
-            p.Add("NormalizedUsername", user.NormalizedUsername);
-            p.Add("Email", user.Email);
-            p.Add("NormalizedEmail", user.NormalizedEmail);
-            p.Add("EmailConfirmed", user.EmailConfirmed);
-            p.Add("PasswordHash", user.PasswordHash);
-            p.Add("PhoneNumber", user.PhoneNumber);
-            p.Add("PhoneNumberConfirmed", user.PhoneNumberConfirmed);
-            p.Add("TwoFactorEnabled", user.TwoFactorEnabled);
-            p.Add("ApplicationUserId", DbType.Int32, direction: ParameterDirection.InputOutput);
+            DataTable dataTable = new();
 
-            await _db.SaveData("dbo.spApplicationUser_Insert", p, _connectionString.Name, cancellationToken);
+            dataTable.Columns.Add("Fullname", typeof(string));
+            dataTable.Columns.Add("Username", typeof(string));
+            dataTable.Columns.Add("NormalizedUsername", typeof(string));
+            dataTable.Columns.Add("Email", typeof(string));
+            dataTable.Columns.Add("NormalizedEmail", typeof(string));
+            dataTable.Columns.Add("EmailConfirmed", typeof(bool));
+            dataTable.Columns.Add("PasswordHash", typeof(string));
+            dataTable.Columns.Add("PhoneNumber", typeof(string));
+            dataTable.Columns.Add("PhoneNumberConfirmed", typeof(bool));
+            dataTable.Columns.Add("TwoFactorEnabled", typeof(bool));
+
+            dataTable.Rows.Add(
+                user.Fullname,
+                user.Username,
+                user.NormalizedUsername,
+                user.Email,
+                user.NormalizedEmail,
+                user.EmailConfirmed,
+                user.PasswordHash,
+                user.PhoneNumber,
+                user.PhoneNumberConfirmed,
+                user.TwoFactorEnabled);
+
+            await _db.SaveData("dbo.spApplicationUser_Insert", new { Account = dataTable.AsTableValuedParameter("dbo.ApplicationUser") }, _connectionString.Name, cancellationToken);
 
             return IdentityResult.Success;
         }

@@ -12,13 +12,15 @@ builder.Services.AddSingleton(new ConnectionStringData
     Name = "Default"
 });
 
+builder.Services.AddTransient<IUserStore<ApplicationUserIdentity>, UserStore>();
+builder.Services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
+
 builder.Services.AddScoped<IDatabaseAccess, SqlServerDb>();
 builder.Services.AddScoped<IProviderData, ProviderData>();
 builder.Services.AddScoped<IAccountData, AccountData>();
 builder.Services.AddScoped<ITransactionData, TransactionData>();
 
 builder.Services.AddIdentity<ApplicationUserIdentity, ApplicationRole>()
-    .AddUserStore<UserStore>()
     .AddDefaultTokenProviders()
     .AddSignInManager<SignInManager<ApplicationUserIdentity>>()
     .AddDefaultUI();

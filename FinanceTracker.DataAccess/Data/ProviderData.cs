@@ -33,14 +33,14 @@ namespace FinanceTracker.DataAccess.Data
             return row.FirstOrDefault();
         }
 
-        public async Task<int> CreateProvider(ProviderModel model)
+        public async Task<int> CreateProvider(int payorId, string title, string service, string url)
         {
             DynamicParameters p = new DynamicParameters();
 
-            p.Add("Title", model.Title);
-            p.Add("Service", model.Service);
-            p.Add("URL", model.Url);
-            p.Add("PayorId", model.PayorId);
+            p.Add("Title", title);
+            p.Add("Service", service);
+            p.Add("URL", url);
+            p.Add("UserId", payorId);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
             await _db.SaveData("dbo.spProvider_Insert", p, _connectionString.Name);

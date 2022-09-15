@@ -6,7 +6,7 @@ namespace FinanceTracker.DataAccess.Data
     {
         Task<List<ProviderModel>> GetAllProviders();
         Task<ProviderModel?> GetProviderById(int id);
-        Task<int> CreateProvider(ProviderModel model);
+        Task<int> CreateProvider(int payorId, string title, string service, string url);
         Task DeleteProvider(int id);
         Task UpdateProvider(int id, string? service, string? title, string? url);
     }

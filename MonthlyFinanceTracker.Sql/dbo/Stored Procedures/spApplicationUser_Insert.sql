@@ -2,21 +2,26 @@
 	@ApplicationUser ApplicationUserType READONLY
 AS
 BEGIN
-	INSERT INTO [dbo].[ApplicationUser] (
-										 [Fullname],
+	INSERT INTO [dbo].[ApplicationUser] ([Fullname],
 										 [Username],
 										 [NormalizedUsername],
 										 [Email],
 										 [NormalizedEmail],
 										 [EmailConfirmed],
-										 [Fullname],
-										 [PasswordHash])
-	SELECT [Username],
+										 [PasswordHash],
+										 [PhoneNumber],
+										 [PhoneNumberConfirmed],
+										 [TwoFactorEnabled])
+	SELECT [Fullname],
+		   [Username],
 		   [NormalizedUsername],
 		   [Email],
 		   [NormalizedEmail],
-		   [Fullname],
-		   [PasswordHash]
+		   [EmailConfirmed],
+		   [PasswordHash],
+		   [PhoneNumber],
+		   [PhoneNumberConfirmed],
+		   [TwoFactorEnabled]
 	FROM @ApplicationUser;
 
 	SELECT CAST(SCOPE_IDENTITY() AS INT);

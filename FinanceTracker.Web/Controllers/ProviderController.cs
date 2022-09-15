@@ -81,24 +81,14 @@ namespace FinanceTracker.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProviderDisplayModel model)
         {
-            ProviderModel output;
-
             if (ModelState.IsValid == false)
             {
                 return View();
             }
 
-            output = new()
-            {
-                PayorId = model.PayorId,
-                Title = model.Title,
-                Service = model.Service,
-                Url = model.Url
-            };
+            int id = await _providerData.CreateProvider(model.PayorId, model.Title!, model.Service!, model.Url!);
 
-            int id = await _providerData.CreateProvider(output);
-
-            return RedirectToAction("Index", new {id});
+            return RedirectToAction("Index", new { id });
         }
 
         public async Task<IActionResult> Delete(int id)
