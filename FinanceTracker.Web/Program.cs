@@ -3,6 +3,8 @@ using FinanceTracker.DataAccess.Database;
 using FinanceTracker.DataAccess.Models;
 using Microsoft.AspNetCore.Identity;
 using FinanceTracker.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using FinanceTracker.Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,7 @@ builder.Services.AddScoped<IDatabaseAccess, SqlServerDb>();
 builder.Services.AddScoped<IProviderData, ProviderData>();
 builder.Services.AddScoped<IAccountData, AccountData>();
 builder.Services.AddScoped<ITransactionData, TransactionData>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddIdentity<ApplicationUserIdentity, ApplicationRole>()
     .AddDefaultTokenProviders()
