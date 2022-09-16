@@ -1,12 +1,14 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.DataAccess.Models;
 using FinanceTracker.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static FinanceTracker.Web.Utility.Helper;
 
 namespace FinanceTracker.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAccountData _accountData;

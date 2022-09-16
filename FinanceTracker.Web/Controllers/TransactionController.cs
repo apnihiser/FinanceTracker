@@ -1,9 +1,11 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Web.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionData _transactionData;

@@ -1,10 +1,12 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.DataAccess.Models;
 using FinanceTracker.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Web.Controllers
 {
+    [Authorize]
     public class ProviderController : Controller
     {
         private readonly IProviderData _providerData;
