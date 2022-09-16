@@ -8,6 +8,7 @@ namespace FinanceTracker.Web.Utility
     public class EmailSender : IEmailSender
     {
         private readonly IConfiguration _config;
+        private MailJetOptions _mailJetOptions;
 
         public EmailSender(IConfiguration config)
         {
@@ -16,7 +17,9 @@ namespace FinanceTracker.Web.Utility
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            MailjetClient client = new MailjetClient(_config.GetValue<string>("MailJet:Key"), _config.GetValue<string>("MailJet:Secret")) { };
+            _mailJetOptions = _config.GetSection("MailJet").Get<MailJetOptions>();
+
+            MailjetClient client = new MailjetClient(_mailJetOptions.ApiKey, _mailJetOptions.SecretKey) { };
 
             MailjetRequest request = new MailjetRequest { Resource = Send.Resource }
                .Property(Send.FromEmail, "apnihiser@protonmail.com")

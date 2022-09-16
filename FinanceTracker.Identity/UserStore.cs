@@ -78,7 +78,7 @@ namespace FinanceTracker.Identity
         {
             var output = await _db.LoadData<ApplicationUserIdentity, dynamic>("dbo.spApplicationUser_GetById", new { Id = userId }, _connectionString.Name, cancellationToken);
 
-            return output.First();
+            return output.FirstOrDefault();
         }
 
         public async Task<ApplicationUserIdentity> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
