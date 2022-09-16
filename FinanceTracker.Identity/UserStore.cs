@@ -57,7 +57,7 @@ namespace FinanceTracker.Identity
                 user.PhoneNumberConfirmed,
                 user.TwoFactorEnabled);
 
-            await _db.SaveData("dbo.spApplicationUser_Insert", new { Account = dataTable.AsTableValuedParameter("dbo.ApplicationUser") }, _connectionString.Name, cancellationToken);
+            await _db.SaveData("dbo.spApplicationUser_Insert", new { ApplicationUser = dataTable.AsTableValuedParameter("dbo.ApplicationUserType") }, _connectionString.Name, cancellationToken);
 
             return IdentityResult.Success;
         }
@@ -85,7 +85,7 @@ namespace FinanceTracker.Identity
         {
             var output = await _db.LoadData<ApplicationUserIdentity, dynamic>("dbo.spApplicationUser_FindByName", new { NormalizedUsername = normalizedUserName }, _connectionString.Name, cancellationToken);
 
-            return output.First();
+            return output.FirstOrDefault();
         }
 
         public Task<string> GetNormalizedUserNameAsync(ApplicationUserIdentity user, CancellationToken cancellationToken)

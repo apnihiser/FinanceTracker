@@ -80,7 +80,7 @@
     <Build Include="dbo\Stored Procedures\spFullAccount_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\spFullAccount_GetById.sql" />
     <Build Include="dbo\Stored Procedures\spFullTransaction_GetAll.sql" />
-    <Build Include="dbo\Type\ApplicationUser.sql" />
+    <Build Include="dbo\Type\ApplicationUserType.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationUser_Insert.sql" />
     <Build Include="dbo\Tables\ApplicationUser.sql" />
     <Build Include="dbo\Tables\ApplicationRole.sql" />

@@ -1,6 +1,5 @@
 ﻿CREATE TYPE [dbo].[ApplicationUserType] AS TABLE
 (
-	[ApplicationUserId] INT NOT NULL,
 	[Fullname] VARCHAR(30) NOT NULL,
 	[Username] VARCHAR(20) NOT NULL,
 	[NormalizedUsername] VARCHAR(20) NOT NULL,
