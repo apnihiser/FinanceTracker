@@ -85,6 +85,11 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    if (returnUrl == "/")
+                    {
+                        return RedirectToAction("Index","Transaction");
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
