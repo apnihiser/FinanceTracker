@@ -17,8 +17,7 @@ namespace FinanceTracker.Identity
                              IUserEmailStore<ApplicationUserIdentity>, 
                              IUserPhoneNumberStore<ApplicationUserIdentity>, 
                              IUserTwoFactorStore<ApplicationUserIdentity>, 
-                             IUserPasswordStore<ApplicationUserIdentity>
-                             
+                             IUserPasswordStore<ApplicationUserIdentity>                             
     {
         private readonly IDatabaseAccess _db;
         private readonly ConnectionStringData _connectionString;

@@ -127,7 +127,7 @@
                     </tr>
                 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="EditTransactionModal" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
@@ -147,7 +147,7 @@
                     </div>
 
                     <!-- Delete Modal -->
-                    <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="DeleteTransactionModal" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
@@ -157,7 +157,9 @@
                                 </div>
 
                                 <div class="modal-body">
+
                                     <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+
                                 </div>
 
                             </div>

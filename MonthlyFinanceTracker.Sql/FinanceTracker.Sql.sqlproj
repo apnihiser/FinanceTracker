@@ -97,6 +97,10 @@
     <Build Include="dbo\Stored Procedures\spApplicationRole_GetByNormalizedName.sql" />
     <Build Include="dbo\Stored Procedures\spFullTransaction_GetByUserId.sql" />
     <Build Include="dbo\Type\AccountType.sql" />
+    <Build Include="dbo\Stored Procedures\spFullTransaction_Delete.sql" />
+    <Build Include="dbo\Type\TransactionType.sql" />
+    <Build Include="dbo\Stored Procedures\spFullTransaction_Edit.sql" />
+    <Build Include="dbo\Stored Procedures\spFullTransaction_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />

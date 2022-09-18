@@ -22,25 +22,25 @@ else
         <div class="mb-3">
             <label class="form-label" asp-for="Title"></label>
             <input class="form-control" asp-for="Title"></input>
-            <span asp-validation-for="Title"></span>
+            <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label class="form-label" asp-for="Description"></label>
             <input class="form-control" asp-for="Description"></input>
-            <span asp-validation-for="Description"></span>
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label class="form-label" asp-for="Type"></label>
             <input class="form-control" asp-for="Type"></input>
-            <span asp-validation-for="Type"></span>
+            <span asp-validation-for="Type" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label class="form-label" asp-for="Balance"></label>
             <input class="form-control" asp-for="Balance"></input>
-            <span asp-validation-for="Balance"></span>
+            <span asp-validation-for="Balance" class="text-danger"></span>
         </div>
 
         <a class="btn btn-info" asp-action="Index">BACK</a>

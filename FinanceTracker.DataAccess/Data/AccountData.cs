@@ -87,9 +87,9 @@ namespace FinanceTracker.DataAccess.Data
 
         public async Task<FullAccountModel> GetFullAccountByHolderId(int id)
         {
-            var rows = await _db.LoadData<FullAccountModel, dynamic>("dbo.spFullAccount_GetById", new { Id = id }, _connectionString.Name);
+            var output = await _db.LoadData<FullAccountModel, dynamic>("dbo.spFullAccount_GetById", new { Id = id }, _connectionString.Name);
 
-            return rows.First();
+            return output.FirstOrDefault();
         }
     }
 }

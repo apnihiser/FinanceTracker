@@ -6,5 +6,8 @@ namespace FinanceTracker.DataAccess.Data
     {
         Task<List<TransactionModel>> GetAllFullTransactions();
         Task<List<TransactionModel>> GetAllFullTransactionsByUserIdAsync(string id);
+        Task DeleteTransactionById(int id);
+        Task EditTransactionById(TransactionModel record);
+        Task CreateTransaction(TransactionModel input);
     }
 }

@@ -57,7 +57,7 @@ namespace FinanceTracker.Web.Controllers
 
             FullAccountModel account = await _accountData.GetFullAccountByHolderId(id);
 
-            if (account is null/* || payors is null*/)
+            if (account is null )
             {
                 return RedirectToAction("Index");
             }
@@ -75,7 +75,7 @@ namespace FinanceTracker.Web.Controllers
             return View(displayAccount);
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }

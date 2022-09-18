@@ -1,44 +1,37 @@
 ﻿@model FinanceTracker.Web.Models.TransactionFullDisplayModel
 
-<form asp-action="Delete" method="post">
+<form asp-action="Delete" method="Post">
 
-    <div asp-validation-summary="ModelOnly"></div>
-
-    <input hidden asp-for="Id"></input>
+    <input asp-for="Id" hidden></input>
 
     <div class="mb-3">
-        <label asp-for="AccountId" class="form-label"></label>
-        <input asp-for="AccountId" readonly class="form-control form-control-plaintext" type="text" />
-        <span asp-validation-for="AccountId"></span>
+        <h5>@Html.DisplayNameFor(model => model.AccountName)</h5>
+        <p>@Model.AccountName</p>
     </div>
 
     <div class="mb-3">
-        <label asp-for="PayeeId" class="form-label"></label>
-        <input asp-for="PayeeId" readonly class="form-control form-control-plaintext" type="text" />
-        <span asp-validation-for="PayeeId"></span>
+        <h5>@Html.DisplayNameFor(model => model.ProviderName)</h5>
+        <p>@Model.ProviderName</p>
     </div>
 
     <div class="mb-3">
-        <label asp-for="AmountDue" class="form-label"></label>
-        <input asp-for="AmountDue" readonly class="form-control form-control-plaintext" type="text" />
-        <span asp-validation-for="AmountDue"></span>
+        <h5>@Html.DisplayNameFor(model => model.AmountDue)</h5>
+        <p>@Model.AmountDue</p>
     </div>
 
     <div class="mb-3">
-        <label asp-for="DueDate" class="form-label"></label>
-        <input asp-for="DueDate" readonly class="form-control form-control-plaintext" type="text" />
-        <span asp-validation-for="DueDate"></span>
+        <h5>@Html.DisplayNameFor(model => model.DueDate)</h5>
+        <p>@Model.DueDate</p>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Status" class="form-label"></label>
-        <input asp-for="Status" readonly class="form-control form-control-plaintext" type="text" />
-        <span asp-validation-for="Status"></span>
+        <h5>@Html.DisplayNameFor(model => model.Status)</h5>
+        <p>@Model.Status</p>
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-danger" value="DELETE"></input>
+        <input type="submit" class="btn btn-danger" value="Delete" asp-action="Delete" asp-route-Id="@Model.Id"></input>
     </div>
 
 </form>

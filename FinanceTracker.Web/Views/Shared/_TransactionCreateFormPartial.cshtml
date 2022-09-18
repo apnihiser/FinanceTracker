@@ -8,25 +8,25 @@
 
     <div class="mb-3">
         <label asp-for="AccountId" class="form-label"></label>
-        <input asp-for="AccountId" class="form-control" type="text" />
+        <select asp-for="AccountId" class="form-select" asp-items="@ViewBag.AccountSelectList"></select>
         <span asp-validation-for="AccountId" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="PayeeId" class="form-label"></label>
-        <input asp-for="PayeeId" class="form-control" type="text" />
+        <select asp-for="PayeeId" class="form-select" asp-items="@ViewBag.ProviderSelectList"></select>
         <span asp-validation-for="PayeeId" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="AmountDue" class="form-label"></label>
-        <input asp-for="AmountDue" class="form-control" type="text" />
+        <input asp-for="AmountDue" class="form-control" type="text" asp-format="{0:C}" />
         <span asp-validation-for="AmountDue" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="DueDate" class="form-label"></label>
-        <input asp-for="DueDate" class="form-control" type="text" />
+        <input asp-for="DueDate" class="form-control" type="Date" />
         <span asp-validation-for="DueDate" class="text-danger"></span>
     </div>
 
