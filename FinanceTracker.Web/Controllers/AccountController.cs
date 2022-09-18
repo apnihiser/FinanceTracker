@@ -75,6 +75,11 @@ namespace FinanceTracker.Web.Controllers
             return View(displayAccount);
         }
 
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AccountDisplayModel model)
