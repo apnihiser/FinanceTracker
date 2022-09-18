@@ -51,9 +51,26 @@ namespace FinanceTracker.DataAccess.Data
             return p.Get<int>("Id");
         }
 
-        public async Task Update(int id, string? title, string? description, string? type, decimal balance, int holderId)
+        public async Task Update(AccountModel accountRecord)
         {
-            await _db.SaveData("dbo.spAccount_Update", new { Id = id, Title = title, Description = description, Type = type, Balance = balance, HolderId = holderId }, _connectionString.Name);
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Id", typeof(int));
+            dataTable.Columns.Add("Title", typeof(string));
+            dataTable.Columns.Add("Description", typeof(string));
+            dataTable.Columns.Add("Type", typeof(string));
+            dataTable.Columns.Add("Balance", typeof(string));
+            dataTable.Columns.Add("ApplicationUserId", typeof(int));
+
+            dataTable.Rows.Add(
+                accountRecord.Id,
+                accountRecord.Title,
+                accountRecord.Description,
+                accountRecord.Type,
+                accountRecord.Balance,
+                accountRecord.ApplicationUserId);
+
+            await _db.SaveData("dbo.spAccount_Update", new { Account = dataTable.AsTableValuedParameter("dbo.AccountType") }, _connectionString.Name);
         }
 
         public async Task Delete(int id)

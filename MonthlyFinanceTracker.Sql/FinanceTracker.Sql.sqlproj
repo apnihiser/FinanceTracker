@@ -95,6 +95,8 @@
     <Build Include="dbo\Stored Procedures\spApplicationRole_DeleteById.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationRole_GetById.sql" />
     <Build Include="dbo\Stored Procedures\spApplicationRole_GetByNormalizedName.sql" />
+    <Build Include="dbo\Stored Procedures\spFullTransaction_GetByUserId.sql" />
+    <Build Include="dbo\Type\AccountType.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />

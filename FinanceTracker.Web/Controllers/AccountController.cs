@@ -4,6 +4,7 @@ using FinanceTracker.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 using static FinanceTracker.Web.Utility.Helper;
 
 namespace FinanceTracker.Web.Controllers
@@ -12,12 +13,10 @@ namespace FinanceTracker.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountData _accountData;
-        //private readonly IPayorData _payorData;
 
-        public AccountController(IAccountData accountData/*, IPayorData payorData*/)
+        public AccountController(IAccountData accountData)
         {
             _accountData = accountData;
-            //_payorData = payorData;
         }
 
         public async Task<IActionResult> Index()
@@ -57,7 +56,6 @@ namespace FinanceTracker.Web.Controllers
             }
 
             FullAccountModel account = await _accountData.GetFullAccountByHolderId(id);
-            //List<PayorModel> payors = await _payorData.GetAllPayors();
 
             if (account is null/* || payors is null*/)
             {
@@ -74,23 +72,8 @@ namespace FinanceTracker.Web.Controllers
                 HolderId = account.HolderId
             };
 
-            //List<SelectListItem> selectList = ConvertToSelectList(payors);
-
-            //ViewBag.UserSelectList = selectList;
-
             return View(displayAccount);
         }
-
-        //public async Task<IActionResult> Create()
-        //{
-        //    List<PayorModel> payors = await _payorData.GetAllPayors();
-
-        //    List<SelectListItem> selectList = ConvertToSelectList(payors);
-
-        //    ViewBag.UserSelectList = selectList;
-
-        //    return View();
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -108,15 +91,25 @@ namespace FinanceTracker.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(AccountDisplayModel model)
+        public async Task<IActionResult> Update(AccountDisplayModel input)
         {
             if (ModelState.IsValid == false)
             {
-                return View();
+                return RedirectToAction("Index");
             }
             else
             {
-                await _accountData.Update(model.Id, model.Title, model.Description, model.Type, model.Balance, model.HolderId);
+                AccountModel accountRecord = new()
+                {
+                    Id = input.Id,
+                    Title = input.Title,
+                    Description = input.Description,
+                    Type = input.Type,
+                    Balance = input.Balance,
+                    ApplicationUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                };
+
+                await _accountData.Update(accountRecord);
 
                 return RedirectToAction("Index");
             }
@@ -138,7 +131,7 @@ namespace FinanceTracker.Web.Controllers
                 Description = model.Description,
                 Type = model.Type,
                 Balance = model.Balance,
-                HolderId = model.HolderId
+                HolderId = model.ApplicationUserId
             };
 
             return View(output);

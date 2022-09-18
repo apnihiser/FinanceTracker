@@ -25,5 +25,10 @@ namespace FinanceTracker.DataAccess.Data
 
             return rows.ToList();
         }
+
+        public async Task<List<TransactionModel>> GetAllFullTransactionsByUserIdAsync(string id)
+        {
+            return await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetByUserId", new { ApplicationUserId = id }, _connectionString.Name);
+        }
     }
 }

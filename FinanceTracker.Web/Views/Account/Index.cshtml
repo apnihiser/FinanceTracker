@@ -11,7 +11,6 @@
         <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
                     <th>@Html.DisplayNameFor(model => model.Title)</th>
                     <th>@Html.DisplayNameFor(model => model.Description)</th>
                     <th>@Html.DisplayNameFor(model => model.Type)</th>
@@ -22,7 +21,6 @@
                 @foreach(var item in Model)
                 {
                     <tr>
-                        <td>@item.FullName</td>
                         <td>@item.Title</td>
                         <td>@item.Description</td>
                         <td>@item.Type</td>
