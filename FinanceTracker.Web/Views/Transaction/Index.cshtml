@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinanceTracker.Web.Models.TransactionFullDisplayModel>
+﻿@model IEnumerable<FinanceTracker.Web.Models.TransactionCreateModel>
 
 @{
     ViewData["Title"] = "Transaction Page";
@@ -127,12 +127,12 @@
                     </tr>
                 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="EditTransactionModal" aria-hidden="true">
+                    <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit Transaction</h5>
+                                    <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
@@ -147,12 +147,12 @@
                     </div>
 
                     <!-- Delete Modal -->
-                    <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="DeleteTransactionModal" aria-hidden="true">
+                    <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Delete Record?</h5>
+                                    <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
@@ -215,19 +215,19 @@
 </div>
 
 <!-- Add Modal -->
-<div class="modal fade" id="addModal_1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal_1" tabindex="-1" aria-labelledby="@($"Add_Modal_Container_{count}")" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Transaction</h5>
+                <h5 class="modal-title" id="@($"Add_Modal_Header_{count}")">Add Transaction</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
                 <div class="modal-body">
                     
-                    <partial name="~/Views/Shared/_TransactionCreateFormPartial.cshtml" model="new TransactionFullDisplayModel {}" />
+                    <partial name="~/Views/Shared/_TransactionCreateFormPartial.cshtml" model="new TransactionCreateModel {}" />
                     
                 </div>
             </div>

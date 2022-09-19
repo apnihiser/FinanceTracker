@@ -1,11 +1,13 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.DataAccess.Models;
 using FinanceTracker.Web.Models;
+using FinanceTracker.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using System.Transactions;
 
 namespace FinanceTracker.Web.Controllers
 {
@@ -15,6 +17,7 @@ namespace FinanceTracker.Web.Controllers
         private readonly ITransactionData _transactionData;
         private readonly IProviderData _providerData;
         private readonly IAccountData _accountData;
+        private readonly ISelectListProvider _selectList;
         private readonly UserManager<ApplicationUserIdentity> _userManager;
         private readonly SignInManager<ApplicationUserIdentity> _signInManager;
 
@@ -22,12 +25,14 @@ namespace FinanceTracker.Web.Controllers
             ITransactionData transactionData,
             IProviderData providerData,
             IAccountData accountData,
+            ISelectListProvider selectList,
             UserManager<ApplicationUserIdentity> userManager,
             SignInManager<ApplicationUserIdentity> signInManager)
         {
             _transactionData = transactionData;
             _providerData = providerData;
             _accountData = accountData;
+            _selectList = selectList;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -42,39 +47,11 @@ namespace FinanceTracker.Web.Controllers
                 return View();
             }
 
-            List<ProviderModel> providers = await _providerData.GetAllProviders();
-
-            if (providers is null)
-            {
-                return View();
-            }
-
-            ProviderSelectListViewModel providerSelectList = new();
-
-            providers.ForEach(x =>
-            {
-                providerSelectList.Providers.Add(new SelectListItem { Text = x.Title, Value = x.Id.ToString() });
-            });
-
-            List<AccountModel> accounts = await _accountData.GetAllAccounts();
-
-            if (accounts is null)
-            {
-                return View();
-            }
-
-            AccountSelectListViewModel accountSelectList = new();
-
-            accounts.ForEach(x =>
-            {
-                accountSelectList.Accounts.Add(new SelectListItem { Text = x.Title, Value = x.Id.ToString() });
-            });
-
-            List<TransactionFullDisplayModel> output = new();
+            List<TransactionCreateModel> output = new();
 
             data.ForEach( x =>
             {
-                output.Add( new TransactionFullDisplayModel
+                output.Add( new TransactionCreateModel
                 {
                     Id = x.Id,
                     AccountId = x.AccountId,
@@ -88,8 +65,9 @@ namespace FinanceTracker.Web.Controllers
                 });
             });
 
-            ViewBag.ProviderSelectList = providerSelectList.Providers;
-            ViewBag.AccountSelectList = accountSelectList.Accounts;
+            ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
+            ViewBag.AccountSelectList = await _selectList.AccountSelectList();
+            ViewBag.StatusSelectList = _selectList.StatusSelectList();
 
             return View(output);
         }
@@ -110,7 +88,7 @@ namespace FinanceTracker.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(TransactionFullDisplayModel input)
+        public async Task<IActionResult> Update(TransactionCreateModel input)
         {
             if (ModelState.IsValid == false)
             {
@@ -134,7 +112,7 @@ namespace FinanceTracker.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TransactionFullDisplayModel input)
+        public async Task<IActionResult> Create(TransactionCreateModel input)
         {
             if (ModelState.IsValid == false)
             {

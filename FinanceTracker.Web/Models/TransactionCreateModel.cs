@@ -2,7 +2,7 @@
 
 namespace FinanceTracker.Web.Models
 {
-    public class TransactionFullDisplayModel
+    public class TransactionCreateModel
     {
         public int Id { get; set; }
 

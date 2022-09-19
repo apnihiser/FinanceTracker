@@ -1,47 +1,62 @@
-﻿@model FinanceTracker.Web.Models.TransactionFullDisplayModel
+﻿@model FinanceTracker.Web.Models.TransactionCreateModel
 
 <form asp-controller="Transaction" asp-action="Update" method="Post">
 
     <div asp-validation-summary="ModelOnly"></div>
 
-    <input hidden asp-for="Id"></input>
-    <input hidden asp-for="ProviderName"></input>
-    <input hidden asp-for="Service"></input>
-    <input hidden asp-for="AccountName"></input>
-    
+    <div class=mb-3>
+        <label hidden asp-for="Id" class="form-label"></label>
+        <input hidden asp-for="Id"></input>
+    </div>
+
+    <div class=mb-3>
+        <label hidden asp-for="ProviderName" class="form-label"></label>
+        <input hidden asp-for="ProviderName"></input>
+    </div>
+
+    <div class=mb-3>
+        <label hidden asp-for="Service" class="form-label"></label>
+        <input hidden asp-for="Service"></input>
+    </div>
+
+    <div class=mb-3>
+        <label hidden asp-for="AccountName" class="form-label"></label>
+        <input hidden asp-for="AccountName"></input>
+    </div>
+
     <div class="mb-3">
         <label asp-for="AccountId" class="form-label"></label>
-        @await Component.InvokeAsync("AccountSelectList")
+        <select asp-for="AccountId" class="form-select" asp-items="@ViewBag.AccountSelectList"></select>
         <span asp-validation-for="AccountId" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="PayeeId" class="form-label"></label>
-        @await Component.InvokeAsync("ProviderSelectList")
-        <span asp-validation-for="PayeeId" class="text-danger"></span>
+        <label asp-for="AccountId" class="form-label"></label>
+        <select asp-for="AccountId" class="form-select" asp-items="@ViewBag.ProviderSelectList"></select>
+        <span asp-validation-for="AccountId" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="AmountDue" class="form-label"></label>
-        <input asp-for="AmountDue" class="form-control" asp-format="{0:C}" />
+        <input asp-for="AmountDue" class="form-control" asp-format="{0:00}" />
         <span asp-validation-for="AmountDue" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="DueDate" class="form-label"></label>
-        <input asp-for="DueDate" class="form-control" type="text" />
+        <input asp-for="DueDate" class="form-control" type="date" />
         <span asp-validation-for="DueDate" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Status" class="form-label"></label>
-        <input asp-for="Status" class="form-control" type="text" />
+        <select asp-for="Status" class="form-control" asp-items="@ViewBag.StatusSelectList"></select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </div>
 
 </form>

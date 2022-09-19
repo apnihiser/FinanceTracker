@@ -22,6 +22,7 @@ builder.Services.AddScoped<IProviderData, ProviderData>();
 builder.Services.AddScoped<IAccountData, AccountData>();
 builder.Services.AddScoped<ITransactionData, TransactionData>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<ISelectListProvider, SelectListProvider>();
 
 builder.Services.AddIdentity<ApplicationUserIdentity, ApplicationRole>(option => option.SignIn.RequireConfirmedEmail = true)
     .AddDefaultTokenProviders()
