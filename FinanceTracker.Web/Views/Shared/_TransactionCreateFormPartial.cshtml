@@ -1,4 +1,4 @@
-﻿@model FinanceTracker.Web.Models.TransactionCreateModel
+﻿@model FinanceTracker.Web.Models.TransactionViewModel
 
 <form method="Post" asp-action="Create">
 
@@ -26,13 +26,13 @@
 
     <div class="mb-3">
         <label asp-for="DueDate" class="form-label"></label>
-        <input asp-for="DueDate" class="form-control" type="Date" />
+        <input asp-for="DueDate" class="form-control" type="date" />
         <span asp-validation-for="DueDate" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Status" class="form-label"></label>
-        <select asp-for="Status" class="form-control" type="text" asp-items="ViewBag.StatusSelectList"></select>
+        <select asp-for="Status" class="form-select" asp-items="ViewBag.StatusSelectList"></select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
 

@@ -12,7 +12,7 @@ namespace FinanceTracker.DataAccess.Models
         public int AccountId { get; set; }
         public int PayeeId { get; set; }
         public decimal Amount { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateTime DueDate { get; set; }
         public string? Status { get; set; }
         public string? ProviderName { get; set; }
         public string? Service { get; set; }

@@ -1,4 +1,10 @@
-﻿@model FinanceTracker.Web.Models.TransactionViewModel
+﻿@model FinanceTracker.Web.Models.TransactionUpdateViewModel
+
+@{
+    ViewData["Title"] = "Transaction Edit Form";
+}
+
+<h3>@ViewData["Title"]</h3>
 
 @if(Model is null)
 {
@@ -45,10 +51,6 @@ else
 
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <input type="submit" class="btn btn-primary" value="Save Changes"></input>
-
-        @*        <div class="modal-footer">
-            
-                </div>*@
 
     </form>
 }

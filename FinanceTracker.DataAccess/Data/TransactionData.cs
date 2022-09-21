@@ -21,6 +21,13 @@ namespace FinanceTracker.DataAccess.Data
             _connectionString = connectionString;
         }
 
+        public async Task<TransactionModel> GetFullTransactionById(int id)
+        {
+            var rows = await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetById", new { Id = id }, _connectionString.Name);
+
+            return rows.FirstOrDefault();
+        }
+
         public async Task<List<TransactionModel>> GetAllFullTransactions()
         {
             var rows = await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetAll", new { }, _connectionString.Name);
@@ -50,6 +57,7 @@ namespace FinanceTracker.DataAccess.Data
             dataTable.Columns.Add("Status", typeof(string));
 
             dataTable.Rows.Add(
+                record.Id,
                 record.AccountId,
                 record.PayeeId,
                 record.Amount,

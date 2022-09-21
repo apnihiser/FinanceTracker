@@ -47,11 +47,11 @@ namespace FinanceTracker.Web.Controllers
                 return View();
             }
 
-            List<TransactionCreateModel> output = new();
+            List<TransactionViewModel> output = new();
 
             data.ForEach( x =>
             {
-                output.Add( new TransactionCreateModel
+                output.Add( new TransactionViewModel
                 {
                     Id = x.Id,
                     AccountId = x.AccountId,
@@ -86,9 +86,35 @@ namespace FinanceTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Update(int id)
+        {
+            if (id == 0)
+            {
+                return View();
+            }
+
+            var record = await _transactionData.GetFullTransactionById(id);
+
+            TransactionUpdateViewModel output = new TransactionUpdateViewModel()
+            {
+               Id = record.Id,
+               AccountId = record.AccountId,
+               PayeeId = record.PayeeId,
+               AmountDue = record.Amount,
+               DueDate = record.DueDate,
+               Status = record.Status
+            };
+
+            ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
+            ViewBag.AccountSelectList = await _selectList.AccountSelectList();
+            ViewBag.StatusSelectList = _selectList.StatusSelectList();
+
+            return View(output);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(TransactionCreateModel input)
+        public async Task<IActionResult> Update(TransactionUpdateViewModel input)
         {
             if (ModelState.IsValid == false)
             {
@@ -112,7 +138,7 @@ namespace FinanceTracker.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TransactionCreateModel input)
+        public async Task<IActionResult> Create(TransactionViewModel input)
         {
             if (ModelState.IsValid == false)
             {

@@ -101,6 +101,7 @@
     <Build Include="dbo\Type\TransactionType.sql" />
     <Build Include="dbo\Stored Procedures\spFullTransaction_Edit.sql" />
     <Build Include="dbo\Stored Procedures\spFullTransaction_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\spFullTransaction_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />

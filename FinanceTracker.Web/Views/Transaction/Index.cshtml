@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinanceTracker.Web.Models.TransactionCreateModel>
+﻿@model IEnumerable<FinanceTracker.Web.Models.TransactionViewModel>
 
 @{
     ViewData["Title"] = "Transaction Page";
@@ -100,71 +100,74 @@
 
                 foreach (var transaction in @Model)
                 {
-                    <!-- Table Row Template -->
-                    <tr>
-                        <td>@transaction.AccountName</td>
-                        <td>@transaction.ProviderName</td>
-                        <td>@transaction.Service</td>
-                        <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
-                        <td>@transaction.DueDate</td>
-                        <td>@transaction.Status</td>
-                        <td>
-                            <input
-                                class="btn btn-warning"
-                                type="submit"
-                                value="EDIT"
-                                data-bs-toggle="modal"
-                                data-bs-target="@($"#editModal_{count}")" />
-                            </td>
+                        <!-- Table Row Template -->
+                        <tr>
+                            <td>@transaction.AccountName</td>
+                            <td>@transaction.ProviderName</td>
+                            <td>@transaction.Service</td>
+                            <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
+                            <td>@transaction.DueDate</td>
+                            <td>@transaction.Status</td>
                             <td>
-                            <input
-                                class="btn btn-danger"
-                                type="submit"
-                                value="DELETE"
-                                data-bs-toggle="modal"
-                                data-bs-target="@($"#deleteModal_{count}")" />
-                        </td>
-                    </tr>
+                                @*switch to use non modal form*@
+                                @*<a class="btn btn-warning" asp-controller="Transaction" asp-action="Update" asp-route-id="@transaction.Id">Update</a>*@
+                                <input
+                                    class="btn btn-warning"
+                                    type="submit"
+                                    value="EDIT"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="@($"#editModal_{count}")" />
+                                </td>
+                                <td>
+                                <input
+                                    class="btn btn-danger"
+                                    type="submit"
+                                    value="DELETE"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="@($"#deleteModal_{count}")" />
+                            </td>
+                        </tr>
                 
-                    <!-- Edit Modal -->
-                    <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
 
-                                <div class="modal-body">
-                            
-                                    <partial name="/Views/Shared/_TransactionEditFormPartial.cshtml" for="@transaction"/>
+                                    <div class="modal-body">
                                 
-                                </div>
+                                        @*<partial name="/Views/Shared/_TransactionEditFormPartial.cshtml" for="@transaction"  />*@
+                                        @await Component.InvokeAsync("EditModalForm", @transaction);
+                                    
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Delete Modal -->
-                    <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
+                        <!-- Delete Modal -->
+                        <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+
+                                    </div>
+
                                 </div>
-
-                                <div class="modal-body">
-
-                                    <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
-
-                                </div>
-
                             </div>
                         </div>
-                    </div>
 
                     count++;
                 }
@@ -227,7 +230,7 @@
             <div class="modal-body">
                 <div class="modal-body">
                     
-                    <partial name="~/Views/Shared/_TransactionCreateFormPartial.cshtml" model="new TransactionCreateModel {}" />
+                    <partial name="~/Views/Shared/_TransactionCreateFormPartial.cshtml" model="new TransactionViewModel {}" />
                     
                 </div>
             </div>
@@ -236,3 +239,7 @@
     </div>
 </div>
         
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
