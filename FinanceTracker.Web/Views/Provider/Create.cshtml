@@ -1,4 +1,5 @@
-﻿@model FinanceTracker.Web.Models.ProviderDisplayModel
+﻿@using System.Security.Claims
+@model FinanceTracker.Web.Models.ProviderDisplayModel
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,12 +15,6 @@
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     
-    <div class="mb-3">
-        <label class="form-label" asp-for="PayorId"></label>
-        <input class="form-control" asp-for="PayorId"></input>
-        <span asp-validation-for="PayorId" class="text-danger"></span>
-    </div>
-
     <div class="mb-3">
         <label class="form-label" asp-for="Service"></label>
         <input class="form-control" asp-for="Service"></input>

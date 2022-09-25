@@ -20,6 +20,7 @@ namespace FinanceTracker.Web.Controllers
         private readonly ISelectListProvider _selectList;
         private readonly UserManager<ApplicationUserIdentity> _userManager;
         private readonly SignInManager<ApplicationUserIdentity> _signInManager;
+        private readonly IDateTimeProvider _dateTime;
 
         public TransactionController(
             ITransactionData transactionData,
@@ -27,7 +28,9 @@ namespace FinanceTracker.Web.Controllers
             IAccountData accountData,
             ISelectListProvider selectList,
             UserManager<ApplicationUserIdentity> userManager,
-            SignInManager<ApplicationUserIdentity> signInManager)
+            SignInManager<ApplicationUserIdentity> signInManager,
+            IDateTimeProvider dateTime)
+            
         {
             _transactionData = transactionData;
             _providerData = providerData;
@@ -35,12 +38,19 @@ namespace FinanceTracker.Web.Controllers
             _selectList = selectList;
             _userManager = userManager;
             _signInManager = signInManager;
+            _dateTime = dateTime;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime dateTime = default(DateTime))
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var data = await _transactionData.GetAllFullTransactionsByUserIdAsync(userId);
+            if (dateTime == default(DateTime))
+            {
+                dateTime = DateTime.Now;
+            }
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+
+            var data = await _transactionData.GetAllFullTransactionsByUserAndMonthIdAsync(userId, dateTime);
 
             if (data is null)
             {

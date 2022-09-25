@@ -3,6 +3,7 @@ using FinanceTracker.DataAccess.Models;
 using FinanceTracker.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FinanceTracker.Web.Controllers
 {
@@ -88,7 +89,9 @@ namespace FinanceTracker.Web.Controllers
                 return View();
             }
 
-            int id = await _providerData.CreateProvider(model.PayorId, model.Title!, model.Service!, model.Url!);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            int id = await _providerData.CreateProvider(userId, model.Title!, model.Service!, model.Url!);
 
             return RedirectToAction("Index", new { id });
         }

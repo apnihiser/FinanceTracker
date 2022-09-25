@@ -16,6 +16,7 @@ builder.Services.AddSingleton(new ConnectionStringData
 
 builder.Services.AddTransient<IUserStore<ApplicationUserIdentity>, UserStore>();
 builder.Services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
+builder.Services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
 builder.Services.AddScoped<IDatabaseAccess, SqlServerDb>();
 builder.Services.AddScoped<IProviderData, ProviderData>();

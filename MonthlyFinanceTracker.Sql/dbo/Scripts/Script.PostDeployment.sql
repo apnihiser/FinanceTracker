@@ -122,9 +122,9 @@ BEGIN
     SELECT @ProviderId5 = Id FROM dbo.[Provider] WHERE Title = 'Netflix';
 
     INSERT INTO dbo.[Transaction] ([AccountId],[PayeeId],[Amount],[DueDate],[Status])
-    VALUES (@AccountId1,@ProviderId1,100.00,'01/01/2022','Due')
-          ,(@AccountId2,@ProviderId2,200.00,'01/02/2022','Past Due')
-          ,(@AccountId3,@ProviderId3,300.00,'01/03/2022','Reconcilled')
-          ,(@AccountId4,@ProviderId4,400.00,'01/04/2022','Due')
-          ,(@AccountId5,@ProviderId5,500.00,'01/05/2022','Reconcilled')
+    VALUES (@AccountId1,@ProviderId1,100.00,'2022-09-25 00:00:00.00','Due')
+          ,(@AccountId2,@ProviderId2,200.00,'2022-08-01 00:00:00.00','Past Due')
+          ,(@AccountId3,@ProviderId3,300.00,'2022-07-31 12:00:00.00','Reconcilled')
+          ,(@AccountId4,@ProviderId4,400.00,'2022-06-15 12:00:00.00','Due')
+          ,(@AccountId5,@ProviderId5,500.00,'2022-05-02 12:00:00.00','Reconcilled')
 END
