@@ -1,5 +1,6 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.DataAccess.Models;
+using FinanceTracker.Web.Enums;
 using FinanceTracker.Web.Models;
 using FinanceTracker.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -41,27 +42,37 @@ namespace FinanceTracker.Web.Controllers
             _dateTime = dateTime;
         }
 
-        public async Task<IActionResult> Index(DateTime dateTime = default(DateTime))
+        public async Task<IActionResult> Index(DateTime dateTime = default(DateTime), DateNavigation direction = DateNavigation.None)
         {
-            if (dateTime == default(DateTime))
+            DateTime dateTimeOutput = default(DateTime);
+
+            if (dateTime == default(DateTime) && direction == DateNavigation.None)
             {
-                dateTime = DateTime.Now;
+                dateTimeOutput = DateTime.Now;
+            }
+            else if (direction == DateNavigation.Back)
+            {
+                dateTimeOutput = dateTime.AddMonths(-1);
+            }
+            else if (direction == DateNavigation.Forwards)
+            {
+                dateTimeOutput = dateTime.AddMonths(1);
             }
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
-            var data = await _transactionData.GetAllFullTransactionsByUserAndMonthIdAsync(userId, dateTime);
+            var data = await _transactionData.GetUserTransactionsByMonth(userId, dateTimeOutput);
 
-            if (data is null)
+            if (data.Count == 0)
             {
                 return View();
             }
 
-            List<TransactionViewModel> output = new();
+            List<TransactionViewModel> transactionList = new();
 
             data.ForEach( x =>
             {
-                output.Add( new TransactionViewModel
+                transactionList.Add( new TransactionViewModel
                 {
                     Id = x.Id,
                     AccountId = x.AccountId,
@@ -74,6 +85,13 @@ namespace FinanceTracker.Web.Controllers
                     Status = x.Status
                 });
             });
+
+            TransactionDateViewModel output = new TransactionDateViewModel()
+            {
+                Transactions = transactionList,
+                TargetMonth = data.First().DueDate
+            };
+
 
             ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
             ViewBag.AccountSelectList = await _selectList.AccountSelectList();

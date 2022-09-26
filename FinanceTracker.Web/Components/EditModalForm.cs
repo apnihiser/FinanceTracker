@@ -5,7 +5,7 @@ namespace FinanceTracker.Web.Components
 {
     public class EditModalForm : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(TransactionViewModel input)
+        public IViewComponentResult Invoke(TransactionViewModel input)
         {
             return View(input);
         }

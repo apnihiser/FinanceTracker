@@ -40,9 +40,9 @@ namespace FinanceTracker.DataAccess.Data
             return await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetByUserId", new { ApplicationUserId = id }, _connectionString.Name);
         }
 
-        public async Task<List<TransactionModel>> GetAllFullTransactionsByUserAndMonthIdAsync(string id, DateTime dateTime)
+        public async Task<List<TransactionModel>> GetUserTransactionsByMonth(string id, DateTime dateTime)
         {
-            return await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetByUserIdAndMonth", new { ApplicationUserId = id, DateTime = dateTime }, _connectionString.Name);
+            return await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
         }
 
         public async Task DeleteTransactionById(int id)

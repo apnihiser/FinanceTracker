@@ -4,8 +4,8 @@ namespace FinanceTracker.Web.Models
 {
     public class ProviderSelectListViewModel
     {
-        public string? Name { get; set; }
+        //public string? Name { get; set; }
 
-        public List<SelectListItem> Providers { get; set; } = new List<SelectListItem>();
+        //public List<SelectListItem> Providers { get; set; } = new List<SelectListItem>();
     }
 }
