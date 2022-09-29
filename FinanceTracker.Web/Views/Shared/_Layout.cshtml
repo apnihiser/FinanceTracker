@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FinanceTracker.Web.styles.css" asp-append-version="true" />
 
+    <!-- GOOGLE CHART REFERENCES -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
   </head>
 
   <body class="d-flex flex-column h-100 font">
@@ -33,10 +38,6 @@
             <ul class="navbar-nav mb-2 mb-md-0 d-flex w-100">
 
                 <!-- NAV LIST ITEM -->
-@*                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                </li>*@
-
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Transaction" asp-action="Index">Dashboard</a>
                 </li>
@@ -89,6 +90,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/notify.min.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 

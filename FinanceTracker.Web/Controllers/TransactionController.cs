@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace FinanceTracker.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionData _transactionData;
@@ -22,7 +22,8 @@ namespace FinanceTracker.Web.Controllers
         private readonly UserManager<ApplicationUserIdentity> _userManager;
         private readonly SignInManager<ApplicationUserIdentity> _signInManager;
         private readonly IDateTimeProvider _dateTime;
-
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly string userId;
         public TransactionController(
             ITransactionData transactionData,
             IProviderData providerData,
@@ -30,7 +31,8 @@ namespace FinanceTracker.Web.Controllers
             ISelectListProvider selectList,
             UserManager<ApplicationUserIdentity> userManager,
             SignInManager<ApplicationUserIdentity> signInManager,
-            IDateTimeProvider dateTime)
+            IDateTimeProvider dateTime,
+            IHttpContextAccessor contextAccessor)
             
         {
             _transactionData = transactionData;
@@ -40,6 +42,8 @@ namespace FinanceTracker.Web.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _dateTime = dateTime;
+            _contextAccessor = contextAccessor;
+            userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
         }
 
         public async Task<IActionResult> Index(DateTime dateTime = default(DateTime), DateNavigation direction = DateNavigation.None)
@@ -58,8 +62,6 @@ namespace FinanceTracker.Web.Controllers
             {
                 dateTimeOutput = dateTime.AddMonths(1);
             }
-
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
 
             var data = await _transactionData.GetUserTransactionsByMonth(userId, dateTimeOutput);
 
@@ -186,6 +188,56 @@ namespace FinanceTracker.Web.Controllers
             await _transactionData.CreateTransaction(output);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> GetProviderTransactionResults(DateTime dateTime = default(DateTime))
+        {
+            CommonResponse<List<TransactionResult>> commonResponse = new CommonResponse<List<TransactionResult>>();
+
+            try
+            {
+                var dataRows = await _transactionData.GetUserTransactionsByMonth(userId, dateTime);
+
+                List<TransactionResult> result = new List<TransactionResult>();
+
+                dataRows.ForEach( x => result.Add(new TransactionResult { TransactionCost = x.Amount, Name = x.ProviderName }) );
+
+                commonResponse.DataEnum = result;
+
+                commonResponse.Status = Helper.success_code;
+            }
+            catch(Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+
+            return Ok(commonResponse);
+        }
+
+        public async Task<IActionResult> GetStatusTransactionResults(DateTime dateTime = default(DateTime))
+        {
+            CommonResponse<List<TransactionResult>> commonResponse = new CommonResponse<List<TransactionResult>>();
+
+            try
+            {
+                var dataRows = await _transactionData.GetUserTransactionsByMonth(userId, dateTime);
+
+                List<TransactionResult> result = new List<TransactionResult>();
+
+                dataRows.ForEach(x => result.Add(new TransactionResult { TransactionCost = x.Amount, Name = x.Status }));
+
+                commonResponse.DataEnum = result;
+                commonResponse.Message = Helper.ChartLoadSuccessful;
+                commonResponse.Status = Helper.success_code;
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+
+            return Ok(commonResponse);
         }
     }
 }
