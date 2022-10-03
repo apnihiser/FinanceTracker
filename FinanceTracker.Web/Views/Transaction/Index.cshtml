@@ -6,89 +6,41 @@
     ViewData["Title"] = "Transaction Page";
 }
 
-@*<!--Title-->
-<div class="col-12 text-center">
-    <p class="title">@ViewData["Title"]</p>
-</div>*@
-
 @if (@Model is null || @Model?.Transactions?.Count == 0)
 {
-
     <h3 class="text-danger">No Transactions for this month <a asp-action="Index">Click here</a> to see current months' transactions</h3>
 }
 else
 {
-    <!--Month Controls-->
-    <div class="col-12 text-center topSpace-md">
-        <div>
-            <span>
-                <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Back">
-                    <svg
-                        version="1.1"
-                        id="Layer_1a"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        x="0px"
-                        y="0px"
-                        viewBox="0 0 512 512"
-                        style="enable-background: new 0 0 512 512"
-                        xml:space="preserve"
-                        class="me-3 controls controlsIcon--left iconSize"
-                        >
-                        <style type="text/css">
-                            .st0 {
-                            fill: #41b653;
-                            }
-                            .st1 {
-                            fill: #ffffff;
-                            }
-                        </style>
-                        <g>
-                            <circle class="st0" cx="256" cy="256" r="256" />
-                            <path
-                            class="st1"
-                            d="M473.4,180.06H275.88V124.1c0-6.8-7.36-11.05-13.25-7.65L34.18,248.35c-5.89,3.4-5.89,11.9,0,15.3
-                        l228.45,131.9c5.89,3.4,13.25-0.85,13.25-7.65v-55.96H473.4c4.86,0,8.83-3.97,8.83-8.83V188.89
-                        C482.24,184.03,478.26,180.06,473.4,180.06z"
-                            />
-                        </g></svg
-                    ></a>
+    <div class="row mt-5 d-flex controlPanel monthControl_background">
+        
+        <!-- Month Controls -->
+        <div class="col-lg-4 col-12 d-flex align-items-center justify-content-center p-1 monthControl_font">
+            <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Back">
+                <i class="fa-solid fa-square-caret-left fa-lg"></i>
+            </a>
 
-                @Model?.TargetMonth.ToString("MMMM yyyy")
+            <p class="month">&nbsp @Model?.TargetMonth.ToString("MMMM yyyy") &nbsp</p>
 
-                <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Forwards">
-                    <svg
-                    version="1.1"
-                    id="Layer_1b"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    x="0px"
-                    y="0px"
-                    viewBox="0 0 512 512"
-                    style="enable-background: new 0 0 512 512"
-                    xml:space="preserve"
-                    class="imgRotate180 ms-3 controls controlsIcon--right iconSize">
-                        <style type="text/css">
-                            .st0 {
-                            fill: #41b653;
-                            }
-                            .st1 {
-                            fill: #ffffff;
-                            }
-                        </style>
-                        <g>
-                            <circle class="st0" cx="256" cy="256" r="256" />
-                            <path
-                            class="st1"
-                            d="M473.4,180.06H275.88V124.1c0-6.8-7.36-11.05-13.25-7.65L34.18,248.35c-5.89,3.4-5.89,11.9,0,15.3
-                                l228.45,131.9c5.89,3.4,13.25-0.85,13.25-7.65v-55.96H473.4c4.86,0,8.83-3.97,8.83-8.83V188.89
-                                C482.24,184.03,478.26,180.06,473.4,180.06z" />
-                        </g>
-                    </svg>
-                </a>
-            </span>
+            <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Forwards">
+                <i class="fa-solid fa-square-caret-right fa-xl"></i>
+            </a>
         </div>
+
+        <!-- Transaction Status Tracker -->
+        <div class="col-lg-8 col-12 p-1">
+            <div class="responsiveChart" id="stackedBarChart_Transaction"></div>
+        </div>
+
+        <!-- Pie Charts -->
+        <div class="row mt-5 mb-5 p-1">
+            <div class="col-xl-6 col-12" id="pieChart_Transaction" align="center"></div>
+            <div class="col-xl-6 col-12" id="pieChart_Status" align="center"></div>
+        </div>
+        
     </div>
+
+
 
     <!--Transaction Table-->
     <div class="table-responsive topSpace-md">
@@ -109,74 +61,71 @@ else
 
                     foreach (var transaction in @Model?.Transactions)
                     {
-                                                                <!-- Table Row Template -->
-                                                                <tr>
-                                                                    <td>@transaction.AccountName</td>
-                                                                    <td>@transaction.ProviderName</td>
-                                                                    <td>@transaction.Service</td>
-                                                                    <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
-                                                                    <td>@transaction.DueDate</td>
-                                                                    <td>@transaction.Status</td>
-                                                                    <td>
-                                                                        @*switch to use non modal form*@
-                                                                        @*<a class="btn btn-warning" asp-controller="Transaction" asp-action="Update" asp-route-id="@transaction.Id">Update</a>*@
-                                                                        <input
-                                                                                    class="btn btn-warning"
-                                                                                    type="submit"
-                                                                                    value="EDIT"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="@($"#editModal_{count}")" />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input
-                                                                                    class="btn btn-danger"
-                                                                                    type="submit"
-                                                                                    value="DELETE"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="@($"#deleteModal_{count}")" />
-                                                                    </td>
-                                                                </tr>
+                        <!-- Table Row Template -->
+                        <tr>
+                            <td>@transaction.AccountName</td>
+                            <td>@transaction.ProviderName</td>
+                            <td>@transaction.Service</td>
+                            <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
+                            <td>@transaction.DueDate</td>
+                            <td>@transaction.Status</td>
+                            <td>
+                                <input
+                                            class="btn btn-warning"
+                                            type="submit"
+                                            value="EDIT"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="@($"#editModal_{count}")" />
+                            </td>
+                            <td>
+                                <input
+                                            class="btn btn-danger"
+                                            type="submit"
+                                            value="DELETE"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="@($"#deleteModal_{count}")" />
+                            </td>
+                        </tr>
 
-                                                                <!-- Edit Modal -->
-                                                                <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
-                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                            </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
 
-                                                                            <div class="modal-body">
+                                    <div class="modal-body">
 
-                                                                                @*<partial name="/Views/Shared/_TransactionEditFormPartial.cshtml" for="@transaction"  />*@
-                                                                                @await Component.InvokeAsync("EditModalForm", @transaction);
+                                        @await Component.InvokeAsync("EditModalForm", @transaction);
 
-                                                                            </div>
+                                    </div>
 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                                                <!-- Delete Modal -->
-                                                                <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
+                        <!-- Delete Modal -->
+                        <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
-                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                            </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
 
-                                                                            <div class="modal-body">
+                                    <div class="modal-body">
 
-                                                                                <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+                                        <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
 
-                                                                            </div>
+                                    </div>
 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                </div>
+                            </div>
+                        </div>
 
                         count++;
                     }
@@ -186,7 +135,7 @@ else
         </table>
     </div>
 
-    <div class="col-12 text-end">
+    <div class="col-12 text-end mb-5">
         <input
             class="btn btn-success"
             type="submit"
@@ -195,12 +144,6 @@ else
             data-bs-target="#addModal_1"
         />
     </div>
-
-    <div class="row mt-5 mb-5">
-        <div class="col-lg-6 col-12" id="columnchart_div1" align="center"></div>
-        <div class="col-lg-6 col-12" id="columnchart_div2" align="center"></div>
-    </div>
-
 
     <!-- Add Modal -->
     <div class="modal fade" id="addModal_1" tabindex="-1" aria-labelledby="@($"Add_Modal_Container_{count}")" aria-hidden="true">
@@ -229,6 +172,10 @@ else
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+        let providerChartdata;
+        let statusChartdata;
+        let statusCountChartdata;
+
         $(document).ready(function () {
             $.ajax({
                 type: "POST",
@@ -241,6 +188,7 @@ else
                         google.charts.load('current', {
                         'packages': ['corechart']
                         });
+                        providerChartdata = response.dataEnum;
                         google.charts.setOnLoadCallback(function () {
                             drawProviderPieChart(response.dataEnum);
                         });
@@ -254,9 +202,7 @@ else
                 }
             });
         });
-    </script>
 
-    <script>
         $(document).ready(function () {
             $.ajax({
                 type: "POST",
@@ -269,11 +215,10 @@ else
                         google.charts.load('current', {
                         'packages': ['corechart']
                         });
+                        statusChartdata = response.dataEnum;
                         google.charts.setOnLoadCallback(function () {
                             drawStatusPieChart(response.dataEnum);
                         });
-
-                        $.notify(response.message, "success");
                     }
                     else {
                         $.notify(response.message, "error");
@@ -284,5 +229,40 @@ else
                 }
             });
         });
+
+        
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("GetStatusCodeTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
+                success: function (response) {
+                    if(response.status === 1)
+                    {
+                        google.charts.load('current', {
+                        'packages': ['corechart']
+                        });
+                        google.charts.setOnLoadCallback(function () {
+                            statusCountChartdata = response.dataEnum;
+                            drawStackedBarChart(response.dataEnum);
+                        });
+                    }
+                    else {
+                        $.notify(response.message, "error");
+                    }
+                },
+                error: function(xhr) {
+                    $.notify("Error", "error");
+                }
+            });
+        });
+
+        $(window).resize(function(){
+            drawProviderPieChart(providerChartdata);
+            drawStatusPieChart(statusChartdata)
+            drawStackedBarChart(statusCountChartdata);
+        })
     </script>
 }

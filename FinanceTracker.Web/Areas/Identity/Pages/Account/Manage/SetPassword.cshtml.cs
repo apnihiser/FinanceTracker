@@ -14,12 +14,12 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUserIdentity> _userManager;
+        private readonly SignInManager<ApplicationUserIdentity> _signInManager;
 
         public SetPasswordModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            UserManager<ApplicationUserIdentity> userManager,
+            SignInManager<ApplicationUserIdentity> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

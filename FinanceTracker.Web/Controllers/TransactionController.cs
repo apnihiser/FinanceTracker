@@ -192,15 +192,15 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> GetProviderTransactionResults(DateTime dateTime = default(DateTime))
         {
-            CommonResponse<List<TransactionResult>> commonResponse = new CommonResponse<List<TransactionResult>>();
+            CommonResponse<List<TransactionProviderChartViewModel>> commonResponse = new CommonResponse<List<TransactionProviderChartViewModel>>();
 
             try
             {
-                var dataRows = await _transactionData.GetUserTransactionsByMonth(userId, dateTime);
+                var dataRows = await _transactionData.GetTransactionProviderChartDataByMonth(userId, dateTime);
 
-                List<TransactionResult> result = new List<TransactionResult>();
+                List<TransactionProviderChartViewModel> result = new List<TransactionProviderChartViewModel>();
 
-                dataRows.ForEach( x => result.Add(new TransactionResult { TransactionCost = x.Amount, Name = x.ProviderName }) );
+                dataRows.ForEach( x => result.Add(new TransactionProviderChartViewModel { Amount = x.Amount, Name = x.ProviderName }) );
 
                 commonResponse.DataEnum = result;
 
@@ -217,15 +217,40 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> GetStatusTransactionResults(DateTime dateTime = default(DateTime))
         {
-            CommonResponse<List<TransactionResult>> commonResponse = new CommonResponse<List<TransactionResult>>();
+            CommonResponse<List<TransactionStatusChartViewModel>> commonResponse = new CommonResponse<List<TransactionStatusChartViewModel>>();
 
             try
             {
-                var dataRows = await _transactionData.GetUserTransactionsByMonth(userId, dateTime);
+                var dataRows = await _transactionData.GetTransactionStatusChartDataByMonth(userId, dateTime);
 
-                List<TransactionResult> result = new List<TransactionResult>();
+                List<TransactionStatusChartViewModel> result = new List<TransactionStatusChartViewModel>();
 
-                dataRows.ForEach(x => result.Add(new TransactionResult { TransactionCost = x.Amount, Name = x.Status }));
+                dataRows.ForEach(x => result.Add(new TransactionStatusChartViewModel { Amount = x.Amount, Name = x.Status }));
+
+                commonResponse.DataEnum = result;
+                commonResponse.Message = Helper.ChartLoadSuccessful;
+                commonResponse.Status = Helper.success_code;
+            }
+            catch (Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+
+            return Ok(commonResponse);
+        }
+
+        public async Task<IActionResult> GetStatusCodeTransactionResults(DateTime dateTime = default(DateTime))
+        {
+            CommonResponse<List<TransactionStatusCountChartViewModel>> commonResponse = new CommonResponse<List<TransactionStatusCountChartViewModel>>();
+
+            try
+            {
+                var dataRows = await _transactionData.GetTransactionStatusCountChartDataByMonth(userId, dateTime);
+
+                List<TransactionStatusCountChartViewModel> result = new List<TransactionStatusCountChartViewModel>();
+
+                dataRows.ForEach(x => result.Add(new TransactionStatusCountChartViewModel { Count = x.Count, Name = x.Status }));
 
                 commonResponse.DataEnum = result;
                 commonResponse.Message = Helper.ChartLoadSuccessful;

@@ -15,13 +15,13 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUserIdentity> _userManager;
+        private readonly SignInManager<ApplicationUserIdentity> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
         public ChangePasswordModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUserIdentity> userManager,
+            SignInManager<ApplicationUserIdentity> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
             _userManager = userManager;

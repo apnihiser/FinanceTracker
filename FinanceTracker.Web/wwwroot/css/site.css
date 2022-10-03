@@ -1,8 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
+html {
+    font-size: 62.5%;
+}
+
+body{
+    font-size: 1.3rem;
+}
+
+p {
+    margin: 0;
+}
+
+input {
+    font-size: 1.5rem !important;
+}
+
 main {
     min-height: 100vh;
     background-color: rgb(198, 202, 199);
+    letter-spacing: .1rem;
 }
 
 .topSpace-sm {
@@ -73,7 +90,39 @@ main > .container {
     height: 35px;
 }
 
-/*div.columnchart_div1 {
-    display: inline-block;
-    margin: 0 auto;
-}*/
+.responsiveChart {
+    width: 100%;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.monthControl_background {
+    background-color: #d7d8da;
+}
+
+.controlPanel {
+    border: solid 1px #333;
+}
+
+.controlPanel--leftIcon {
+    height: 100px;
+}
+
+@media screen and (max-width: 991px)
+{
+    .monthControl_font {
+        font-size: 3rem;
+        letter-spacing: .2rem;
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .monthControl_font {
+        font-size: 1.8vw;
+        letter-spacing: .2rem;
+    }
+}
+

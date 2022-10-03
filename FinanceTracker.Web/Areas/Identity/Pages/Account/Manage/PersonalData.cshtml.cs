@@ -12,11 +12,11 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUserIdentity> _userManager;
         private readonly ILogger<PersonalDataModel> _logger;
 
         public PersonalDataModel(
-            UserManager<ApplicationUser> userManager,
+            UserManager<ApplicationUserIdentity> userManager,
             ILogger<PersonalDataModel> logger)
         {
             _userManager = userManager;
