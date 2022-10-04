@@ -8,8 +8,8 @@ body{
     font-size: 1.3rem;
 }
 
-p {
-    margin: 0;
+table,p {
+    margin: 0 !important;
 }
 
 input {
@@ -102,16 +102,38 @@ main > .container {
     background-color: #d7d8da;
 }
 
-.controlPanel {
-    border: solid 1px #333;
+.drop-shadow {
+    box-shadow: 2px 2px 10px rgba(119, 119, 119, .3);
 }
 
 .controlPanel--leftIcon {
     height: 100px;
 }
 
-@media screen and (max-width: 991px)
-{
+.nav-tabs {
+    background-color: black;
+}
+
+.nav-tabs .nav-link.active {
+    color: #333;
+}
+
+.nav-link {
+    color: #eee;
+}
+
+.nav-link:hover,
+.nav-link:active {
+    border: none;
+    color: #4c8bf5;
+}
+
+.nav-link:link,
+.nav-link:active {
+    border: none;
+}
+
+@media screen and (max-width: 991px) {
     .monthControl_font {
         font-size: 3rem;
         letter-spacing: .2rem;

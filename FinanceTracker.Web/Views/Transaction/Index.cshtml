@@ -12,138 +12,166 @@
 }
 else
 {
-    <div class="row mt-5 d-flex controlPanel monthControl_background">
-        
-        <!-- Month Controls -->
-        <div class="col-lg-4 col-12 d-flex align-items-center justify-content-center p-1 monthControl_font">
-            <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Back">
-                <i class="fa-solid fa-square-caret-left fa-lg"></i>
-            </a>
+    <!-- Chart Nagivator -->
+    <section>
+        <!-- Chart  -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="chart-transaction__tab" data-bs-toggle="tab" data-bs-target="#chart-transaction" type="button" role="tab" aria-controls="chart-transaction" aria-selected="true">Transaction Summary</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="chart-account__tab" data-bs-toggle="tab" data-bs-target="#chart-account" type="button" role="tab" aria-controls="profile" aria-selected="false">Account Summary</a>
+          </li>
+        </ul>
 
-            <p class="month">&nbsp @Model?.TargetMonth.ToString("MMMM yyyy") &nbsp</p>
+        <!-- Chart Tab Panes -->
+        <div class="tab-content monthControl_background drop-shadow" id="myTabContent">
+            <div class="tab-pane fade show active" id="chart-transaction" role="tabpanel" aria-labelledby="chart-transaction__tab">
+                <div class="row mt-5 d-flex">
 
-            <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Forwards">
-                <i class="fa-solid fa-square-caret-right fa-xl"></i>
-            </a>
+                    <!-- Month Controls -->
+                    <div class="col-lg-4 col-12 d-flex align-items-center justify-content-center p-1 monthControl_font">
+                        <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Back">
+                            <i class="fa-solid fa-square-caret-left fa-lg"></i>
+                        </a>
+
+                        <p class="month">&nbsp @Model?.TargetMonth.ToString("MMMM yyyy") &nbsp</p>
+
+                        <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Forwards">
+                            <i class="fa-solid fa-square-caret-right fa-xl"></i>
+                        </a>
+                    </div>
+
+                    <!-- Transaction Summary -->
+                    <div class="col-lg-8 col-12 p-1">
+                        <div class="responsiveChart" id="stackedBarChart_Transaction"></div>
+                    </div>
+
+                    <!-- Transaction Pie Charts -->
+                    <div class="row mt-5 mb-5 p-1">
+                        <div class="col-xl-6 col-12" id="pieChart_Transaction" align="center"></div>
+                        <div class="col-xl-6 col-12" id="pieChart_Status" align="center"></div>
+                    </div>
+                </div>  
+            </div>
+            <div class="tab-pane fade" id="chart-account" role="tabpanel" aria-labelledby="chart-account__tab">
+                <p>...</p>
+            </div>
         </div>
+    </section>
+    
+    <section>
+         <!--Transaction Table-->
+        <div class="table-responsive topSpace-md drop-shadow mb-4">
+            <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
+                <thead class="table-dark">
+                    <tr class="fw-bold">
+                        <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().AccountName)</td>
+                        <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().ProviderName)</td>
+                        <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().Service)</td>
+                        <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().AmountDue)</td>
+                        <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().DueDate)</td>
+                        <td colspan="3">@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().Status)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int count = 1;
 
-        <!-- Transaction Status Tracker -->
-        <div class="col-lg-8 col-12 p-1">
-            <div class="responsiveChart" id="stackedBarChart_Transaction"></div>
-        </div>
+                        foreach (var transaction in @Model?.Transactions)
+                        {
+                            <!-- Table Row Template -->
+                            <tr>
+                                <td>@transaction.AccountName</td>
+                                <td>@transaction.ProviderName</td>
+                                <td>@transaction.Service</td>
+                                <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
+                                <td>@transaction.DueDate</td>
+                                <td>@transaction.Status</td>
+                                <td>
+                                    <input
+                                                class="btn btn-warning"
+                                                type="submit"
+                                                value="EDIT"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="@($"#editModal_{count}")" />
+                                </td>
+                                <td>
+                                    <input
+                                                class="btn btn-danger"
+                                                type="submit"
+                                                value="DELETE"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="@($"#deleteModal_{count}")" />
+                                </td>
+                            </tr>
 
-        <!-- Pie Charts -->
-        <div class="row mt-5 mb-5 p-1">
-            <div class="col-xl-6 col-12" id="pieChart_Transaction" align="center"></div>
-            <div class="col-xl-6 col-12" id="pieChart_Status" align="center"></div>
-        </div>
-        
-    </div>
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
 
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
 
+                                        <div class="modal-body">
 
-    <!--Transaction Table-->
-    <div class="table-responsive topSpace-md">
-        <table class="table align-middle table-secondary table-striped table-bordered border-secondary table-hover">
-            <thead class="table-dark">
-                <tr class="fw-bold">
-                    <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().AccountName)</td>
-                    <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().ProviderName)</td>
-                    <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().Service)</td>
-                    <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().AmountDue)</td>
-                    <td>@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().DueDate)</td>
-                    <td colspan="3">@Html.DisplayNameFor(model => model.Transactions.FirstOrDefault().Status)</td>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int count = 1;
+                                            @await Component.InvokeAsync("EditModalForm", @transaction);
 
-                    foreach (var transaction in @Model?.Transactions)
-                    {
-                        <!-- Table Row Template -->
-                        <tr>
-                            <td>@transaction.AccountName</td>
-                            <td>@transaction.ProviderName</td>
-                            <td>@transaction.Service</td>
-                            <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
-                            <td>@transaction.DueDate</td>
-                            <td>@transaction.Status</td>
-                            <td>
-                                <input
-                                            class="btn btn-warning"
-                                            type="submit"
-                                            value="EDIT"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="@($"#editModal_{count}")" />
-                            </td>
-                            <td>
-                                <input
-                                            class="btn btn-danger"
-                                            type="submit"
-                                            value="DELETE"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="@($"#deleteModal_{count}")" />
-                            </td>
-                        </tr>
+                                        </div>
 
-                        <!-- Edit Modal -->
-                        <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-
-                                    <div class="modal-body">
-
-                                        @await Component.InvokeAsync("EditModalForm", @transaction);
-
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Delete Modal -->
-                        <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
 
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+
+                                        </div>
+
                                     </div>
-
-                                    <div class="modal-body">
-
-                                        <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
-
-                                    </div>
-
                                 </div>
                             </div>
-                        </div>
 
-                        count++;
+                            count++;
+                        }
                     }
-                }
 
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
 
-    <div class="col-12 text-end mb-5">
-        <input
-            class="btn btn-success"
-            type="submit"
-            value="ADD TRANSACTION"
-            data-bs-toggle="modal"
-            data-bs-target="#addModal_1"
-        />
-    </div>
+        <div class="col-12 text-end mb-5">
+            <input
+                class="btn btn-success"
+                type="submit"
+                value="ADD TRANSACTION"
+                data-bs-toggle="modal"
+                data-bs-target="#addModal_1"
+            />
+        </div>
+    </section>
+
+
+
+
+
+
+
+   
 
     <!-- Add Modal -->
     <div class="modal fade" id="addModal_1" tabindex="-1" aria-labelledby="@($"Add_Modal_Container_{count}")" aria-hidden="true">
