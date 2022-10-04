@@ -80,3 +80,27 @@ function drawStackedBarChart(chartData) {
 
     pieChart1.draw(data, StackedBarChartOptions);
 }
+
+function callGoogleChart(response, chartType) {
+    if (response.status === 1) {
+        google.charts.load("current", {
+            packages: ["corechart"],
+        });
+        providerChartdata = response.dataEnum;
+        google.charts.setOnLoadCallback(function () {
+            switch (chartType) {
+                case "provider":
+                    drawProviderPieChart(response.dataEnum);
+                    break;
+                case "status":
+                    drawStatusPieChart(response.dataEnum);
+                    break;
+                case "statusCount":
+                    drawStackedBarChart(response.dataEnum);
+                    break;
+            }
+        });
+    } else {
+        $.notify(response.message, "error");
+    }
+}

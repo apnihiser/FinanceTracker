@@ -241,7 +241,7 @@ namespace FinanceTracker.Web.Controllers
             return Ok(commonResponse);
         }
 
-        public async Task<IActionResult> GetStatusCodeTransactionResults(DateTime dateTime = default(DateTime))
+        public async Task<IActionResult> GetStatusCountTransactionResults(DateTime dateTime = default(DateTime))
         {
             CommonResponse<List<TransactionStatusCountChartViewModel>> commonResponse = new CommonResponse<List<TransactionStatusCountChartViewModel>>();
 
