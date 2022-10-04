@@ -24,6 +24,7 @@ namespace FinanceTracker.Web.Controllers
         private readonly IDateTimeProvider _dateTime;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly string userId;
+
         public TransactionController(
             ITransactionData transactionData,
             IProviderData providerData,

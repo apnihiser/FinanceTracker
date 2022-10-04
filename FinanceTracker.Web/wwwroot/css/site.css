@@ -116,6 +116,7 @@ main > .container {
 
 .nav-tabs .nav-link.active {
     color: #333;
+    background-color: #d7d8da;
 }
 
 .nav-link {
