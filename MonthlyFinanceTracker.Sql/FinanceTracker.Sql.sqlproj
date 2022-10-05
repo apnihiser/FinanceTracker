@@ -105,6 +105,9 @@
     <Build Include="dbo\Stored Procedures\spTransactionProviderCost_GetByUserIdAndMonth.sql" />
     <Build Include="dbo\Stored Procedures\spTransactionStatusCost_GetByUserIdAndMonth.sql" />
     <Build Include="dbo\Stored Procedures\spTransactionStatusCount_GetByUserIdAndMonth.sql" />
+    <Build Include="dbo\Stored Procedures\spAccountTypes_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\spAccountCostByName_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\spAccountCostByType_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />

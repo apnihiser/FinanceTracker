@@ -44,13 +44,13 @@ else
 
                     <!-- Transaction Summary -->
                     <div class="col-lg-8 col-12 p-1">
-                        <div class="responsiveChart" id="stackedBarChart_Transaction"></div>
+                        <div class="responsiveChart" id="stackedBarChart_transaction"></div>
                     </div>
 
                     <!-- Transaction Pie Charts -->
                     <div class="row mt-5 mb-5 p-1">
-                        <div class="col-xl-6 col-12" id="pieChart_Transaction" align="center"></div>
-                        <div class="col-xl-6 col-12" id="pieChart_Status" align="center"></div>
+                        <div class="col-xl-6 col-12" id="pieChart_transaction" align="center"></div>
+                        <div class="col-xl-6 col-12" id="pieChart_status" align="center"></div>
                     </div>
                 </div>  
             </div>
@@ -87,71 +87,71 @@ else
 
                         foreach (var transaction in @Model?.Transactions)
                         {
-                                <!-- Table Row Template -->
-                                <tr>
-                                    <td>@transaction.AccountName</td>
-                                    <td>@transaction.ProviderName</td>
-                                    <td>@transaction.Service</td>
-                                    <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
-                                    <td>@transaction.DueDate</td>
-                                    <td>@transaction.Status</td>
-                                    <td>
-                                        <input
-                                            class="btn btn-outline-primary fw-bold"
-                                            type="submit"
-                                            value="EDIT"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="@($"#editModal_{count}")" />
-                                    </td>
-                                    <td>
-                                        <input
-                                            class="btn btn-outline-danger fw-bold"
-                                            type="submit"
-                                            value="DELETE"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="@($"#deleteModal_{count}")" />
-                                    </td>
-                                </tr>
+                                        <!-- Table Row Template -->
+                                        <tr>
+                                            <td>@transaction.AccountName</td>
+                                            <td>@transaction.ProviderName</td>
+                                            <td>@transaction.Service</td>
+                                            <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
+                                            <td>@transaction.DueDate</td>
+                                            <td>@transaction.Status</td>
+                                            <td>
+                                                <input
+                                                    class="btn btn-outline-primary fw-bold"
+                                                    type="submit"
+                                                    value="EDIT"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="@($"#editModal_{count}")" />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    class="btn btn-outline-danger fw-bold"
+                                                    type="submit"
+                                                    value="DELETE"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="@($"#deleteModal_{count}")" />
+                                            </td>
+                                        </tr>
 
-                                <!-- Edit Modal -->
-                                <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <!-- Edit Modal -->
+                                        <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
 
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        @await Component.InvokeAsync("EditModalForm", @transaction);
+
+                                                    </div>
+
+                                                </div>
                                             </div>
-
-                                            <div class="modal-body">
-
-                                                @await Component.InvokeAsync("EditModalForm", @transaction);
-
-                                            </div>
-
                                         </div>
-                                    </div>
-                                </div>
 
-                                <!-- Delete Modal -->
-                                <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
 
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+
+                                                    </div>
+
+                                                </div>
                                             </div>
-
-                                            <div class="modal-body">
-
-                                                <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
-
-                                            </div>
-
                                         </div>
-                                    </div>
-                                </div>
 
                             count++;
                         }
@@ -199,9 +199,12 @@ else
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        let providerChartdata;
-        let statusChartdata;
-        let statusCountChartdata;
+        let providerdata;
+        let statusdata;
+        let statusCountdata;
+        let accountTypeData;
+        let accountTypeCostData;
+        let accountProviderCostData;
 
         $(document).ready(function () {
             $.ajax({
@@ -210,7 +213,8 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetProviderTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
-                callGoogleChart(response, chartType = "provider")
+                  providerdata = response;
+                  callGoogleChart(providerdata, chartType = "provider")
               },
               error: function (xhr) {
                 $.notify("Error", "error");
@@ -223,7 +227,8 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetStatusTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
-                callGoogleChart(response, chartType = "status")
+                  statusdata = response;
+                  callGoogleChart(statusdata, chartType = "status")
               },
               error: function (xhr) {
                 $.notify("Error", "error");
@@ -236,7 +241,50 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetStatusCountTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
-                callGoogleChart(response, chartType = "statusCount")
+                  statusCountdata = response;
+                  callGoogleChart(statusCountdata, chartType = "statusCount")
+              },
+              error: function (xhr) {
+                $.notify("Error", "error");
+              },
+            });
+
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              url: '@Url.Action("GetAccountTypeResults", "Account")',
+              success: function (response) {
+                  accountTypeData = response;
+                  callGoogleChart(accountTypeData, chartType = "accountCount")
+              },
+              error: function (xhr) {
+                $.notify("Error", "error");
+              },
+            });
+
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              url: '@Url.Action("GetAccountProviderCost", "Account")',
+              success: function (response) {
+                  accountTypeCostData = response;
+                  callGoogleChart(accountTypeData, chartType = "accountCount")
+              },
+              error: function (xhr) {
+                $.notify("Error", "error");
+              },
+            });
+
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              url: '@Url.Action("GetAccountTypeCost", "Account")',
+              success: function (response) {
+                  accountProviderCostData = response;
+                  callGoogleChart(accountTypeData, chartType = "accountCount")
               },
               error: function (xhr) {
                 $.notify("Error", "error");
@@ -245,9 +293,12 @@ else
         });
 
         $(window).resize(function(){
-            drawProviderPieChart(providerChartdata);
-            drawStatusPieChart(statusChartdata)
-            drawStackedBarChart(statusCountChartdata);
+            callGoogleChart(providerdata, chartType = "provider");
+            callGoogleChart(statusdata, chartType = "status");
+            callGoogleChart(statusCountdata, chartType = "statusCount");
+            callGoogleChart(accountTypeData, chartType = "accountCount");
+            callGoogleChart(accountTypeCostData, chartType = "accountProviderCost");
+            callGoogleChart(accountProviderCostData, chartType = "accountTypeCost");
         })
     </script>
 }

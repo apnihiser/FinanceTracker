@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FinanceTracker.DataAccess.Models
 {
-    public class TransactionStatusCountChartModel
+    public class TransactionProviderAmount
     {
-        public string Status { get; set; }
-        public int Count { get; set; }
+        public string ProviderName { get; set; }
+        public decimal Amount { get; set; }
     }
 }

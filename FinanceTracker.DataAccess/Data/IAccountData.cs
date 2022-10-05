@@ -11,5 +11,8 @@ namespace FinanceTracker.DataAccess.Data
         Task Update(AccountModel accountRecord);
         Task<List<FullAccountModel>> GetAllFullAccounts();
         Task<FullAccountModel> GetFullAccountByHolderId(int id);
+        Task<List<AccountTypeCount>> GetAccountCountByUserId(string id);
+        Task<List<AccountProviderCost>> GetAccountProviderCostByUserId(string id);
+        Task<List<AccountTypeCost>> GetAccountTypeCostByUserId(string id);
     }
 }

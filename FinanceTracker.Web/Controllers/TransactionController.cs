@@ -44,7 +44,7 @@ namespace FinanceTracker.Web.Controllers
             _signInManager = signInManager;
             _dateTime = dateTime;
             _contextAccessor = contextAccessor;
-            userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public async Task<IActionResult> Index(DateTime dateTime = default(DateTime), DateNavigation direction = DateNavigation.None)
@@ -193,15 +193,15 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> GetProviderTransactionResults(DateTime dateTime = default(DateTime))
         {
-            CommonResponse<List<TransactionProviderChartViewModel>> commonResponse = new CommonResponse<List<TransactionProviderChartViewModel>>();
+            CommonResponse<List<TransactionProviderChartData>> commonResponse = new CommonResponse<List<TransactionProviderChartData>>();
 
             try
             {
                 var dataRows = await _transactionData.GetTransactionProviderChartDataByMonth(userId, dateTime);
 
-                List<TransactionProviderChartViewModel> result = new List<TransactionProviderChartViewModel>();
+                List<TransactionProviderChartData> result = new List<TransactionProviderChartData>();
 
-                dataRows.ForEach( x => result.Add(new TransactionProviderChartViewModel { Amount = x.Amount, Name = x.ProviderName }) );
+                dataRows.ForEach( x => result.Add(new TransactionProviderChartData { Amount = x.Amount, Name = x.ProviderName }) );
 
                 commonResponse.DataEnum = result;
 
@@ -218,15 +218,15 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> GetStatusTransactionResults(DateTime dateTime = default(DateTime))
         {
-            CommonResponse<List<TransactionStatusChartViewModel>> commonResponse = new CommonResponse<List<TransactionStatusChartViewModel>>();
+            CommonResponse<List<TransactionStatusChartData>> commonResponse = new CommonResponse<List<TransactionStatusChartData>>();
 
             try
             {
                 var dataRows = await _transactionData.GetTransactionStatusChartDataByMonth(userId, dateTime);
 
-                List<TransactionStatusChartViewModel> result = new List<TransactionStatusChartViewModel>();
+                List<TransactionStatusChartData> result = new List<TransactionStatusChartData>();
 
-                dataRows.ForEach(x => result.Add(new TransactionStatusChartViewModel { Amount = x.Amount, Name = x.Status }));
+                dataRows.ForEach(x => result.Add(new TransactionStatusChartData { Amount = x.Amount, Name = x.Status }));
 
                 commonResponse.DataEnum = result;
                 commonResponse.Message = Helper.ChartLoadSuccessful;
@@ -243,15 +243,15 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> GetStatusCountTransactionResults(DateTime dateTime = default(DateTime))
         {
-            CommonResponse<List<TransactionStatusCountChartViewModel>> commonResponse = new CommonResponse<List<TransactionStatusCountChartViewModel>>();
+            CommonResponse<List<TransactionStatusCountChartData>> commonResponse = new CommonResponse<List<TransactionStatusCountChartData>>();
 
             try
             {
                 var dataRows = await _transactionData.GetTransactionStatusCountChartDataByMonth(userId, dateTime);
 
-                List<TransactionStatusCountChartViewModel> result = new List<TransactionStatusCountChartViewModel>();
+                List<TransactionStatusCountChartData> result = new List<TransactionStatusCountChartData>();
 
-                dataRows.ForEach(x => result.Add(new TransactionStatusCountChartViewModel { Count = x.Count, Name = x.Status }));
+                dataRows.ForEach(x => result.Add(new TransactionStatusCountChartData { Count = x.Count, Name = x.Status }));
 
                 commonResponse.DataEnum = result;
                 commonResponse.Message = Helper.ChartLoadSuccessful;

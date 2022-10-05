@@ -21,6 +21,27 @@ namespace FinanceTracker.DataAccess.Data
             _connectionString = connectionString;
         }
 
+        public async Task<List<AccountTypeCost>> GetAccountTypeCostByUserId(string id)
+        {
+            var output = await _db.LoadData<AccountTypeCost, dynamic>("dbo.spAccountCostByType_GetById", new { ApplicationUserId = id }, _connectionString.Name);
+
+            return output.ToList();
+        }
+
+        public async Task<List<AccountProviderCost>> GetAccountProviderCostByUserId(string id)
+        {
+            var output = await _db.LoadData<AccountProviderCost, dynamic>("dbo.spAccountCostByName_GetById", new { ApplicationUserId = id}, _connectionString.Name);
+
+            return output.ToList();
+        }
+
+        public async Task<List<AccountTypeCount>> GetAccountCountByUserId(string id)
+        {
+            var output = await _db.LoadData<AccountTypeCount, dynamic>("dbo.spAccountTypes_GetById", new { ApplicationUserId = id }, _connectionString.Name);
+
+            return output.ToList();
+        }
+
         public async Task<List<AccountModel>> GetAllAccounts()
         {
             var output = await _db.LoadData<AccountModel, dynamic>("dbo.spAccount_GetAll", new { }, _connectionString.Name);

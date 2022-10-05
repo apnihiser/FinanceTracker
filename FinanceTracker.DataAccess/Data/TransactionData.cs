@@ -45,19 +45,19 @@ namespace FinanceTracker.DataAccess.Data
             return await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
         }
 
-        public async Task<List<TransactionProviderChartModel>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime)
+        public async Task<List<TransactionProviderAmount>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime)
         {
-            return await _db.LoadData<TransactionProviderChartModel, dynamic>("dbo.spTransactionProviderCost_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
+            return await _db.LoadData<TransactionProviderAmount, dynamic>("dbo.spTransactionProviderCost_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
         }
 
-        public async Task<List<TransactionStatusChartModel>> GetTransactionStatusChartDataByMonth(string id, DateTime dateTime)
+        public async Task<List<TransactionStatusAmount>> GetTransactionStatusChartDataByMonth(string id, DateTime dateTime)
         {
-            return await _db.LoadData<TransactionStatusChartModel, dynamic>("dbo.spTransactionStatusCost_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
+            return await _db.LoadData<TransactionStatusAmount, dynamic>("dbo.spTransactionStatusCost_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
         }
 
-        public async Task<List<TransactionStatusCountChartModel>> GetTransactionStatusCountChartDataByMonth(string id, DateTime dateTime)
+        public async Task<List<TransactionStatusCount>> GetTransactionStatusCountChartDataByMonth(string id, DateTime dateTime)
         {
-            return await _db.LoadData<TransactionStatusCountChartModel, dynamic>("dbo.spTransactionStatusCount_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
+            return await _db.LoadData<TransactionStatusCount, dynamic>("dbo.spTransactionStatusCount_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
         }
 
         public async Task DeleteTransactionById(int id)

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FinanceTracker.DataAccess.Models
 {
-    public class TransactionProviderChartModel
+    public class AccountProviderCost
     {
-        public string ProviderName { get; set; }
-        public decimal Amount { get; set; }
+        public string Title { get; set; }
+        public int Sum { get; set; }
     }
 }

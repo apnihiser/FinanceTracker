@@ -1,8 +1,8 @@
 ﻿namespace FinanceTracker.Web.Models
 {
-    public class TransactionProviderChartViewModel
+    public class AccountTypeCountData
     {
         public string Name { get; set; }
-        public decimal Amount { get; set; }
+        public int Count { get; set; }
     }
 }
