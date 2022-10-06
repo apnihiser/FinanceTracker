@@ -52,16 +52,35 @@ else
                         <div class="col-xl-6 col-12" id="pieChart_transaction" align="center"></div>
                         <div class="col-xl-6 col-12" id="pieChart_status" align="center"></div>
                     </div>
+
                 </div>  
             </div>
             <div class="tab-pane fade" id="chart-account" role="tabpanel" aria-labelledby="chart-account__tab">
-                <div class="col-lg-8 col-12 p-1">
-                    <div class="responsiveChart" id="stackedBarChart_account"></div>
-                </div>
+                <div class="row mt-5 d-flex">
 
-                <div class="row mt-5 mb-5 p-1">
-                    <div class="col-xl-6 col-12" id="pieChart_account__name" align="center"></div>
-                    <div class="col-xl-6 col-12" id="pieChart_account__type" align="center"></div>
+                    <!-- Month Controls -->
+                    <div class="col-lg-4 col-12 d-flex align-items-center justify-content-center p-1 monthControl_font">
+                        <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Back">
+                            <i class="fa-solid fa-square-caret-left fa-xl"></i>
+                        </a>
+
+                        <p class="month">&nbsp @Model?.TargetMonth.ToString("MMMM yyyy") &nbsp</p>
+
+                        <a asp-action="Index" asp-route-dateTime="@Model?.Transactions?.First().DueDate" asp-route-direction="@DateNavigation.Forwards">
+                            <i class="fa-solid fa-square-caret-right fa-xl"></i>
+                        </a>
+                    </div>
+
+                    <!-- Account Summary -->
+                    <div class="col-12 col-lg-8 p-1">
+                        <div class="" id="stackedBarChart_account"></div>
+                    </div>
+
+                    <!-- Account Pie Charts -->
+                    <div class="row mt-5 mb-5 p-1">
+                        <div class="col-xl-6 col-12" id="pieChart_account__name" align="center"></div>
+                        <div class="col-xl-6 col-12" id="pieChart_account__type" align="center"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,71 +106,71 @@ else
 
                         foreach (var transaction in @Model?.Transactions)
                         {
-                                        <!-- Table Row Template -->
-                                        <tr>
-                                            <td>@transaction.AccountName</td>
-                                            <td>@transaction.ProviderName</td>
-                                            <td>@transaction.Service</td>
-                                            <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
-                                            <td>@transaction.DueDate</td>
-                                            <td>@transaction.Status</td>
-                                            <td>
-                                                <input
-                                                    class="btn btn-outline-primary fw-bold"
-                                                    type="submit"
-                                                    value="EDIT"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="@($"#editModal_{count}")" />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    class="btn btn-outline-danger fw-bold"
-                                                    type="submit"
-                                                    value="DELETE"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="@($"#deleteModal_{count}")" />
-                                            </td>
-                                        </tr>
+                                                                                                                        <!-- Table Row Template -->
+                                                                                                                        <tr>
+                                                                                                                            <td>@transaction.AccountName</td>
+                                                                                                                            <td>@transaction.ProviderName</td>
+                                                                                                                            <td>@transaction.Service</td>
+                                                                                                                            <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
+                                                                                                                            <td>@transaction.DueDate</td>
+                                                                                                                            <td>@transaction.Status</td>
+                                                                                                                            <td>
+                                                                                                                                <input
+                                                                                                                                    class="btn btn-outline-primary fw-bold"
+                                                                                                                                    type="submit"
+                                                                                                                                    value="EDIT"
+                                                                                                                                    data-bs-toggle="modal"
+                                                                                                                                    data-bs-target="@($"#editModal_{count}")" />
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                                <input
+                                                                                                                                    class="btn btn-outline-danger fw-bold"
+                                                                                                                                    type="submit"
+                                                                                                                                    value="DELETE"
+                                                                                                                                    data-bs-toggle="modal"
+                                                                                                                                    data-bs-target="@($"#deleteModal_{count}")" />
+                                                                                                                            </td>
+                                                                                                                        </tr>
 
-                                        <!-- Edit Modal -->
-                                        <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
+                                                                                                                        <!-- Edit Modal -->
+                                                                                                                        <div class="modal fade" id="@($"editModal_{count}")" tabindex="-1" aria-labelledby="@($"Update_Modal_Container_{count}")" aria-hidden="true">
+                                                                                                                            <div class="modal-dialog">
+                                                                                                                                <div class="modal-content">
 
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
+                                                                                                                                    <div class="modal-header">
+                                                                                                                                        <h5 class="modal-title" id="@($"Update_Modal_Header_{count}")">Edit Transaction</h5>
+                                                                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                                    </div>
 
-                                                    <div class="modal-body">
+                                                                                                                                    <div class="modal-body">
 
-                                                        @await Component.InvokeAsync("EditModalForm", @transaction);
+                                                                                                                                        @await Component.InvokeAsync("EditModalForm", @transaction);
 
-                                                    </div>
+                                                                                                                                    </div>
 
-                                                </div>
-                                            </div>
-                                        </div>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
 
-                                        <!-- Delete Modal -->
-                                        <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
+                                                                                                                        <!-- Delete Modal -->
+                                                                                                                        <div class="modal fade" id="@($"deleteModal_{count}")" tabindex="-1" aria-labelledby="@($"Delete_Modal_Container_{count}")" aria-hidden="true">
+                                                                                                                            <div class="modal-dialog">
+                                                                                                                                <div class="modal-content">
 
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
+                                                                                                                                    <div class="modal-header">
+                                                                                                                                        <h5 class="modal-title" id="@($"Delete_Modal_Header_{count}")">Delete Record?</h5>
+                                                                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                                    </div>
 
-                                                    <div class="modal-body">
+                                                                                                                                    <div class="modal-body">
 
-                                                        <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
+                                                                                                                                        <partial name="/Views/Shared/_TransactionDeleteFormPartial.cshtml" for="@transaction" />
 
-                                                    </div>
+                                                                                                                                    </div>
 
-                                                </div>
-                                            </div>
-                                        </div>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
 
                             count++;
                         }
@@ -198,41 +217,56 @@ else
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
-        let providerdata;
-        let statusdata;
-        let statusCountdata;
-        let accountTypeData;
+    <script type="text/javascript">
+        let providerData;
+        let statusData;
+        let statusCountData;
         let accountTypeCostData;
         let accountProviderCostData;
+        let accountTypeData;
 
+        // on success load google charts and the corechart package
+        google.charts.load("current", { packages: ["corechart"] });
+        
         $(document).ready(function () {
+
+            // TRANSACTION CHARTS BEGIN -->
             $.ajax({
               type: "POST",
               dataType: "json",
               contentType: "application/json",
               url: '@Url.Action("GetProviderTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
-                  providerdata = response;
-                  callGoogleChart(providerdata, chartType = "provider")
+                // load the scoped variable for redraw use
+                providerData = response.dataEnum;
+
+                // Draw the Transaction Totals by Provider Pie Chart
+                google.charts.setOnLoadCallback(function () {
+                  drawSummaryByProvider(providerData);
+                });
               },
               error: function (xhr) {
                 $.notify("Error", "error");
-              },
+              } 
             });
-
+            
             $.ajax({
               type: "POST",
               dataType: "json",
               contentType: "application/json",
               url: '@Url.Action("GetStatusTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
-                  statusdata = response;
-                  callGoogleChart(statusdata, chartType = "status")
+                // load the scoped variable for redraw use
+                statusData = response.dataEnum
+
+                // Draw the Transaction Totals by Status Pie Chart
+                google.charts.setOnLoadCallback(function () {
+                  drawSummaryByStatus(statusData);
+                });
               },
               error: function (xhr) {
                 $.notify("Error", "error");
-              },
+              } 
             });
 
             $.ajax({
@@ -241,13 +275,24 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetStatusCountTransactionResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
-                  statusCountdata = response;
-                  callGoogleChart(statusCountdata, chartType = "statusCount")
+                // load the scoped variable for redraw use
+                statusCountData = response.dataEnum
+
+                // Draw the Transaction Status Count Stacked Bar Chart
+                google.charts.setOnLoadCallback(function () {
+                  drawTransactionStatusCount(statusCountData);
+                });                 
               },
               error: function (xhr) {
                 $.notify("Error", "error");
-              },
+              } 
             });
+
+            // <--- TRANSACTION CHARTS END
+            //
+            //
+            //
+            // ACCOUNT CHARTS BEGIN ----->
 
             $.ajax({
               type: "POST",
@@ -255,12 +300,17 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetAccountTypeResults", "Account")',
               success: function (response) {
-                  accountTypeData = response;
-                  callGoogleChart(accountTypeData, chartType = "accountCount")
+                // load the scoped variable for redraw use
+                accountTypeCostData = response.dataEnum
+
+                // Draw the Account Totals by Type Pie Chart
+                google.charts.setOnLoadCallback(function () {
+                  drawSummaryByType(accountTypeCostData);
+                });
               },
               error: function (xhr) {
                 $.notify("Error", "error");
-              },
+              } 
             });
 
             $.ajax({
@@ -269,12 +319,17 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetAccountProviderCost", "Account")',
               success: function (response) {
-                  accountTypeCostData = response;
-                  callGoogleChart(accountTypeData, chartType = "accountCount")
+                // load the scoped variable for redraw use
+                accountProviderCostData = response.dataEnum
+
+                // Draw the Account Totals by Provider Pie Chart
+                google.charts.setOnLoadCallback(function () {
+                  drawSummaryByAccount(accountProviderCostData);
+                });
               },
               error: function (xhr) {
                 $.notify("Error", "error");
-              },
+              } 
             });
 
             $.ajax({
@@ -283,22 +338,28 @@ else
               contentType: "application/json",
               url: '@Url.Action("GetAccountTypeCost", "Account")',
               success: function (response) {
-                  accountProviderCostData = response;
-                  callGoogleChart(accountTypeData, chartType = "accountCount")
+                // load the scoped variable for redraw use
+                accountTypeData = response.dataEnum
+
+                // Draw the Account Status Count Stacked Bar Chart
+                google.charts.setOnLoadCallback(function () {
+                  drawAccountCount(accountTypeData);
+                });                 
               },
               error: function (xhr) {
                 $.notify("Error", "error");
-              },
+              } 
             });
-        });
+        }); 
 
+        // Redraw charts upon resize
         $(window).resize(function(){
-            callGoogleChart(providerdata, chartType = "provider");
-            callGoogleChart(statusdata, chartType = "status");
-            callGoogleChart(statusCountdata, chartType = "statusCount");
-            callGoogleChart(accountTypeData, chartType = "accountCount");
-            callGoogleChart(accountTypeCostData, chartType = "accountProviderCost");
-            callGoogleChart(accountProviderCostData, chartType = "accountTypeCost");
-        })
+            drawSummaryByProvider(providerData);
+            drawSummaryByStatus(statusData);
+            drawTransactionStatusCount(statusCountData);
+            drawSummaryByType(accountTypeCostData);
+            drawSummaryByAccount(accountProviderCostData);
+            drawAccountCount(accountTypeData);
+        });
     </script>
 }

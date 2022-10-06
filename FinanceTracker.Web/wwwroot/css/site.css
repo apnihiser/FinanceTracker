@@ -22,6 +22,10 @@ main {
     letter-spacing: .1rem;
 }
 
+.row {
+    margin: 0 !important;
+}
+
 .topSpace-sm {
     margin-top: 1.2rem;
 }
@@ -77,6 +81,7 @@ main > .container {
     width: 100%;
 }
 
+/* BS Tab styling */
 .controls:hover {
     transition: 0.1s ease-in;
     transform: scale(1.2);
@@ -92,10 +97,6 @@ main > .container {
 
 .responsiveChart {
     width: 100%;
-}
-
-.row {
-    margin: 0 !important;
 }
 
 .monthControl_background {
@@ -132,6 +133,20 @@ main > .container {
 .nav-link:link,
 .nav-link:active {
     border: none;
+}
+
+/* bs tabbed content fix */
+.tab-content > .tab-pane {
+    height: 1px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+}
+
+.tab-content > .active {
+    height: auto;
+    overflow: auto;
+    visibility: visible;
 }
 
 @media screen and (max-width: 991px) {
