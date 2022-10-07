@@ -5,7 +5,7 @@
 *@
 
 @{
-    ViewData["Title"] = "Providers Index Page";
+    ViewData["Title"] = "PROVIDER MANAGEMENT";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -28,7 +28,7 @@
                         <td>@item.Service</td>
                         <td>@item.Url</td>
                         <td>
-                            <a class="btn btn-info" asp-action="Display" asp-route-id="@item.Id">DETAILS</a>
+                            <a class="btn btn-outline-primary fw-bold" asp-action="Display" asp-route-id="@item.Id">DETAILS</a>
                         </td>
                     </tr>
                 }

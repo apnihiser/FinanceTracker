@@ -12,14 +12,33 @@ table,p {
     margin: 0 !important;
 }
 
-input {
-    font-size: 1.5rem !important;
+input, button, select, a, .form-select, .btn {
+    font-size: 1.5rem;
 }
 
 main {
     min-height: 100vh;
     background-color: rgb(198, 202, 199);
     letter-spacing: .1rem;
+}
+
+span {
+    font-size: 1.5rem;
+}
+
+.font {
+    font-family: "Lato", sans-serif;
+    font-weight: 600;
+    color: #333;
+}
+
+main > .container {
+    padding: 60px 15px 0;
+    margin-bottom: 5rem;
+}
+
+.form-control {
+    font-size: 1.5rem;
 }
 
 .row {
@@ -34,6 +53,17 @@ main {
     margin-top: 2rem;
 }
 
+ul.nav a {
+    padding: 5px;
+    font-size: 1.3rem;
+}
+
+ul.navbar-nav a.logo {
+    font-size: 2.2rem;
+    margin-right: 15px;
+    font-weight: 700;
+}
+
 .topSpace-lg {
     margin-top: 4rem;
 }
@@ -42,36 +72,8 @@ main {
     margin-top: 8rem;
 }
 
-.imgIcon {
-    height: 25px;
-    width: 25px;
-}
-
-.imgRotate180 {
-    transform: rotate(180deg);
-}
-
-.font {
-    font-family: "Lato", sans-serif;
-    font-weight: 600;
-    color: #333;
-}
-
-.title {
-    font-size: 3rem;
-}
-
-span {
-    font-size: 1.5rem;
-}
-
-main > .container {
-    padding: 60px 15px 0;
-    margin-bottom: 5rem;
-}
-
-.totals-container {
-    border-radius: 10px;
+.nav-link {
+    padding: 0px;
 }
 
 .sticky-footer {
@@ -79,6 +81,10 @@ main > .container {
     left: 0;
     bottom: 0;
     width: 100%;
+}
+
+ul.nav-pills a.nav-link {
+    color: #333;
 }
 
 /* BS Tab styling */
@@ -89,6 +95,15 @@ main > .container {
 
 .controlsIcon--right:hover {
     transform: scale(1.2) rotate(180deg);
+}
+
+.imgIcon {
+    height: 25px;
+    width: 25px;
+}
+
+.imgRotate180 {
+    transform: rotate(180deg);
 }
 
 .iconSize {
