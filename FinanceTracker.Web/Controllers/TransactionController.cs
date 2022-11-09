@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace FinanceTracker.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionData _transactionData;
@@ -66,10 +66,9 @@ namespace FinanceTracker.Web.Controllers
 
             var data = await _transactionData.GetUserTransactionsByMonth(userId, dateTimeOutput);
 
-            if (direction == DateNavigation.Back & data.Count == 0)
+            if (data.Count == 0)
             {
-                dateTimeOutput = dateTime.AddMonths(1);
-                data = await _transactionData.GetUserTransactionsByMonth(userId, dateTimeOutput);
+                return View();
             }
 
             List<TransactionViewModel> transactionList = new();

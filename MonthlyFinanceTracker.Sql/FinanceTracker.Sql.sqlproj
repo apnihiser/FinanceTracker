@@ -113,7 +113,9 @@
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />
   </ItemGroup>
   <ItemGroup>
+    <PostDeploy Include="dbo\Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="FinanceTracker.Sql.publish.xml" />
-    <None Include="dbo\Scripts\FinanceTracker.Sql.publish.xml" />
   </ItemGroup>
 </Project>
