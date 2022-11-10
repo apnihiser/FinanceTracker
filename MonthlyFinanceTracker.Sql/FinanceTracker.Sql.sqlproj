@@ -108,6 +108,7 @@
     <Build Include="dbo\Stored Procedures\spAccountTypes_GetById.sql" />
     <Build Include="dbo\Stored Procedures\spAccountCostByName_GetById.sql" />
     <Build Include="dbo\Stored Procedures\spAccountCostByType_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\spFullTransaction_GetByUserIdAndMonth.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />

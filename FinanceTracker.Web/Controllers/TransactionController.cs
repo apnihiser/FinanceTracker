@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace FinanceTracker.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionData _transactionData;
