@@ -82,10 +82,10 @@ BEGIN
 
     INSERT INTO dbo.[Provider] ([Title],[Service],[URL],[UserId])
     VALUES ('Cable Company','Cable','http://Comcast.com',@UserId1)
-          ,('Energy Company','Electricity','http://FirstEnergy.com', @UserId2)
-          ,('Gas Company','Gas','http://ColumbiaGas.com', @UserId3)
-          ,('Local Municipality','Utilities','http://FirstEnergy.com', @UserId4)
-          ,('Netflix','Movie Streaming','http://Netflix.com', @UserId5)
+          ,('Energy Company','Electricity','http://FirstEnergy.com', @UserId1)
+          ,('Gas Company','Gas','http://ColumbiaGas.com', @UserId1)
+          ,('Local Municipality','Utilities','http://FirstEnergy.com', @UserId1)
+          ,('Netflix','Movie Streaming','http://Netflix.com', @UserId1)
 
     INSERT INTO dbo.[Account] ([Title],[Description],[Type],[Balance],[ApplicationUserId])
     VALUES ('Credit Union','Local Credit Union Checking','Checking',5596.65,@UserId1)
@@ -122,9 +122,9 @@ BEGIN
     SELECT @ProviderId5 = Id FROM dbo.[Provider] WHERE Title = 'Netflix';
 
     INSERT INTO dbo.[Transaction] ([AccountId],[PayeeId],[Amount],[DueDate],[Status])
-    VALUES (@AccountId1,@ProviderId1,100.00,'2022-09-25 00:00:00.00','Due')
-          ,(@AccountId2,@ProviderId2,200.00,'2022-08-01 00:00:00.00','Past Due')
-          ,(@AccountId3,@ProviderId3,300.00,'2022-07-31 12:00:00.00','Reconcilled')
-          ,(@AccountId4,@ProviderId4,400.00,'2022-06-15 12:00:00.00','Due')
-          ,(@AccountId5,@ProviderId5,500.00,'2022-05-02 12:00:00.00','Reconcilled')
+    VALUES (@AccountId1,@ProviderId1,100.00,'2022-11-25 00:00:00.00','Due')
+          ,(@AccountId2,@ProviderId2,200.00,'2022-11-01 00:00:00.00','Past Due')
+          ,(@AccountId3,@ProviderId3,300.00,'2022-11-30 12:00:00.00','Reconcilled')
+          ,(@AccountId4,@ProviderId4,400.00,'2022-11-15 12:00:00.00','Due')
+          ,(@AccountId5,@ProviderId5,500.00,'2022-11-02 12:00:00.00','Reconcilled')
 END
