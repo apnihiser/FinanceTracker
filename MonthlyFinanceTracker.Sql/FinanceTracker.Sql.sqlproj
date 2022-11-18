@@ -111,12 +111,13 @@
     <Build Include="dbo\Stored Procedures\spFullTransaction_GetByUserIdAndMonth.sql" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="MonthlyFinanceTracker.Sql.refactorlog" />
+    <RefactorLog Include="financetracker.DEV.Sql.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FinanceTracker.Sql.publish.xml" />
+    <None Include="financetrackerdb.PROD.Sql.publish.xml" />
   </ItemGroup>
 </Project>
