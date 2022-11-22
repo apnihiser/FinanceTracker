@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 
+
 namespace FinanceTracker.DataAccess.Database
 {
     public class SqlServerDb : IDatabaseAccess

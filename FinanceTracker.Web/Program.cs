@@ -13,7 +13,6 @@ builder.Services.AddSingleton(new ConnectionStringData
 {
     Name = "Default"
 });
-
 builder.Services.AddTransient<IUserStore<ApplicationUserIdentity>, UserStore>();
 builder.Services.AddTransient<IRoleStore<ApplicationRole>, RoleStore>();
 builder.Services.AddTransient<IDateTimeProvider, DateTimeProvider>();
@@ -34,6 +33,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
