@@ -21,9 +21,9 @@ namespace FinanceTracker.DataAccess.Data
             _connectionString = connectionString;
         }
 
-        public async Task<List<ProviderModel>> GetAllProviders()
+        public async Task<List<ProviderModel>> GetAllProvidersByUserId(string userId)
         {
-            var rows = await _db.LoadData<ProviderModel, dynamic>("dbo.spProvider_GetAll", new { }, _connectionString.Name);
+            var rows = await _db.LoadData<ProviderModel, dynamic>("dbo.spProvider_GetAll", new { ApplicationUserId = userId }, _connectionString.Name);
             return rows.ToList();
         }
 

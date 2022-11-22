@@ -26,7 +26,7 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await _accountData.GetAllFullAccounts();
+            var data = await _accountData.GetAllFullAccountsByUserId(_userId);
 
             if (data is null)
             {

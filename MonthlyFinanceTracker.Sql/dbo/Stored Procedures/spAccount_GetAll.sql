@@ -2,5 +2,5 @@
 AS
 BEGIN
 	SELECT [Id], [Title], [Description], [Type], [Balance], [ApplicationUserId]
-	FROM [dbo].[Account]
+	FROM [dbo].[Account] as a
 END

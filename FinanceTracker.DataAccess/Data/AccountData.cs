@@ -30,7 +30,7 @@ namespace FinanceTracker.DataAccess.Data
 
         public async Task<List<AccountProviderCost>> GetAccountProviderCostByUserId(string id)
         {
-            var output = await _db.LoadData<AccountProviderCost, dynamic>("dbo.spAccountCostByName_GetById", new { ApplicationUserId = id}, _connectionString.Name);
+            var output = await _db.LoadData<AccountProviderCost, dynamic>("dbo.spAccountCostByName_GetById", new { ApplicationUserId = id }, _connectionString.Name);
 
             return output.ToList();
         }
@@ -99,9 +99,9 @@ namespace FinanceTracker.DataAccess.Data
             await _db.SaveData("dbo.spAccount_Delete", new { Id = id }, _connectionString.Name);
         }
 
-        public async Task<List<FullAccountModel>> GetAllFullAccounts()
+        public async Task<List<FullAccountModel>> GetAllFullAccountsByUserId(string userId)
         {
-            var rows = await _db.LoadData<FullAccountModel, dynamic>("dbo.spFullAccount_GetAll", new { }, _connectionString.Name);
+            var rows = await _db.LoadData<FullAccountModel, dynamic>("dbo.spFullAccount_GetAll", new { ApplicationUserId = userId }, _connectionString.Name);
 
             return rows.ToList();
         }

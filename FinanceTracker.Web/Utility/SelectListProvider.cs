@@ -1,6 +1,7 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace FinanceTracker.Web.Utility
 {
@@ -8,20 +9,24 @@ namespace FinanceTracker.Web.Utility
     {
         private readonly IAccountData _accountData;
         private readonly IProviderData _providerData;
+        private readonly IHttpContextAccessor _contextAccessor;
         private static readonly string _due = "Due";
         private static readonly string _scheduled = "Scheduled";
         private static readonly string _cleared = "Cleared";
         private static readonly string _late = "Late";
+        private readonly string _userId;
 
-        public SelectListProvider(IAccountData accountData, IProviderData providerData)
+        public SelectListProvider(IAccountData accountData, IProviderData providerData, IHttpContextAccessor contextAccessor)
         {
             _accountData = accountData;
             _providerData = providerData;
+            _contextAccessor = contextAccessor;
+            _userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public async Task<List<SelectListItem>> ProviderSelectList()
         {
-            List<ProviderModel> providers = await _providerData.GetAllProviders();
+            List<ProviderModel> providers = await _providerData.GetAllProvidersByUserId(_userId);
 
             if (providers is null)
             {

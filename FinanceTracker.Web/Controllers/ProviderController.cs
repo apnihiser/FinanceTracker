@@ -11,15 +11,19 @@ namespace FinanceTracker.Web.Controllers
     public class ProviderController : Controller
     {
         private readonly IProviderData _providerData;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly string _userId;
 
-        public ProviderController(IProviderData providerData)
+        public ProviderController(IProviderData providerData, IHttpContextAccessor contextAccessor)
         {
             _providerData = providerData;
+            _contextAccessor = contextAccessor;
+            _userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public async Task<IActionResult> Index()
         {
-            var providers = await _providerData.GetAllProviders();
+            var providers = await _providerData.GetAllProvidersByUserId(_userId);
 
             List <ProviderDisplayModel> output = new();
 
