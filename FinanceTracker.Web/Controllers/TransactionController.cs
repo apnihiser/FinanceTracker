@@ -66,6 +66,10 @@ namespace FinanceTracker.Web.Controllers
 
             var data = await _transactionData.GetUserTransactionsByMonth(userId, dateTimeOutput);
 
+            ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
+            ViewBag.AccountSelectList = await _selectList.AccountSelectList();
+            ViewBag.StatusSelectList = _selectList.StatusSelectList();
+
             if (data.Count == 0)
             {
                 return View();
@@ -94,11 +98,6 @@ namespace FinanceTracker.Web.Controllers
                 Transactions = transactionList,
                 TargetMonth = data.First().DueDate
             };
-
-
-            ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
-            ViewBag.AccountSelectList = await _selectList.AccountSelectList();
-            ViewBag.StatusSelectList = _selectList.StatusSelectList();
 
             return View(output);
         }

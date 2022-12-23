@@ -4,7 +4,7 @@
 
     <div asp-validation-summary="ModelOnly"></div>
 
-    <input hidden asp-for="Id"></input>
+    <input hidden asp-for="Id" />
 
     <div class="mb-3">
         <label asp-for="AccountId" class="form-label"></label>
@@ -32,13 +32,13 @@
 
     <div class="mb-3">
         <label asp-for="Status" class="form-label"></label>
-        <select asp-for="Status" class="form-select" asp-items="ViewBag.StatusSelectList"></select>
+        <select asp-for="Status" class="form-select" asp-items="@ViewBag.StatusSelectList"></select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" value="Save Changes"></input>
+        <input type="submit" class="btn btn-primary" value="Save Changes" />
     </div>
 
 </form>
