@@ -26,7 +26,7 @@
 
     <div class="mb-3">
         <label asp-for="DueDate" class="form-label"></label>
-        <input asp-for="DueDate" class="form-control" type="date" />
+        <input asp-for="DueDate" class="form-control" type="date" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
         <span asp-validation-for="DueDate" class="text-danger"></span>
     </div>
 
