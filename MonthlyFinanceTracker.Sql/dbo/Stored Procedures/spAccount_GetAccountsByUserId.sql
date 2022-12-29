@@ -6,5 +6,5 @@ BEGIN
 
 	SELECT [Id], [Title], [Description], [Type], [Balance], [ApplicationUserId]
 	FROM dbo.Account a
-	WHERE a.Id = @ApplicationUserId;
+	WHERE a.ApplicationUserId = @ApplicationUserId;
 END
