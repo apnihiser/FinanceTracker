@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FinanceTracker.Web.Controllers
 {
@@ -111,6 +112,23 @@ namespace FinanceTracker.Web.Controllers
                 return RedirectToAction("Index");
             }
 
+            // if transaction status is "Cleared" then we need to find the account and reverse the amount from the account!
+            // Get Transaction by Id
+            var transaction = await _transactionData.GetFullTransactionById(id);
+
+            // Check if Transaction Id is "Cleared"
+            if (transaction.Status == "Cleared")
+            {
+                // if cleared reverse Amount from status
+                var account = await _accountData.GetAccountByAccountId(transaction.AccountId);
+
+                // ex1: balance = 10.00 - (-1.00) = 11.00
+                // ex2: balance = 10.00 - (1.00) = 9.00
+                account.Balance -= transaction.Amount;
+
+                await _accountData.Update(account);
+            }
+
             await _transactionData.DeleteTransactionById(id);
 
             return RedirectToAction("Index");
@@ -151,6 +169,55 @@ namespace FinanceTracker.Web.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Check to see if Status was changed
+            // Get unmodified Transaction from the database
+            var transaction = await _transactionData.GetFullTransactionById(input.Id);
+
+            // was transaction previously cleared?
+            bool wasCleared = false;
+
+            if(transaction.Status == "Cleared")
+            {
+                wasCleared = true;
+            }
+
+            // Check if Transaction Id is "Cleared"
+            bool isCleared = false;
+
+            if (input.Status == "Cleared")
+            {
+                isCleared = true;
+            }
+
+            // Was it changed to Cleared?
+            if (wasCleared != isCleared && input.Status == "Cleared")
+            {
+                // Since transaction was changed from non-cleared to cleared, we need to add the change to the account
+                var account = await _accountData.GetAccountByAccountId(input.AccountId);
+
+                // ex1: balance = 10.00 + (-1.00) = 9.00
+                // ex2: balance = 10.00 + (1.00) = 11.00
+                account.Balance += input.AmountDue;
+
+                await _accountData.Update(account);
+            }
+            // Was it changed to not cleared (from cleared)?
+            // **QUESTION, what if changed to nonCleared (from cleared) AND a Dollar Amount changed?**
+            // **ANSWER: We only need to reverse what was previously cleared, we don't care if the amount changes until it is cleared in the future.**
+            else if(wasCleared != isCleared && input.Status != "Cleared")
+            {
+                // Since transaction was changed from non-cleared to cleared, we need to add the change to the account
+                var account = await _accountData.GetAccountByAccountId(input.AccountId);
+
+                // We are going to use the unmodified transaction! since we want only reverse what was previously cleared
+                // We DO NOT care about the new amount provided, only until it get changed to CLEARED in the future.
+                // ex1: balance = 10.00 - (-1.00) = 11.00
+                // ex2: balance = 10.00 - (1.00) = 9.00
+                account.Balance -= transaction.Amount;
+
+                await _accountData.Update(account);
+            }
+
             TransactionModel output = new TransactionModel()
             {
                 Id = input.Id,
@@ -177,7 +244,6 @@ namespace FinanceTracker.Web.Controllers
 
             TransactionModel output = new TransactionModel()
             {
-                Id = input.Id,
                 AccountId = input.AccountId,
                 PayeeId = input.PayeeId,
                 Amount = input.AmountDue,
@@ -185,7 +251,22 @@ namespace FinanceTracker.Web.Controllers
                 Status = input.Status
             };
 
-            await _transactionData.CreateTransaction(output);
+            // Get Transaction by Id
+            int id = await _transactionData.CreateTransaction(output);
+            var transaction = await _transactionData.GetFullTransactionById(id);
+
+            // Check if Transaction Id is "Cleared"
+            if (output.Status == "Cleared")
+            {
+                // if cleared change Amount from status
+                var account = await _accountData.GetAccountByAccountId(transaction.AccountId);
+
+                // ex1: balance = 10.00 + (-1.00) = 9.00
+                // ex2: balance = 10.00 + (1.00) = 11.00
+                account.Balance += output.Amount;
+
+                await _accountData.Update(account);
+            }    
 
             return RedirectToAction("Index");
         }

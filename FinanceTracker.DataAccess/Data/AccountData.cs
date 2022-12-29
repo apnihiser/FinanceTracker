@@ -112,5 +112,12 @@ namespace FinanceTracker.DataAccess.Data
 
             return output.FirstOrDefault();
         }
+
+        public async Task<AccountModel> GetAccountByAccountId(int id)
+        {
+            var output = await _db.LoadData<AccountModel, dynamic>("dbo.spAccount_GetByAccountId", new { Id = id }, _connectionString.Name);
+
+            return output.FirstOrDefault();
+        }
     }
 }

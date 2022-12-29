@@ -87,26 +87,38 @@ namespace FinanceTracker.DataAccess.Data
             await _db.SaveData("dbo.spFullTransaction_Edit", new { TransactionType = dataTable.AsTableValuedParameter("dbo.TransactionType") }, _connectionString.Name);
         }
 
-        public async Task CreateTransaction(TransactionModel input)
+        public async Task<int> CreateTransaction(TransactionModel input)
         {
-            DataTable dataTable = new DataTable();
+            //DataTable dataTable = new DataTable();
 
-            dataTable.Columns.Add("Id", typeof(int));
-            dataTable.Columns.Add("AccountId", typeof(int));
-            dataTable.Columns.Add("PayeeId", typeof(int));
-            dataTable.Columns.Add("Amount", typeof(decimal));
-            dataTable.Columns.Add("DueDate", typeof(DateTime));
-            dataTable.Columns.Add("Status", typeof(string));
+            //dataTable.Columns.Add("Id", typeof(int));
+            //dataTable.Columns.Add("AccountId", typeof(int));
+            //dataTable.Columns.Add("PayeeId", typeof(int));
+            //dataTable.Columns.Add("Amount", typeof(decimal));
+            //dataTable.Columns.Add("DueDate", typeof(DateTime));
+            //dataTable.Columns.Add("Status", typeof(string));
 
-            dataTable.Rows.Add(
-                input.Id,
-                input.AccountId,
-                input.PayeeId,
-                input.Amount,
-                input.DueDate,
-                input.Status);
+            //dataTable.Rows.Add(
+            //    input.Id,
+            //    input.AccountId,
+            //    input.PayeeId,
+            //    input.Amount,
+            //    input.DueDate,
+            //    input.Status);
 
-            await _db.SaveData("dbo.spFullTransaction_Insert", new { TransactionType = dataTable.AsTableValuedParameter("dbo.TransactionType") }, _connectionString.Name);
+            //await _db.SaveData("dbo.spFullTransaction_Insert", new { TransactionType = dataTable.AsTableValuedParameter("dbo.TransactionType") }, _connectionString.Name);
+
+            DynamicParameters p = new DynamicParameters();
+            p.Add("AccountId", input.AccountId);
+            p.Add("PayeeId", input.PayeeId);
+            p.Add("Amount", input.Amount);
+            p.Add("DueDate", input.DueDate);
+            p.Add("Status", input.Status);
+            p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
+
+            await _db.SaveData("dbo.spFullTransaction_Insert", p , _connectionString.Name);
+
+            return p.Get<int>("Id");
         }
     }
 }

@@ -1,20 +1,27 @@
 ﻿CREATE PROCEDURE [dbo].[spFullTransaction_Insert]
-	@TransactionType TransactionType READONLY
+	--@TransactionType TransactionType READONLY Move from datatype to dynamic parameter
+	@AccountId int,
+	@PayeeId int,
+	@Amount Money,
+	@DueDate DateTime2,
+	@Status NVARCHAR(50),
+	@Id int output
 AS
 BEGIN
+	SET NOCOUNT ON;
+
 	INSERT INTO [dbo].[Transaction]
 		([AccountId]
 		,[PayeeId]
 		,[Amount]
 		,[DueDate]
 		,[Status])
-	SELECT
-		[AccountId]
-		,[PayeeId]
-		,[Amount]
-		,[DueDate]
-		,[Status]
-	FROM @TransactionType;
+	VALUES
+		(@AccountId
+		,@PayeeId
+		,@Amount
+		,@DueDate
+		,@Status)
 
-	SELECT CAST(SCOPE_IDENTITY() as INT);
+	set @Id = SCOPE_IDENTITY();
 END

@@ -9,7 +9,8 @@ namespace FinanceTracker.DataAccess.Data
         Task<List<TransactionModel>> GetAllFullTransactionsByUserIdAsync(string id);
         Task DeleteTransactionById(int id);
         Task EditTransactionById(TransactionModel record);
-        Task CreateTransaction(TransactionModel input);
+        //Task CreateTransaction(TransactionModel input);
+        Task<int> CreateTransaction(TransactionModel input);
         Task<List<TransactionModel>> GetUserTransactionsByMonth(string id, DateTime dateTime);
         Task<List<TransactionProviderAmount>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime);
         Task<List<TransactionStatusAmount>> GetTransactionStatusChartDataByMonth(string id, DateTime dateTime);
