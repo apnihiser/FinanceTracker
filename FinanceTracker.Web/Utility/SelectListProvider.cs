@@ -45,7 +45,7 @@ namespace FinanceTracker.Web.Utility
 
         public async Task<List<SelectListItem>> AccountSelectList()
         {
-            List<AccountModel> providers = await _accountData.GetAllAccounts();
+            List<AccountModel> providers = await _accountData.GetAccountsByUserId(_userId);
 
             if (providers is null)
             {

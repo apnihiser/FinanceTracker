@@ -49,11 +49,18 @@ namespace FinanceTracker.DataAccess.Data
             return output.ToList();
         }
 
-        public async Task<AccountModel?> GetAccountsByUserId(int id)
+        public async Task<AccountModel?> GetAccountByUserId(int id)
         {
             var output = await _db.LoadData<AccountModel, dynamic>("dbo.spAccount_GetById", new { Id = id }, _connectionString.Name);
 
             return output.First();
+        }
+
+        public async Task<List<AccountModel>> GetAccountsByUserId(string userId)
+        {
+            var output = await _db.LoadData<AccountModel, dynamic>("dbo.spAccount_GetAccountsByUserId", new { ApplicationUserId = userId }, _connectionString.Name);
+
+            return output.ToList();
         }
 
         public async Task<int> Create(string? title, string? description, string? type, decimal balance, int holderId)

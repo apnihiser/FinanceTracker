@@ -127,7 +127,7 @@ namespace FinanceTracker.Web.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var model = await _accountData.GetAccountsByUserId(id);
+            var model = await _accountData.GetAccountByUserId(id);
 
             if (model is null)
             {

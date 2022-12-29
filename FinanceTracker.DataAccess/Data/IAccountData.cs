@@ -8,7 +8,8 @@ namespace FinanceTracker.DataAccess.Data
         Task Delete(int id);
         Task<List<AccountTypeCount>> GetAccountCountByUserId(string id);
         Task<List<AccountProviderCost>> GetAccountProviderCostByUserId(string id);
-        Task<AccountModel?> GetAccountsByUserId(int id);
+        Task<AccountModel?> GetAccountByUserId(int id);
+        Task<List<AccountModel>> GetAccountsByUserId(string userId);
         Task<List<AccountTypeCost>> GetAccountTypeCostByUserId(string id);
         Task<List<AccountModel>> GetAllAccounts();
         Task<List<FullAccountModel>> GetAllFullAccountsByUserId(string userId);
