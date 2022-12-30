@@ -8,7 +8,7 @@ function drawSummaryByProvider(chartData) {
 
     var dataArray = [];
     $.each(chartData, function (i, obj) {
-        dataArray.push([obj.name, obj.amount]);
+        dataArray.push([obj.name, Math.abs(obj.amount)]);
     });
     data.addRows(dataArray);
 
@@ -34,7 +34,7 @@ function drawSummaryByStatus(chartData) {
     var dataArray = [];
 
     $.each(chartData, function (i, obj) {
-        dataArray.push([obj.name, obj.amount]);
+        dataArray.push([obj.name, Math.abs(obj.amount)]);
     });
     data.addRows(dataArray);
 

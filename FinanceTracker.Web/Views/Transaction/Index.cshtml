@@ -9,10 +9,15 @@
 @if (@Model is null || @Model?.Transactions?.Count == 0)
 {
     
-    <h3 class="text-danger">No Transactions for this month!</h3> 
-    <h3><a asp-controller="Provider" asp-action="Index">Click here</a> to add your first Service Provider</h3>
-    <h3><a asp-controller="Account" asp-action="Index">Click here</a> to add your first Financial Account.</h3>
+    <h3 class="text-danger">NO TRANSACTIONS FOR THIS MONTH!</h3>
 
+    <h3>If you have reached a month with no transactions <a asp-action="Index">CLICK HERE</a> to go back</h3>
+    <hr />
+    <h3>Otherwise get started with your first Transaction below!</h3>
+    <h3><a asp-controller="Provider" asp-action="Index">CLICK HERE</a> to add your first Service Provider</h3>
+    <h3><a asp-controller="Account" asp-action="Index">CLICK HERE</a> to add your first Financial Account.</h3>
+    <hr />
+    <h3>If you are ready to start tracking then add a transaction below!</h3>
 }
 else
 {
@@ -153,7 +158,7 @@ else
 
                                         <div class="modal-body">
 
-                                            @await Component.InvokeAsync("EditModalForm", @transaction);
+                                            @await Component.InvokeAsync("EditModalForm", @transaction)
 
                                         </div>
 

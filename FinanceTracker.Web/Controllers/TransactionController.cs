@@ -217,6 +217,23 @@ namespace FinanceTracker.Web.Controllers
 
                 await _accountData.Update(account);
             }
+            // Will need to update to maintain balance between cleared transaction of user were to update.
+            else if(transaction.Status == "Cleared" && input.Status == "Cleared")
+            {
+                // account was cleared previous but user is updating cleared transaction value, so we need to reverse previous transaction
+                var account = await _accountData.GetAccountByAccountId(input.AccountId);
+                // ex1: balance = 10.00 - (-1.00) = 11.00
+                // ex2: balance = 10.00 - (1.00) = 9.00
+                account.Balance -= transaction.Amount;
+                await _accountData.Update(account);
+
+                // Now add new transaction
+                // ex1: balance = 10.00 + (-1.00) = 9.00
+                // ex2: balance = 10.00 + (1.00) = 11.00
+                account.Balance += input.AmountDue;
+
+                await _accountData.Update(account);
+            }
 
             TransactionModel output = new TransactionModel()
             {
