@@ -48,7 +48,7 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new();
 
         public string ReturnUrl { get; set; }
 
@@ -77,6 +77,10 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string DemoLogin = "demoUser@demo.com";
+
+            public string DemoPassword = "DemoPassword@1";
         }
 
 

@@ -23,6 +23,7 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUserIdentity> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
+
         public LoginModel(SignInManager<ApplicationUserIdentity> signInManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
@@ -31,7 +32,7 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
 
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new();
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -52,6 +53,10 @@ namespace FinanceTracker.Web.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
+            public string DemoLogin = "demoUser@demo.com";
+            public string DemoPassword = "DemoPassword@1";
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)

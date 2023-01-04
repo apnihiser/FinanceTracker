@@ -1,10 +1,19 @@
 ﻿@page
 @model ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    ViewData["Title"] = "Dollar Tracker";
+    Layout = "~/Views/Shared/_LoginRegisterLayoutPage.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<header class="dt-header">
+    <div class="d-flex align-items-center justify-content-begin dt-header-logo">
+        <img class="logo" src="/img/DollarTracker_Logo_no_font.png" alt="Dollar Tracker Logo" />
+        <h1 class="fw-bold">DOLLAR<span>TRACKER</span></h1>
+    </div>
+</header>
+
+<h1>Resent Email Confirmation</h1>
+
 <h2>Enter your email.</h2>
 <hr />
 <div class="row">

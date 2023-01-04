@@ -2,83 +2,89 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Dollar Tracker";
+    Layout = "~/Views/Shared/_LoginRegisterLayoutPage.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="Input.Email" class="form-label"></label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-floating">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                    <label asp-for="Input.Password" class="form-label"></label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div>
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+<header class="dt-header">
+    <div class="d-flex align-items-center justify-content-begin dt-header-logo">
+        <img alt="Dollar Tracker logo" class="logo" src="/img/DollarTracker_Logo_no_font.png" />
+        <h1 class="fw-bold">DOLLAR<span>TRACKER</span></h1>
     </div>
-    @*<div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
+</header>
+
+<article class="text-center">
+    <div class="row d-flex align-items-center login-background p-4">
+        <div class="col-12 col-lg-8 img-container">
+            <img alt="Smiling friends Hero Image" src="/img/smiling-friends.jpg" />
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <h2 class="col-12 text-center mb-4 fs-1 fw-bold">Log In</h2>
+
+            <div class="col-12 d-flex justify-content-around mb-4 align-items-end">
+                <p>New To Dollar Tracker?</p>
+                <a asp-page="./Register">Sign Up Today!</a>
+            </div>
+
+            <form id="account" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="login-input mb-3">
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
                     <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+                        <i class="login-input-icon fa-solid fa-envelope"></i>
+                        <input asp-for="Input.Email" type="text" placeholder="Username" autocomplete="username" aria-required="true" class="login-input-field col-12 mb-3" />
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>*@
-</div>
+
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div>
+                        <i class="login-input-icon fa-solid fa-lock"></i>
+                        <input asp-for="Input.Password" type="password" placeholder="Password" autocomplete="current-password" aria-required="true" class="login-input-field col-12" />
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-around align-items-end mb-4">
+                    <div>
+                        <input asp-for="Input.RememberMe" type="checkbox" id="rememberMe" />
+                        <label asp-for="Input.RememberMe">Keep Me Logged In</label>
+
+                    </div>
+                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a>
+                </div>
+
+                <div>
+                    <button type="submit" id="login-submit" class="col-12 btn login-button login-logButton fw-bold fs-3">Log In</button>
+                </div>
+
+                <div>
+                    <h2 class="text-decoration"><span>or</span></h2>
+                </div>
+
+
+            </form>
+
+            <form id="account" method="post">
+                <input hidden asp-for="Input.Email" type="text" value="@Model.Input.DemoLogin" />
+                <input hidden asp-for="Input.Password" type="password" value="@Model.Input.DemoPassword" />
+                <button type="submit" class="col-12 login-button login-tryButton fs-3">
+                    Try Our Free Demo NOW
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="dt-description p-4 fs-4">
+        <p>
+            <i class="fa-solid fa-circle-info"></i>
+            Dollar Tracker is the simple to use, but flexible app to track
+            financial activity against your money accounts. Built specifically
+            for you and your family's use. Get started TODAY with our free demo.
+            <u>No sign-up required!</u>
+        </p>
+    </div>
+</article>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

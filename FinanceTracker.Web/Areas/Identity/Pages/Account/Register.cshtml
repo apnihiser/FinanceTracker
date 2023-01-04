@@ -1,12 +1,108 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Dollar Tracker";
+    Layout = "~/Views/Shared/_LoginRegisterLayoutPage.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<header class="dt-header">
+    <div class="d-flex align-items-center justify-content-begin dt-header-logo">
+        <img class="logo" src="/img/DollarTracker_Logo_no_font.png" alt="Dollar Tracker Logo" />
+        <h1 class="fw-bold">DOLLAR<span>TRACKER</span></h1>
+    </div>
+</header>
 
-<div class="row">
+<article class="text-center">
+    <div class="row d-flex align-items-center login-background p-4">
+        <div class="col-12 col-lg-8 img-container">
+            <img alt="Money Tree Hero Image" src="/img/money-tree.jpg" />
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <h2 class="col-12 text-center mb-4 fs-1 fw-bold">Sign Up for Dollar Tracker</h2>
+
+            <div class="col-12 d-flex justify-content-around mb-4 align-items-end">
+                <p>Have an account? </p>
+                <a asp-page="./Login">Log In</a>
+            </div>
+
+            <form id="account" method="post">
+                <div class="login-input mb-3">
+
+                    <span asp-validation-for="Input.Fullname" class="text-danger"></span>
+                    <div>
+                        <i class="login-input-icon fa-solid fa-sign-hanging"></i>
+                        <input asp-for="Input.Fullname" type="text" placeholder="Full Name" aria-required="true" class="login-input-field col-12 mb-3" />
+                    </div>
+                    
+
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <div>
+                        <i class="login-input-icon fa-solid fa-envelope"></i>
+                        <input asp-for="Input.Email" type="text" placeholder="Email" aria-required="true" class="login-input-field col-12 mb-3" />
+                    </div>
+
+
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div>
+                        <i class="login-input-icon fa-solid fa-lock"></i>
+                        <input asp-for="Input.Password" type="password" placeholder="Password" autocomplete="new-password" aria-required="true" class="login-input-field col-12 mb-3" />
+                    </div>
+
+
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    <div>
+                        <i class="login-input-icon fa-solid fa-lock"></i>
+                        <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirm Password" autocomplete="new-password" aria-required="true" class="login-input-field col-12 mb-3" />
+                    </div>
+
+                </div>
+
+                <div>
+                    <button type="submit" id="registerSubmit" class="col-12 btn login-button login-logButton fw-bold fs-3">Sign Up</button>
+                </div>
+
+                <div>
+                    <h2 class="text-decoration"><span>or</span></h2>
+                </div>
+
+
+            </form>
+
+            <form asp-page="./Login" id="account" method="post">
+                <input hidden asp-for="Input.Email" type="text" value="@Model.Input.DemoLogin" />
+                <input hidden asp-for="Input.Password" type="password" value="@Model.Input.DemoPassword" />
+                <button type="submit" class="col-12 login-button login-tryButton fs-3">
+                    Try Our Free Demo NOW
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="dt-description p-4 fs-4">
+        <p>
+            <i class="fa-solid fa-circle-info"></i>
+            Dollar Tracker is the simple to use, but flexible app to track
+            financial activity against your money accounts. Built specifically
+            for you and your family's use. Get started TODAY with our free demo.
+            <u>No sign-up required!</u>
+        </p>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 
@@ -44,38 +140,7 @@
 
         </form>
 
-    </div>
-    @*<div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>*@
+    </div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

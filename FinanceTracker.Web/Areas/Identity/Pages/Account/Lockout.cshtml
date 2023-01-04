@@ -1,9 +1,16 @@
 ﻿@page
 @model LockoutModel
 @{
-    ViewData["Title"] = "Locked out";
+    ViewData["Title"] = "Dollar Tracker";
+    Layout = "~/Views/Shared/_LoginRegisterLayoutPage.cshtml";
 }
 
+<header class="dt-header">
+    <div class="d-flex align-items-center justify-content-begin dt-header-logo">
+        <img class="logo" src="/img/DollarTracker_Logo_no_font.png" alt="Dollar Tracker Logo" />
+        <h1 class="fw-bold">DOLLAR<span>TRACKER</span></h1>
+    </div>
+</header>
 <header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
     <p class="text-danger">This account has been locked out, please try again later.</p>
