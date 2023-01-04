@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\FinanceTrackerWebTemplates\**" />
+    <Content Remove="wwwroot\FinanceTrackerWebTemplates\**" />
+    <EmbeddedResource Remove="wwwroot\FinanceTrackerWebTemplates\**" />
+    <None Remove="wwwroot\FinanceTrackerWebTemplates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.3" />
     <PackageReference Include="Mailjet.Api" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
