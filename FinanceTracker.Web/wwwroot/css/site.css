@@ -1,25 +1,69 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+.h1 {
+    margin: 0;
+}
+
+h2,
+.h2 {
+    margin: 0;
+}
+
+h3,
+.h3 {
+    margin: 0;
+}
+
+h4,
+.h4 {
+    margin: 0;
+}
+
+h5,
+.h5 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
 html {
     font-size: 62.5%;
 }
 
-body{
+body {
     font-size: 1.3rem;
 }
 
-table,p {
+table,
+p {
     margin: 0 !important;
 }
 
-input, button, select, a, .form-select, .btn {
+input,
+button,
+select,
+a,
+.form-select,
+.btn {
     font-size: 1.5rem;
+}
+
+body {
+    background-color: #fff;
 }
 
 main {
     min-height: 100vh;
-    background-color: rgb(198, 202, 199);
-    letter-spacing: .1rem;
+    background-color: #f8fff9;
+    letter-spacing: 0.1rem;
 }
 
 span {
@@ -119,7 +163,7 @@ ul.nav-pills a.nav-link {
 }
 
 .drop-shadow {
-    box-shadow: 2px 2px 10px rgba(119, 119, 119, .3);
+    box-shadow: 2px 2px 10px rgba(119, 119, 119, 0.3);
 }
 
 .controlPanel--leftIcon {
@@ -167,7 +211,7 @@ ul.nav-pills a.nav-link {
 @media screen and (max-width: 991px) {
     .monthControl_font {
         font-size: 3rem;
-        letter-spacing: .2rem;
+        letter-spacing: 0.2rem;
         margin-top: 1rem;
     }
 }
@@ -175,7 +219,161 @@ ul.nav-pills a.nav-link {
 @media screen and (min-width: 991px) {
     .monthControl_font {
         font-size: 1.8vw;
-        letter-spacing: .2rem;
+        letter-spacing: 0.2rem;
     }
 }
 
+/*login register page*/
+
+.dt-header {
+    margin-bottom: 150px;
+}
+
+.dt-header > div > h1 {
+    border: 2px solid #8ce99a;
+    font-size: 2.5em;
+    margin-left: 5px;
+}
+
+.dt-header > div > h1 > span {
+    background-color: #8ce99a;
+    font-size: 1em;
+}
+
+header {
+    margin-top: 4em;
+}
+
+article {
+    margin-top: 4em;
+}
+
+.login-background {
+    background-color: #8ce99a;
+    border-radius: 5px;
+    overflow: visible;
+    position: relative;
+}
+
+.login-input i {
+    position: absolute;
+}
+
+.login-input-field {
+    padding: 5px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #f8fff9;
+}
+
+.login-input-icon {
+    padding: 10px;
+    color: #27412c;
+}
+
+.text-decoration {
+    color: #27412c;
+}
+
+.login-button {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #27412c;
+    border-radius: 15px;
+}
+
+.login-logButton {
+    background-color: #2f9e44;
+    color: #e5e5e5;
+    border: 1px solid #2f9e44;
+    border-radius: 5px;
+}
+
+.login-logButton:hover {
+    background-color: #e5e5e5;
+    color: #2f9e44;
+}
+
+.login-tryButton {
+    background-color: #8ce99a;
+    color: #27412c;
+    border: 1px solid #f8fff9;
+    border-radius: 5px;
+}
+
+.login-tryButton:hover {
+    background-color: #f8fff9;
+    color: #27412c;
+}
+
+header > div > img {
+    height: 50px;
+}
+
+article > div > .img-container {
+    position: absolute;
+    left: 35%;
+}
+
+article > div > .img-container > img {
+    border: 1px solid #27412c;
+    border-radius: 50%;
+    height: 600px;
+}
+
+article > div > div > form  > div > h2 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #27412c;
+    line-height: 0.1em;
+    margin: 20px 0 20px;
+}
+
+article > div > div > form > div > h2 > span {
+    background: #8ce99a;
+    padding: 0 10px;
+}
+
+.dt-description {
+    margin-top: 9em;
+    border: 2px solid #4356a6;
+    color: #4356a6;
+    border-radius: 5px;
+}
+
+/*Media Section*/
+@media (min-width: 1200px) {
+    .container {
+        max-width: 970px;
+    }
+}
+
+@media (max-width: 992px) {
+    .dt-header-logo {
+        margin-bottom: 5em;
+        justify-content: center;
+    }
+
+    article > div > .img-container {
+        position: static;
+    }
+
+    article > div > .img-container > img {
+        border: 1px solid #27412c;
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 2em;
+    }
+}
+
+@media (max-width: 350px) {
+    .dt-header-logo {
+        font-size: 3.5vw;
+    }
+
+    .logo {
+        max-width: 15%;
+        height: auto;
+    }
+}
