@@ -14,17 +14,17 @@
 <form asp-action="Create" method="Post">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    
-    <div class="mb-3">
-        <label class="form-label" asp-for="Service"></label>
-        <input class="form-control" asp-for="Service"></input>
-        <span asp-validation-for="Service" class="text-danger"></span>
-    </div>
-    
+
     <div class="mb-3">
         <label class="form-label" asp-for="Title"></label>
         <input class="form-control" asp-for="Title"></input>
         <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Service"></label>
+        <input class="form-control" asp-for="Service"></input>
+        <span asp-validation-for="Service" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
