@@ -29,6 +29,13 @@ builder.Services.AddIdentity<ApplicationUserIdentity, ApplicationRole>(option =>
     .AddSignInManager<SignInManager<ApplicationUserIdentity>>()
     .AddDefaultUI();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = ".AspNetCore.Identity.DollarTracker";
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+    options.SlidingExpiration = true;
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -53,7 +60,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Transaction}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 

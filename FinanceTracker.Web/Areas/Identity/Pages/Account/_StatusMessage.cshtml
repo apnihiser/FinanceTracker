@@ -4,12 +4,7 @@
     Layout = "~/Views/Shared/_LoginRegisterLayoutPage.cshtml";
 }
 
-<header class="dt-header">
-    <div class="d-flex align-items-center justify-content-begin dt-header-logo">
-        <img class="logo" src="/img/DollarTracker_Logo_no_font.png" alt="Dollar Tracker Logo" />
-        <h1 class="fw-bold">DOLLAR<span>TRACKER</span></h1>
-    </div>
-</header>
+
 @if (!String.IsNullOrEmpty(Model))
 {
     var statusMessageClass = Model.StartsWith("Error") ? "danger" : "success";
