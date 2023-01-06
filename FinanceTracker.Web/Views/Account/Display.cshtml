@@ -17,29 +17,23 @@ else
 
         <div asp-validation-summary="ModelOnly"></div>
 
-        <input hidden asp-for="Id"></input>
+        <input hidden asp-for="Id" />
 
         <div class="mb-3">
             <label class="form-label" asp-for="Title"></label>
-            <input class="form-control" asp-for="Title"></input>
+            <input class="form-control" asp-for="Title" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label class="form-label" asp-for="Description"></label>
-            <input class="form-control" asp-for="Description"></input>
+            <input class="form-control" asp-for="Description" />
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label class="form-label" asp-for="Type"></label>
-            <input class="form-control" asp-for="Type"></input>
-            <span asp-validation-for="Type" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
             <label class="form-label" asp-for="Balance"></label>
-            <input class="form-control" asp-for="Balance"></input>
+            <input class="form-control" asp-for="Balance" />
             <span asp-validation-for="Balance" class="text-danger"></span>
         </div>
 

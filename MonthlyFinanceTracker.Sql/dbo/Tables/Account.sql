@@ -3,7 +3,7 @@
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
     [Title] NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(100) NOT NULL, 
-    [Type] NVARCHAR(50) NOT NULL, 
+    [Type] NVARCHAR(50) NULL, 
     [Balance] MONEY NOT NULL, 
     [ApplicationUserId] INT NOT NULL
 )

@@ -6,7 +6,7 @@
 *@
 
 @{
-    ViewData["Title"] = "Create New Provider";
+    ViewData["Title"] = "Create A New Category";
 }
 
 <h1 class="mb-3">@ViewData["Title"]</h1>
@@ -17,19 +17,19 @@
 
     <div class="mb-3">
         <label class="form-label" asp-for="Title"></label>
-        <input class="form-control" asp-for="Title"></input>
+        <input class="form-control" asp-for="Title" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label class="form-label" asp-for="Service"></label>
-        <input class="form-control" asp-for="Service"></input>
+        <input class="form-control" asp-for="Service" />
         <span asp-validation-for="Service" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label class="form-label" asp-for="Url"></label>
-        <input class="form-control" asp-for="Url"></input>
+        <input class="form-control" asp-for="Url" />
         <span asp-validation-for="Url" class="text-danger"></span>
     </div>
 

@@ -2,7 +2,7 @@
 
 <form asp-action="Delete" method="Post">
 
-    <input asp-for="Id" hidden></input>
+    <input asp-for="Id" hidden />
 
     <div class="mb-3">
         <h5>@Html.DisplayNameFor(model => model.AccountName)</h5>
@@ -31,7 +31,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-danger" value="Delete" asp-action="Delete" asp-route-Id="@Model.Id"></input>
+        <input type="submit" class="btn btn-danger" value="Delete" asp-action="Delete" asp-route-Id="@Model.Id" />
     </div>
 
 </form>

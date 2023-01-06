@@ -11,7 +11,6 @@ namespace FinanceTracker.Web.Utility
         private readonly IProviderData _providerData;
         private readonly IHttpContextAccessor _contextAccessor;
         private static readonly string _due = "Due";
-        private static readonly string _scheduled = "Scheduled";
         private static readonly string _cleared = "Cleared";
         private static readonly string _late = "Late";
         private readonly string _userId;
@@ -67,7 +66,6 @@ namespace FinanceTracker.Web.Utility
             List<SelectListItem> output = new();
 
             output.Add(new SelectListItem { Text = _due, Value = _due });
-            output.Add(new SelectListItem { Text = _scheduled, Value = _scheduled });
             output.Add(new SelectListItem { Text = _cleared, Value = _cleared });
             output.Add(new SelectListItem { Text = _late, Value = _late });
 
