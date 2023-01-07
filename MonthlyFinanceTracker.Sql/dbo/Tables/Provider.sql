@@ -2,7 +2,7 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
     [Title] NVARCHAR(50) NOT NULL, 
-    [Service] NVARCHAR(100) NOT NULL, 
+    [Service] NVARCHAR(100) NULL, 
     [URL] NVARCHAR(300) NOT NULL, 
     [UserId] INT NOT NULL
 )

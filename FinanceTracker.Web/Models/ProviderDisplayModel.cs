@@ -12,7 +12,6 @@ namespace FinanceTracker.Web.Models
         public string? Title { get; set; }
 
         [Display(Name = "Reason for Transactions")]
-        [Required]
         [StringLength(100, ErrorMessage = "{0} must be under {1} characters long.")]
         public string? Service { get; set; }
 

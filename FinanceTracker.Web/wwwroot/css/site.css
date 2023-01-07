@@ -70,14 +70,30 @@ span {
     font-size: 1.5rem;
 }
 
-li.accordian-List:not(:last-child) {
-    margin-bottom: 15px;
-}
-
 .font {
     font-family: "Lato", sans-serif;
     font-weight: 600;
     color: #333;
+}
+
+li.accordian-List:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+li.accordian-List {
+    font-weight: 400;
+    font-size: .9em;
+}
+
+li > ol > li {
+
+    list-style-position: inside;
+}
+
+li > ol > li::before {
+    content: "";
+    width: 10px;
+    display: inline-block;
 }
 
 main > .container {
@@ -216,21 +232,6 @@ ul.nav-pills a.nav-link {
     visibility: visible;
 }
 
-@media screen and (max-width: 991px) {
-    .monthControl_font {
-        font-size: 3rem;
-        letter-spacing: 0.2rem;
-        margin-top: 1rem;
-    }
-}
-
-@media screen and (min-width: 991px) {
-    .monthControl_font {
-        font-size: 1.8vw;
-        letter-spacing: 0.2rem;
-    }
-}
-
 /*login register page*/
 
 .dt-header {
@@ -351,6 +352,21 @@ article > div > div > form > div > h2 > span {
 }
 
 /*Media Section*/
+@media screen and (max-width: 991px) {
+    .monthControl_font {
+        font-size: 3rem;
+        letter-spacing: 0.2rem;
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .monthControl_font {
+        font-size: 1.8vw;
+        letter-spacing: 0.2rem;
+    }
+}
+
 @media (min-width: 1200px) {
     .container {
         max-width: 970px;

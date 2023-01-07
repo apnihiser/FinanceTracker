@@ -7,26 +7,27 @@
 <div class="accordion" id="createCategoryAccordian">
 
     <div class="accordion-item">
-        <h2 class="accordion-header" id="createInfo">
+        <h3 class="accordion-header" id="createInfo">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 <i class="fa-solid fa-sack-dollar me-3 fs-2"></i>
-                <h2>What are Money Accounts?</h2>
+                <h3>What are Money Accounts?</h3>
             </button>
-        </h2>
+        </h3>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="createInfo" data-bs-parent="#createCategoryAccordian">
             <div class="accordion-body">
                 <ul class="fs-3">
                     <li class="accordian-List"><p>Money Accounts can be thought of as a bucket where money can be placed in or taken out of.</p></li>
                     <li class="accordian-List"><p>Each ACCOUNT will keep a balance based on the beginning balance minus any future CLEARED transactions.</p></li>
+                    <li class="accordian-List"><p>ACCOUNTS require a type to track money against. For example, all of your bank checking accounts will be summed together for a total on the transaction page.</p></li>
                     <li class="accordian-List">
                         <p>Financial Tracker uses a simple 3 step process to enter a transaction:</p>
                         <ol>
-                            <li class="accordian-List">A Cash Flow movement is initiated from a <a asp-controller="Provider" asp-action="Index">CATEGORY</a>. This could Represent a bill from your Power Company.</li>
-                            <li class="accordian-List">Identify which Money ACCOUNT the Cash Flow will be deposited or withdrawn from. This account could represent your checking account.</li>
+                            <li class="accordian-List"><p>A Cash Flow movement is initiated from a <a asp-controller="Provider" asp-action="Index">CATEGORY</a>. This could Represent a bill from your Power Company.</p></li>
+                            <li class="accordian-List"><p>Identify which Money ACCOUNT the Cash Flow will be deposited or withdrawn from. This account could represent your checking account.</p></li>
                             <li class="accordian-List">
-                                Generate a transaction that will represent this Cash Flow from your <a asp-controller="Provider" asp-action="Index">CATEGORY</a> into your ACCOUNT.
+                                <p>Generate a transaction that will represent this Cash Flow from your <a asp-controller="Provider" asp-action="Index">CATEGORY</a> into your ACCOUNT.
                                 Finally this transaction will represent the flow of money from your account to your power company. This will only clear, once the status has been set to clear by you.
-                                More information on this in the transactions dashboard.
+                                More information on this in the transactions dashboard.</p>
                             </li>
                         </ol>
                     </li>
@@ -39,12 +40,12 @@
     </div>
 
     <div class="accordion-item">
-        <h2 class="accordion-header" id="createTips">
+        <h3 class="accordion-header" id="createTips">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <i class="fa-solid fa-sack-dollar me-3 fs-2"></i>
-                <h2>How to use Money Accounts</h2>
+                <h3>How to use Money Accounts</h3>
             </button>
-        </h2>
+        </h3>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="createTips" data-bs-parent="#createCategoryAccordian">
             <div class="accordion-body">
                 <ul class="fs-3">
@@ -61,20 +62,20 @@
     </div>
 
     <div class="accordion-item">
-        <h2 class="accordion-header" id="createExamples">
+        <h3 class="accordion-header" id="createExamples">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                 <i class="fa-solid fa-sack-dollar me-3 fs-2"></i>
-                <h2>Money Account Examples</h2>
+                <h3>Money Account Examples</h3>
             </button>
-        </h2>
+        </h3>
         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="createExamples" data-bs-parent="#createCategoryAccordian">
             <div class="accordion-body">
                 <ul class="fs-3">
                     <li class="accordian-List"><p>Some Common Examples below to help get you started!<p></li>
-                    <li class="accordian-List"><p>Name : MyBank Checking Account | Description: Where I keep at least $2000 to cover monthly expenses | Balance: $2225.89<p></li>
-                    <li class="accordian-List"><p>Name : MyBank High Interest Savings Account | Description: The rest of my incoming money gets dumped here up to $100,000.00 for easy access | Balance: $126,000.00<p></li>
-                    <li class="accordian-List"><p>Name : MyBank 401K | Description: Contributing 17% of salary to my work 401k | Balance $723,998.12<p></li>
-                    <li class="accordian-List"><p>Name : MyBank IRA | Description: Still unable to max out IRA so the rest of Salary goes here | Balance $129,555.12<p></li>
+                    <li class="accordian-List"><p>Name : MyBank Checking Account | Description: Where I keep at least $2000 to cover monthly expenses | Type: Checking | Balance: $2225.89<p></li>
+                    <li class="accordian-List"><p>Name : MyBank High Interest Savings Account | Description: The rest of my incoming money gets dumped here up to $100,000.00 for easy access | Type: Savings | Balance: $126,000.00<p></li>
+                    <li class="accordian-List"><p>Name : MyBank 401K | Description: Contributing 17% of salary to my work 401k | Type: Retirement | Balance $723,998.12<p></li>
+                    <li class="accordian-List"><p>Name : MyBank IRA | Description: Still unable to max out IRA so the rest of Salary goes here | Type: Retirement | Balance $129,555.12<p></li>
                 </ul>
             </div>
         </div>
@@ -88,6 +89,7 @@
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Title)</th>
                     <th>@Html.DisplayNameFor(model => model.Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.Type)</th>
                     <th colspan="2">@Html.DisplayNameFor(model => model.Balance)</th>
                 </tr>
             </thead>
@@ -97,6 +99,7 @@
                     <tr>
                         <td>@item.Title</td>
                         <td>@item.Description</td>
+                        <td>@item.Type</td>
                         <td>@String.Format("{0:C}", item.Balance)</td>
                         <td>
                             <a class="btn btn-outline-primary fw-bold" asp-action="Display" asp-route-id="@item.Id">DETAILS</a>

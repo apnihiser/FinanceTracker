@@ -32,6 +32,12 @@ else
         </div>
 
         <div class="mb-3">
+            <label class="form-label" asp-for="Type"></label>
+            <input class="form-control" asp-for="Type" />
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label" asp-for="Balance"></label>
             <input class="form-control" asp-for="Balance" />
             <span asp-validation-for="Balance" class="text-danger"></span>

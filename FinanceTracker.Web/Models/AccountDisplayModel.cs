@@ -19,6 +19,7 @@ namespace FinanceTracker.Web.Models
         [StringLength(100, MinimumLength = 2, ErrorMessage = "{0} must be between {1} and {2} digits long.")]
         public string? Description { get; set; }
 
+        [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "{0} must be between {1} and {2} digits long.")]
         public string? Type { get; set; }
 

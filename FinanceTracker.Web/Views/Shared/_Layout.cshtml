@@ -52,11 +52,11 @@
                     </li>
 
                     <!-- NAV DROP DOWN LIST -->
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown text-center">
 
                         <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Management</a>
               
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <ul class="dropdown-menu dropdown-submenu" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li>
                                 <a class="dropdown-item" asp-controller="Provider" asp-action="Index">Financial Categories</a>
                             </li>
@@ -66,7 +66,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item ms-md-auto ms-auto-md">
+
+                    <li class="nav-item ms-md-auto ms-auto-md d-flex">
                         <div>
                             <partial name="_LoginPartial.cshtml" />
                         </div>
