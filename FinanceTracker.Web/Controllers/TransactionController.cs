@@ -24,6 +24,7 @@ namespace FinanceTracker.Web.Controllers
         private readonly SignInManager<ApplicationUserIdentity> _signInManager;
         private readonly IDateTimeProvider _dateTime;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IRecordConsistency _recordConsistency;
         private readonly string userId;
 
         public TransactionController(
@@ -34,7 +35,9 @@ namespace FinanceTracker.Web.Controllers
             UserManager<ApplicationUserIdentity> userManager,
             SignInManager<ApplicationUserIdentity> signInManager,
             IDateTimeProvider dateTime,
-            IHttpContextAccessor contextAccessor)
+            IHttpContextAccessor contextAccessor,
+            IRecordConsistency recordConsistency
+            )
             
         {
             _transactionData = transactionData;
@@ -45,6 +48,7 @@ namespace FinanceTracker.Web.Controllers
             _signInManager = signInManager;
             _dateTime = dateTime;
             _contextAccessor = contextAccessor;
+            _recordConsistency = recordConsistency;
             userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
@@ -145,71 +149,9 @@ namespace FinanceTracker.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Check to see if Status was changed
-            // Get unmodified Transaction from the database
-            var transaction = await _transactionData.GetFullTransactionById(input.Id);
+            input = await _recordConsistency.MaintainTransactionConsistencyIfStatusChanged(input);
 
-            // was transaction previously cleared?
-            bool wasCleared = false;
-
-            if(transaction.Status == "Cleared")
-            {
-                wasCleared = true;
-            }
-
-            // Check if Transaction Id is "Cleared"
-            bool isCleared = false;
-
-            if (input.Status == "Cleared")
-            {
-                isCleared = true;
-            }
-
-            // Was it changed to Cleared?
-            if (wasCleared != isCleared && input.Status == "Cleared")
-            {
-                // Since transaction was changed from non-cleared to cleared, we need to add the change to the account
-                var account = await _accountData.GetAccountByAccountId(input.AccountId);
-
-                // ex1: balance = 10.00 + (-1.00) = 9.00
-                // ex2: balance = 10.00 + (1.00) = 11.00
-                account.Balance += input.AmountDue;
-
-                await _accountData.Update(account);
-            }
-            // Was it changed to not cleared (from cleared)?
-            // **QUESTION, what if changed to nonCleared (from cleared) AND a Dollar Amount changed?**
-            // **ANSWER: We only need to reverse what was previously cleared, we don't care if the amount changes until it is cleared in the future.**
-            else if(wasCleared != isCleared && input.Status != "Cleared")
-            {
-                // Since transaction was changed from non-cleared to cleared, we need to add the change to the account
-                var account = await _accountData.GetAccountByAccountId(input.AccountId);
-
-                // We are going to use the unmodified transaction! since we want only reverse what was previously cleared
-                // We DO NOT care about the new amount provided, only until it get changed to CLEARED in the future.
-                // ex1: balance = 10.00 - (-1.00) = 11.00
-                // ex2: balance = 10.00 - (1.00) = 9.00
-                account.Balance -= transaction.Amount;
-
-                await _accountData.Update(account);
-            }
-            // Will need to update to maintain balance between cleared transaction of user were to update.
-            else if(transaction.Status == "Cleared" && input.Status == "Cleared")
-            {
-                // account was cleared previous but user is updating cleared transaction value, so we need to reverse previous transaction
-                var account = await _accountData.GetAccountByAccountId(input.AccountId);
-                // ex1: balance = 10.00 - (-1.00) = 11.00
-                // ex2: balance = 10.00 - (1.00) = 9.00
-                account.Balance -= transaction.Amount;
-                await _accountData.Update(account);
-
-                // Now add new transaction
-                // ex1: balance = 10.00 + (-1.00) = 9.00
-                // ex2: balance = 10.00 + (1.00) = 11.00
-                account.Balance += input.AmountDue;
-
-                await _accountData.Update(account);
-            }
+            input = await _recordConsistency.MaintainTransactionConsistencyIfAccountChanged(input);
 
             TransactionModel output = new TransactionModel()
             {
