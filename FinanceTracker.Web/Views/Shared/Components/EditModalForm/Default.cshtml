@@ -39,7 +39,7 @@ else
 
         <div class="mb-3">
             <label asp-for="AmountDue" class="form-label"></label>
-            <input asp-for="AmountDue" class="form-control" asp-format="{0:C}" />
+            <input asp-for="AmountDue" class="form-control" asp-format="{0:#,##0.00#}" />
             <span asp-validation-for="AmountDue" class="text-danger"></span>
         </div>
 
