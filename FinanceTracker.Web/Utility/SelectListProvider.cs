@@ -13,6 +13,8 @@ namespace FinanceTracker.Web.Utility
         private static readonly string _due = "Due";
         private static readonly string _cleared = "Cleared";
         private static readonly string _late = "Late";
+        private static readonly string _deposit = "Deposit";
+        private static readonly string _withdrawal = "Withdrawl";
         private readonly string _userId;
 
         public SelectListProvider(IAccountData accountData, IProviderData providerData, IHttpContextAccessor contextAccessor)
@@ -68,6 +70,16 @@ namespace FinanceTracker.Web.Utility
             output.Add(new SelectListItem { Text = _due, Value = _due });
             output.Add(new SelectListItem { Text = _cleared, Value = _cleared });
             output.Add(new SelectListItem { Text = _late, Value = _late });
+
+            return output;
+        }
+
+        public List<SelectListItem> TransactionTypeSelectList()
+        {
+            List<SelectListItem> output = new();
+
+            output.Add(new SelectListItem { Text = _deposit, Value = _deposit });
+            output.Add(new SelectListItem { Text = _withdrawal, Value = _withdrawal });
 
             return output;
         }

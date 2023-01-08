@@ -13,9 +13,11 @@ namespace FinanceTracker.DataAccess.Models
         public int PayeeId { get; set; }
         public decimal Amount { get; set; }
         public DateTime DueDate { get; set; }
-        public string? Status { get; set; }
-        public string? ProviderName { get; set; }
-        public string? Service { get; set; }
-        public string? AccountName { get; set; }
+        public string Status { get; set; }
+        public string ProviderName { get; set; }
+        public string Service { get; set; }
+        public string AccountName { get; set; }
+        public string TransactionReason { get; set; }
+        public string Type { get; set; }
     }
 }

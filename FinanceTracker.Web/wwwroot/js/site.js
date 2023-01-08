@@ -96,7 +96,7 @@ function drawSummaryByType(chartData) {
     data.addRows(dataArray);
 
     var ProviderPieChartOptions = {
-        title: "Account Summary By Type",
+        title: "Counts by Account Type",
         backgroundColor: {
             fill: "#d7d8da"
         },
@@ -122,7 +122,7 @@ function drawSummaryByAccount(chartData) {
     data.addRows(dataArray);
 
     var ProviderPieChartOptions = {
-        title: "Account Summary By Provider",
+        title: "Dollar Sums By Provider",
         backgroundColor: {
             fill: "#d7d8da"
         },
@@ -147,7 +147,7 @@ function drawAccountCount(chartData) {
     });
 
     data.addRows([
-        ["Type Summary", ...dataArray]
+        ["Dollar Sums by Type", ...dataArray]
     ]);
 
     var accStackedBarChartOptions = {

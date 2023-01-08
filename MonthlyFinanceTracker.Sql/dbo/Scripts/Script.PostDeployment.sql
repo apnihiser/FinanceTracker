@@ -44,24 +44,14 @@ BEGIN
          '440-444-4444',
          'False',
          'False'),
-         ('test 04',
-         'test04@test.com',
-         'TEST04@TEST.COM',
-         'test04@test.com',
-         'TEST04@TEST.COM',
+         ('demoUser@demo.com',
+         'demoUser@demo.com',
+         'DEMOUSER@DEMO.COM',
+         'demoUser@demo.com',
+         'DEMOUSER@DEMO.COM',
          'True',
-         'AQAAAAEAACcQAAAAENw/mvERdmbGWkFmHMdW07uEDqo/DNeGQj/YAwpOJxpi3QFRMHx3VdiFGB64oDxUOQ==',
-         '440-444-4444',
-         'False',
-         'False'),
-         ('test 05',
-         'test05@test.com',
-         'TEST05@TEST.COM',
-         'test05@test.com',
-         'TEST05@TEST.COM',
-         'True',
-         'AQAAAAEAACcQAAAAENw/mvERdmbGWkFmHMdW07uEDqo/DNeGQj/YAwpOJxpi3QFRMHx3VdiFGB64oDxUOQ==',
-         '440-444-4444',
+         'AQAAAAEAACcQAAAAEAZRw6LRO4qGE++hYwPV7dV4dEVQ9KTwis3I0mAMdZ0F5mLo8LjOPzdcCNInvYjgUw==',
+         'NULL',
          'False',
          'False')
 END
@@ -71,14 +61,10 @@ BEGIN
     DECLARE @UserId1 int;
     DECLARE @UserId2 int;
     DECLARE @UserId3 int;
-    DECLARE @UserId4 int;
-    DECLARE @UserId5 int;
 
     SELECT @UserId1 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST01@TEST.COM';
     SELECT @UserId2 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST02@TEST.COM';
     SELECT @UserId3 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST03@TEST.COM';
-    SELECT @UserId4 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST04@TEST.COM';
-    SELECT @UserId5 = ApplicationUserId FROM dbo.[ApplicationUser] WHERE [NormalizedUsername] = 'TEST05@TEST.COM';
 
     INSERT INTO dbo.[Provider] ([Title],[Service],[URL],[UserId])
     VALUES ('Cable Company','Cable','http://Comcast.com',@UserId1)
@@ -89,10 +75,10 @@ BEGIN
 
     INSERT INTO dbo.[Account] ([Title],[Description],[Type],[Balance],[ApplicationUserId])
     VALUES ('Credit Union','Local Credit Union Checking','Checking',5596.65,@UserId1)
-          ,('Discover Card','Primary Credit Card','Credit',256.55,@UserId2)
-          ,('Chase','Grocery Rewards Card','Credit',25.68,@UserId3)
-          ,('Key Bank','Savings Account','Savings',125684.22,@UserId4)
-          ,('Barclays','CD account','Investment',5000.00,@UserId5)
+          ,('Discover Card','Primary Credit Card','Credit',256.55,@UserId1)
+          ,('Chase','Grocery Rewards Card','Credit',25.68,@UserId1)
+          ,('Key Bank','Savings Account','Savings',125684.22,@UserId1)
+          ,('Barclays','CD account','Investment',5000.00,@UserId1)
 END
 
 IF NOT EXISTS(SELECT 1 FROM dbo.[Transaction])
@@ -121,10 +107,10 @@ BEGIN
     SELECT @ProviderId4 = Id FROM dbo.[Provider] WHERE Title = 'Local Municipality';
     SELECT @ProviderId5 = Id FROM dbo.[Provider] WHERE Title = 'Netflix';
 
-    INSERT INTO dbo.[Transaction] ([AccountId],[PayeeId],[Amount],[DueDate],[Status])
-    VALUES (@AccountId1,@ProviderId1,100.00,'2022-11-25 00:00:00.00','Due')
-          ,(@AccountId2,@ProviderId2,200.00,'2022-11-01 00:00:00.00','Past Due')
-          ,(@AccountId3,@ProviderId3,300.00,'2022-11-30 12:00:00.00','Reconcilled')
-          ,(@AccountId4,@ProviderId4,400.00,'2022-11-15 12:00:00.00','Due')
-          ,(@AccountId5,@ProviderId5,500.00,'2022-11-02 12:00:00.00','Reconcilled')
+    INSERT INTO dbo.[Transaction] ([AccountId],[PayeeId],[TransactionReason],[Type],[Amount],[DueDate],[Status])
+    VALUES (@AccountId1,@ProviderId1,'Bill','Withdrawal',100.00,'2022-11-25 00:00:00.00','Due')
+          ,(@AccountId2,@ProviderId2,'Bill','Withdrawal',200.00,'2022-11-01 00:00:00.00','Due')
+          ,(@AccountId3,@ProviderId3,'Bill','Withdrawal',300.00,'2022-11-30 12:00:00.00','Due')
+          ,(@AccountId4,@ProviderId4,'Bill','Withdrawal',400.00,'2022-11-15 12:00:00.00','Due')
+          ,(@AccountId5,@ProviderId5,'Bill','Withdrawal',500.00,'2022-11-02 12:00:00.00','Due')
 END

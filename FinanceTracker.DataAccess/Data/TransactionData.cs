@@ -72,6 +72,8 @@ namespace FinanceTracker.DataAccess.Data
             dataTable.Columns.Add("Id", typeof(int));
             dataTable.Columns.Add("AccountId", typeof(int));
             dataTable.Columns.Add("PayeeId", typeof(int));
+            dataTable.Columns.Add("TransactionReason", typeof(string));
+            dataTable.Columns.Add("Type", typeof(string));
             dataTable.Columns.Add("Amount", typeof(decimal));
             dataTable.Columns.Add("DueDate", typeof(DateTime));
             dataTable.Columns.Add("Status", typeof(string));
@@ -80,6 +82,8 @@ namespace FinanceTracker.DataAccess.Data
                 record.Id,
                 record.AccountId,
                 record.PayeeId,
+                record.TransactionReason,
+                record.Type,
                 record.Amount,
                 record.DueDate,
                 record.Status);
@@ -89,28 +93,11 @@ namespace FinanceTracker.DataAccess.Data
 
         public async Task<int> CreateTransaction(TransactionModel input)
         {
-            //DataTable dataTable = new DataTable();
-
-            //dataTable.Columns.Add("Id", typeof(int));
-            //dataTable.Columns.Add("AccountId", typeof(int));
-            //dataTable.Columns.Add("PayeeId", typeof(int));
-            //dataTable.Columns.Add("Amount", typeof(decimal));
-            //dataTable.Columns.Add("DueDate", typeof(DateTime));
-            //dataTable.Columns.Add("Status", typeof(string));
-
-            //dataTable.Rows.Add(
-            //    input.Id,
-            //    input.AccountId,
-            //    input.PayeeId,
-            //    input.Amount,
-            //    input.DueDate,
-            //    input.Status);
-
-            //await _db.SaveData("dbo.spFullTransaction_Insert", new { TransactionType = dataTable.AsTableValuedParameter("dbo.TransactionType") }, _connectionString.Name);
-
             DynamicParameters p = new DynamicParameters();
             p.Add("AccountId", input.AccountId);
             p.Add("PayeeId", input.PayeeId);
+            p.Add("TransactionReason", input.TransactionReason);
+            p.Add("Type", input.Type);
             p.Add("Amount", input.Amount);
             p.Add("DueDate", input.DueDate);
             p.Add("Status", input.Status);

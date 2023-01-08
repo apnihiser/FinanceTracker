@@ -26,8 +26,20 @@ else
         </div>
 
         <div class="mb-3">
+            <label asp-for="Reason" class="form-label"></label>
+            <input asp-for="Reason" class="form-select" />
+            <span asp-validation-for="Reason" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Type" class="form-label"></label>
+            <select asp-for="Type" class="form-select" asp-items="@ViewBag.TransactionTypeList"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label asp-for="AmountDue" class="form-label"></label>
-            <input asp-for="AmountDue" class="form-control" type="text" />
+            <input asp-for="AmountDue" class="form-control" type="text" asp-format="@($"0.00")" />
             <span asp-validation-for="AmountDue" class="text-danger"></span>
         </div>
 
@@ -43,10 +55,8 @@ else
             <span asp-validation-for="Status" class="text-danger"></span>
         </div>
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <input type="submit" class="btn btn-primary" value="Save Changes" />
-        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Save Changes" />
 
     </form>
 }

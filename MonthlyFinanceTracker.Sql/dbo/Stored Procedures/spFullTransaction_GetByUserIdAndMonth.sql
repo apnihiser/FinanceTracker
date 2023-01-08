@@ -3,7 +3,7 @@
 	@TargetDate DateTime2
 AS
 BEGIN
-	SELECT [t].[Id], [t].[AccountId], [t].[PayeeId], [t].[Amount], [t].[DueDate], [t].[Status], [p].[Title] as ProviderName, [p].[Service], [a].[Title] as AccountName
+	SELECT [t].[Id], [t].[AccountId], [t].[PayeeId], [t].[TransactionReason], [t].[Type], [t].[Amount], [t].[DueDate], [t].[Status], [p].[Title] as ProviderName, [p].[Service], [a].[Title] as AccountName
 	FROM [dbo].[Transaction] t
 	INNER JOIN [dbo].[Account] a
 	ON [t].[AccountId] = [a].[Id]

@@ -104,7 +104,8 @@ else
                     <tr class="fw-bold">
                         <td>@Html.DisplayNameFor(model => model.Transactions!.First().AccountName)</td>
                         <td>@Html.DisplayNameFor(model => model.Transactions!.First().ProviderName)</td>
-                        <td>@Html.DisplayNameFor(model => model.Transactions!.First().Service)</td>
+                        <td>@Html.DisplayNameFor(model => model.Transactions!.First().Reason)</td>
+                        <td>@Html.DisplayNameFor(model => model.Transactions!.First().Type)</td>
                         <td>@Html.DisplayNameFor(model => model.Transactions!.First().AmountDue)</td>
                         <td>@Html.DisplayNameFor(model => model.Transactions!.First().DueDate)</td>
                         <td colspan="5">@Html.DisplayNameFor(model => model.Transactions!.First().Status)</td>
@@ -120,7 +121,8 @@ else
                             <tr>
                                 <td>@transaction.AccountName</td>
                                 <td>@transaction.ProviderName</td>
-                                <td>@transaction.Service</td>
+                                <td>@transaction.Reason</td>
+                                <td>@transaction.Type</td>
                                 <td>@String.Format("{0:C}", @transaction.AmountDue)</td>
                                 <td>@transaction.DueDate</td>
                                 <td>@transaction.Status</td>

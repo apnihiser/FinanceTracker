@@ -70,6 +70,7 @@ namespace FinanceTracker.Web.Controllers
             ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
             ViewBag.AccountSelectList = await _selectList.AccountSelectList();
             ViewBag.StatusSelectList = _selectList.StatusSelectList();
+            ViewBag.TransactionTypeList = _selectList.TransactionTypeSelectList();
 
             if (data.Count == 0)
             {
@@ -85,11 +86,12 @@ namespace FinanceTracker.Web.Controllers
                     Id = x.Id,
                     AccountId = x.AccountId,
                     PayeeId = x.PayeeId,
+                    Reason = x.TransactionReason,
+                    Type = x.Type,
                     AccountName = x.AccountName,
                     ProviderName = x.ProviderName,
                     AmountDue = x.Amount,
                     DueDate = x.DueDate,
-                    Service = x.Service,
                     Status = x.Status
                 });
             });
@@ -132,32 +134,6 @@ namespace FinanceTracker.Web.Controllers
             await _transactionData.DeleteTransactionById(id);
 
             return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> Update(int id)
-        {
-            if (id == 0)
-            {
-                return View();
-            }
-
-            var record = await _transactionData.GetFullTransactionById(id);
-
-            TransactionUpdateViewModel output = new TransactionUpdateViewModel()
-            {
-               Id = record.Id,
-               AccountId = record.AccountId,
-               PayeeId = record.PayeeId,
-               AmountDue = record.Amount,
-               DueDate = record.DueDate,
-               Status = record.Status
-            };
-
-            ViewBag.ProviderSelectList = await _selectList.ProviderSelectList();
-            ViewBag.AccountSelectList = await _selectList.AccountSelectList();
-            ViewBag.StatusSelectList = _selectList.StatusSelectList();
-
-            return View(output);
         }
 
         [HttpPost]
@@ -239,6 +215,8 @@ namespace FinanceTracker.Web.Controllers
             {
                 Id = input.Id,
                 AccountId = input.AccountId,
+                TransactionReason = input.Reason,
+                Type = input.Type,
                 PayeeId = input.PayeeId,
                 Amount = input.AmountDue,
                 DueDate = input.DueDate,
@@ -263,6 +241,8 @@ namespace FinanceTracker.Web.Controllers
             {
                 AccountId = input.AccountId,
                 PayeeId = input.PayeeId,
+                TransactionReason = input.Reason,
+                Type = input.Type,
                 Amount = input.AmountDue,
                 DueDate = input.DueDate,
                 Status = input.Status

@@ -25,5 +25,15 @@ namespace FinanceTracker.Web.Models
         [Required]
         [StringLength(10, ErrorMessage = "{0} must be under 50 characters long.")]
         public string Status { get; set; } = "Due";
+
+        [StringLength(50, ErrorMessage = "{0} must be under 50 characters long.")]
+        [Required]
+        [Display(Name = "Transaction Reason")]
+        public string Reason { get; set; }
+
+        [StringLength(50, ErrorMessage = "{0} must be under 50 characters long.")]
+        [Required]
+        [Display(Name = "Withdrawal/ Deposit")]
+        public string Type { get; set; }
     }
 }

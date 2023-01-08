@@ -6,6 +6,7 @@ namespace FinanceTracker.Web.Utility
     {
         Task<List<SelectListItem>> AccountSelectList();
         Task<List<SelectListItem>> ProviderSelectList();
-        public List<SelectListItem> StatusSelectList();
+        List<SelectListItem> StatusSelectList();
+        List<SelectListItem> TransactionTypeSelectList();
     }
 }
