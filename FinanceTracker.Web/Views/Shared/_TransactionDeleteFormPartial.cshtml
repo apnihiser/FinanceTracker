@@ -16,12 +16,12 @@
 
     <div class="mb-3">
         <h5>@Html.DisplayNameFor(model => model.AmountDue)</h5>
-        <p>@Model.AmountDue</p>
+        <p>@String.Format("{0:C}", @Model.AmountDue)</p>
     </div>
 
     <div class="mb-3">
         <h5>@Html.DisplayNameFor(model => model.DueDate)</h5>
-        <p>@Model.DueDate</p>
+        <p>@Model.DueDate.ToString("yyyy-MM-dd")</p>
     </div>
 
     <div class="mb-3">

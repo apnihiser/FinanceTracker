@@ -122,7 +122,7 @@ function drawSummaryByAccount(chartData) {
     data.addRows(dataArray);
 
     var ProviderPieChartOptions = {
-        title: "Dollar Sums By Provider",
+        title: "Dollar Sums By Account",
         backgroundColor: {
             fill: "#d7d8da"
         },
