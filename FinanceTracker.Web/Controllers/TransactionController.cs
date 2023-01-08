@@ -149,9 +149,9 @@ namespace FinanceTracker.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            input = await _recordConsistency.MaintainTransactionConsistencyIfStatusChanged(input);
+            _recordConsistency.MaintainTransactionConsistencyIfStatusChanged(input);
 
-            input = await _recordConsistency.MaintainTransactionConsistencyIfAccountChanged(input);
+            _recordConsistency.MaintainTransactionConsistencyIfAccountChanged(input);
 
             TransactionModel output = new TransactionModel()
             {

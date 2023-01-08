@@ -17,7 +17,7 @@ namespace FinanceTracker.Web.Utility
             _accountData = accountData;
         }
 
-        public async Task<TransactionUpdateViewModel> MaintainTransactionConsistencyIfStatusChanged(TransactionUpdateViewModel input)
+        public async Task MaintainTransactionConsistencyIfStatusChanged(TransactionUpdateViewModel input)
         {
             var transaction = await GetExistingTransaction(input.Id);
 
@@ -26,11 +26,9 @@ namespace FinanceTracker.Web.Utility
             bool isRecordNowCleared = IsInputRecordNowCleared(input.Status);
 
             await UpdateBalanceIfStatusChanged(wasRecordCleared, isRecordNowCleared, input, transaction);
-
-            return input;
         }
 
-        public async Task<TransactionUpdateViewModel> MaintainTransactionConsistencyIfAccountChanged(TransactionUpdateViewModel input)
+        public async Task MaintainTransactionConsistencyIfAccountChanged(TransactionUpdateViewModel input)
         {
             var transaction = await GetExistingTransaction(input.Id);
             string recordOldAccountId = transaction.AccountId.ToString();
@@ -43,8 +41,6 @@ namespace FinanceTracker.Web.Utility
                 await RemoveAmountFromAccount(transaction.AccountId, transaction.Amount);
                 await AddAmountToAccount(input.AccountId, input.AmountDue);
             }
-
-            return input;
         }
 
         private async Task<TransactionModel> GetExistingTransaction(int id)

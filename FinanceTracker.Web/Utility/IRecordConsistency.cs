@@ -4,7 +4,7 @@ namespace FinanceTracker.Web.Utility
 {
     public interface IRecordConsistency
     {
-        Task<TransactionUpdateViewModel> MaintainTransactionConsistencyIfStatusChanged(TransactionUpdateViewModel input);
-        Task<TransactionUpdateViewModel> MaintainTransactionConsistencyIfAccountChanged(TransactionUpdateViewModel input);
+        Task MaintainTransactionConsistencyIfStatusChanged(TransactionUpdateViewModel input);
+        Task MaintainTransactionConsistencyIfAccountChanged(TransactionUpdateViewModel input);
     }
 }
