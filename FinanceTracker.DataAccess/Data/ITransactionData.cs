@@ -4,16 +4,15 @@ namespace FinanceTracker.DataAccess.Data
 {
     public interface ITransactionData
     {
-        Task<TransactionModel> GetFullTransactionById(int Id);
-        Task<List<TransactionModel>> GetAllFullTransactions();
-        Task<List<TransactionModel>> GetAllFullTransactionsByUserIdAsync(string id);
+        Task<int> CreateTransaction(TransactionModel input);
         Task DeleteTransactionById(int id);
         Task EditTransactionById(TransactionModel record);
-        //Task CreateTransaction(TransactionModel input);
-        Task<int> CreateTransaction(TransactionModel input);
-        Task<List<TransactionModel>> GetUserTransactionsByMonth(string id, DateTime dateTime);
-        Task<List<TransactionProviderAmount>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime);
+        Task<List<TransactionModel>> GetAllFullTransactions();
+        Task<List<TransactionModel>> GetAllFullTransactionsByUserIdAsync(string id);
+        Task<TransactionModel> GetFullTransactionById(int id);
+        Task<List<TransactionProviderAmount>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime, string transactionType);
         Task<List<TransactionStatusAmount>> GetTransactionStatusChartDataByMonth(string id, DateTime dateTime);
         Task<List<TransactionStatusCount>> GetTransactionStatusCountChartDataByMonth(string id, DateTime dateTime);
+        Task<List<TransactionModel>> GetUserTransactionsByMonth(string id, DateTime dateTime);
     }
 }

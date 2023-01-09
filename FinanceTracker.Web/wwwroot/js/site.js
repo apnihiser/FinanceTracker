@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 // GOOGLE CHART DATA
-function drawSummaryByProvider(chartData) {
+function drawSummaryDepositByProvider(chartData) {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Name');
     data.addColumn('number', 'Amount');
@@ -21,7 +21,7 @@ function drawSummaryByProvider(chartData) {
     };
 
     var pieChart = new google.visualization.PieChart(document
-        .getElementById('pieChart_transaction'));
+        .getElementById('pieChart_transactionDeposits'));
 
     pieChart.draw(data, ProviderPieChartOptions);
 }

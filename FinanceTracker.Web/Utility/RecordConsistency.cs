@@ -1,6 +1,8 @@
 ﻿using FinanceTracker.DataAccess.Data;
 using FinanceTracker.DataAccess.Models;
 using FinanceTracker.Web.Models;
+using Mailjet.Client.Resources.SMS;
+using Microsoft.Identity.Client;
 
 namespace FinanceTracker.Web.Utility
 {
@@ -17,7 +19,10 @@ namespace FinanceTracker.Web.Utility
             _accountData = accountData;
         }
 
-        public async Task MaintainTransactionConsistencyIfStatusChanged(TransactionUpdateViewModel input)
+        // if both status and account changed in a transaction
+        // we need to roll back the inbound transaction amount against the old transaction's account
+        // we then need to add the new transaction amount to the new account
+        public async Task MaintainTransactionConsistencyFromChanges(TransactionUpdateViewModel input)
         {
             var transaction = await GetExistingTransaction(input.Id);
 
@@ -25,22 +30,15 @@ namespace FinanceTracker.Web.Utility
 
             bool isRecordNowCleared = IsInputRecordNowCleared(input.Status);
 
-            await UpdateBalanceIfStatusChanged(wasRecordCleared, isRecordNowCleared, input, transaction);
+            await UpdateBalanceAndAccountIfChanged(wasRecordCleared, isRecordNowCleared, input, transaction);
         }
 
-        public async Task MaintainTransactionConsistencyIfAccountChanged(TransactionUpdateViewModel input)
+        public bool wasAccountChanged(int transactionId, int inputId)
         {
-            var transaction = await GetExistingTransaction(input.Id);
-            string recordOldAccountId = transaction.AccountId.ToString();
-            string recordNewInputId = input.AccountId.ToString();
+            string recordOldAccountId = transactionId.ToString();
+            string recordNewInputId = inputId.ToString();
 
-            bool areAccountsSame = areAttributesTheSame(recordOldAccountId, recordNewInputId);
-
-            if (areAccountsSame == false)
-            {
-                await RemoveAmountFromAccount(transaction.AccountId, transaction.Amount);
-                await AddAmountToAccount(input.AccountId, input.AmountDue);
-            }
+            return areAttributesTheSame(recordOldAccountId, recordNewInputId);
         }
 
         private async Task<TransactionModel> GetExistingTransaction(int id)
@@ -72,22 +70,38 @@ namespace FinanceTracker.Web.Utility
             return output;
         }
 
-        private async Task UpdateBalanceIfStatusChanged(bool wasRecordCleared, bool isRecordNowCleared, TransactionUpdateViewModel input, TransactionModel transaction)
+        private async Task UpdateBalanceAndAccountIfChanged(bool wasRecordCleared, bool isRecordNowCleared, TransactionUpdateViewModel input, TransactionModel transaction)
         {
-            // Has the record Status been changed by the user to "Cleared"? Then add amount to Balance
-            if (wasRecordCleared != isRecordNowCleared && input.Status == "Cleared")
+            bool isSameAccount = wasAccountChanged(transaction.AccountId, input.AccountId);
+
+            if ((wasRecordCleared != isRecordNowCleared) &&
+                 (input.Status == cleared) &&
+                 (isSameAccount == true))
             {
                 await AddAmountToAccount(input.AccountId, input.AmountDue);
             }
-            // Has the record Status been changed by the user to "Not Cleared"? Then Rollback previous "Cleared" amount added.
-            else if (wasRecordCleared != isRecordNowCleared && input.Status != "Cleared")
+            else if ((wasRecordCleared != isRecordNowCleared) &&
+                      (input.Status == cleared) &&
+                      (isSameAccount == false))
             {
-                await RemoveAmountFromAccount(input.AccountId, transaction.Amount);
+                await UpdateAmountInNewAccount(input.AccountId, input.AmountDue);
             }
-            // Has the Balance changed when the Transaction Status remained "Cleared? Then we need to remove the previous "Cleared" balance and Add new "Cleared" balance.
-            else if (transaction.Status == "Cleared" && input.Status == "Cleared")
+            else if ((wasRecordCleared != isRecordNowCleared) &&
+                      (input.Status != cleared))
+            {
+                await RemoveAmountFromAccount(transaction.AccountId, transaction.Amount);
+            }
+            else if ((transaction.Status == cleared) &&
+                      (input.Status == cleared) &&
+                      (isSameAccount == true))
             {
                 await UpdateAmountInAccount(input.AccountId, transaction.Amount, input.AmountDue);
+            }
+            else if ((transaction.Status == cleared) &&
+                      (input.Status == cleared) &&
+                      (isSameAccount == false))
+            {
+                await UpdateAmountsAndAccounts(transaction.AccountId, input.AccountId, transaction.Amount, input.AmountDue);
             }
         }
 
@@ -112,12 +126,33 @@ namespace FinanceTracker.Web.Utility
         private async Task UpdateAmountInAccount(int accountId, decimal previousAmount, decimal newAmount)
         {
             var account = await _accountData.GetAccountByAccountId(accountId);
-
             account.Balance -= previousAmount;
-
             account.Balance += newAmount;
-
             await _accountData.Update(account);
+        }
+
+        private async Task UpdateAmountInNewAccount(int newAccountId, decimal newAmount)
+        {
+            // the old account was NON CLEARED so no activity was incurred,
+            // HOWEVER
+            // In the new account the new activity needs to be changed.
+            // add input amount to new account
+            var newAccount = await _accountData.GetAccountByAccountId(newAccountId);
+            newAccount.Balance += newAmount;
+            await _accountData.Update(newAccount);
+        }
+
+        private async Task UpdateAmountsAndAccounts(int oldAccountId, int newAccountId, decimal oldAmount, decimal newAmount)
+        {
+            // rollback input amount from old account
+            var oldAccount = await _accountData.GetAccountByAccountId(oldAccountId);
+            oldAccount.Balance -= oldAmount;
+            await _accountData.Update(oldAccount);
+
+            // add input amount to new account
+            var newAccount = await _accountData.GetAccountByAccountId(newAccountId);
+            newAccount.Balance += newAmount;
+            await _accountData.Update(newAccount);
         }
     }
 }

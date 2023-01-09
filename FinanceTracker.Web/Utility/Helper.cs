@@ -10,5 +10,7 @@ namespace FinanceTracker.Web.Utility
         public static int success_code = 1;
         public static int failure_code = 0;
         public static string ChartLoadSuccessful = "Transactions Loaded Successfully...";
+        public static string Deposit = "Deposit";
+        public static string Withdrawal = "Withdrawal";
     }
 }

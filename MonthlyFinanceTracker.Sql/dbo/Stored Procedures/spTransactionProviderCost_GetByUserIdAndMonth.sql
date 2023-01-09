@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[spTransactionProviderCost_GetByUserIdAndMonth]
 	@ApplicationUserId int,
-	@TargetDate DateTime2
+	@TargetDate DateTime2,
+	@Type NVARCHAR(10)
 AS
 BEGIN
 	SELECT SUM([tpt].[Amount]) as Amount, [tpt].[Title] as ProviderName
@@ -12,6 +13,7 @@ BEGIN
 		INNER JOIN [dbo].[Provider] p
 		ON [t].[PayeeId] = [p].[Id]
 		WHERE [a].[ApplicationUserId] = @ApplicationUserId and
+			  [t].[Type] = @Type and
 			  [t].[DueDate] >= DATEFROMPARTS(YEAR(@TargetDate), MONTH(@TargetDate), 1) AND
 			  [t].[DueDate] <  DATEADD(MONTH, 1, DATEFROMPARTS(YEAR(@TargetDate), MONTH(@TargetDate), 1))) as tpt
 	GROUP BY Title;

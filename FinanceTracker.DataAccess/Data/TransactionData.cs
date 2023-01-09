@@ -45,9 +45,9 @@ namespace FinanceTracker.DataAccess.Data
             return await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
         }
 
-        public async Task<List<TransactionProviderAmount>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime)
+        public async Task<List<TransactionProviderAmount>> GetTransactionProviderChartDataByMonth(string id, DateTime dateTime, string transactionType)
         {
-            return await _db.LoadData<TransactionProviderAmount, dynamic>("dbo.spTransactionProviderCost_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime }, _connectionString.Name);
+            return await _db.LoadData<TransactionProviderAmount, dynamic>("dbo.spTransactionProviderCost_GetByUserIdAndMonth", new { ApplicationUserId = id, TargetDate = dateTime, Type = transactionType }, _connectionString.Name);
         }
 
         public async Task<List<TransactionStatusAmount>> GetTransactionStatusChartDataByMonth(string id, DateTime dateTime)
@@ -103,7 +103,7 @@ namespace FinanceTracker.DataAccess.Data
             p.Add("Status", input.Status);
             p.Add("Id", DbType.Int32, direction: ParameterDirection.Output);
 
-            await _db.SaveData("dbo.spFullTransaction_Insert", p , _connectionString.Name);
+            await _db.SaveData("dbo.spFullTransaction_Insert", p, _connectionString.Name);
 
             return p.Get<int>("Id");
         }

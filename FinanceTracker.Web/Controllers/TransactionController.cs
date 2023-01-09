@@ -149,9 +149,8 @@ namespace FinanceTracker.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            _recordConsistency.MaintainTransactionConsistencyIfStatusChanged(input);
-
-            _recordConsistency.MaintainTransactionConsistencyIfAccountChanged(input);
+            // Deals with "cleared" status, will update accounts
+            await _recordConsistency.MaintainTransactionConsistencyFromChanges(input);
 
             TransactionModel output = new TransactionModel()
             {
@@ -210,13 +209,13 @@ namespace FinanceTracker.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> GetProviderTransactionResults(DateTime dateTime = default(DateTime))
+        public async Task<IActionResult> GetProviderTransactionDepositResults(DateTime dateTime = default(DateTime))
         {
             CommonResponse<List<TransactionProviderChartData>> commonResponse = new CommonResponse<List<TransactionProviderChartData>>();
 
             try
             {
-                var dataRows = await _transactionData.GetTransactionProviderChartDataByMonth(userId, dateTime);
+                var dataRows = await _transactionData.GetTransactionProviderChartDataByMonth(userId, dateTime, Helper.Deposit);
 
                 List<TransactionProviderChartData> result = new List<TransactionProviderChartData>();
 
@@ -227,6 +226,30 @@ namespace FinanceTracker.Web.Controllers
                 commonResponse.Status = Helper.success_code;
             }
             catch(Exception e)
+            {
+                commonResponse.Message = e.Message;
+                commonResponse.Status = Helper.failure_code;
+            }
+
+            return Ok(commonResponse);
+        }
+        public async Task<IActionResult> GetProviderTransactionWithdrawalResults(DateTime dateTime = default(DateTime))
+        {
+            CommonResponse<List<TransactionProviderChartData>> commonResponse = new CommonResponse<List<TransactionProviderChartData>>();
+
+            try
+            {
+                var dataRows = await _transactionData.GetTransactionProviderChartDataByMonth(userId, dateTime, Helper.Withdrawal);
+
+                List<TransactionProviderChartData> result = new List<TransactionProviderChartData>();
+
+                dataRows.ForEach(x => result.Add(new TransactionProviderChartData { Amount = x.Amount, Name = x.ProviderName }));
+
+                commonResponse.DataEnum = result;
+
+                commonResponse.Status = Helper.success_code;
+            }
+            catch (Exception e)
             {
                 commonResponse.Message = e.Message;
                 commonResponse.Status = Helper.failure_code;
