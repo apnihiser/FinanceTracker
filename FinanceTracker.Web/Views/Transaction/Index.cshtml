@@ -14,26 +14,26 @@
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="createInfo" data-bs-parent="#createCategoryAccordian">
             <div class="accordion-body">
                 <ul class="fs-3">
-                    <li class="accordian-List"><p>Money Accounts can be thought of as a bucket where money can be placed in or taken out of.</p></li>
-                    <li class="accordian-List"><p>Each ACCOUNT will keep a balance based on the beginning balance minus any future CLEARED transactions.</p></li>
-                    <li class="accordian-List"><p>ACCOUNTS require a type to track money against. For example, all of your bank checking accounts will be summed together for a total on the transaction page.</p></li>
+                    <li class="accordian-List"><p>Transactions are an agreement between to entities. One party agrees to receive and pay for the goods or services rendered by the other party.</p></li>
+                    <li class="accordian-List"><p><a asp-controller="Account" asp-action="Index">ACCOUNTS</a> are created to reflect transactions that are considered "Cleared" by you.</p></li>
+                    <li class="accordian-List"><p><a asp-controller="Provider" asp-action="Index">CATEGORIES</a> are created to represent the other party you are receiving goods or services from.</p></li>
                     <li class="accordian-List">
                         <p>Financial Tracker uses a simple 3 step process to enter a transaction:</p>
                         <ol>
                             <li class="accordian-List"><p>A Cash Flow movement is initiated from a <a asp-controller="Provider" asp-action="Index">CATEGORY</a>. This could Represent a bill from your Power Company.</p></li>
-                            <li class="accordian-List"><p>Identify which Money ACCOUNT the Cash Flow will be deposited or withdrawn from. This account could represent your checking account.</p></li>
+                            <li class="accordian-List"><p>Identify which Money <a asp-controller="Account" asp-action="Index">ACCOUNT</a> the Cash Flow will be deposited or withdrawn from. This <a asp-controller="Account" asp-action="Index">ACCOUNT</a> could represent your checking account.</p></li>
                             <li class="accordian-List">
                                 <p>
-                                    Generate a transaction that will represent this Cash Flow from your <a asp-controller="Provider" asp-action="Index">CATEGORY</a> into your ACCOUNT.
-                                    Finally this transaction will represent the flow of money from your account to your power company. This will only clear, once the status has been set to clear by you.
-                                    More information on this in the transactions dashboard.
-                                </p>
+                                    Generate a transaction that will represent this Cash Flow from your <a asp-controller="Provider" asp-action="Index">CATEGORY</a> into your <a asp-controller="Account" asp-action="Index">ACCOUNT</a>.
+                                    Finally this transaction will represent the flow of money from your to your power company. This will only clear, once the status has been set to clear by you.</p>
                             </li>
                         </ol>
                     </li>
-                    <li class="accordian-List"><p>The accounts that you create will be used for transactions in the future unless you decide to delete them.</p></li>
-                    <li class="accordian-List"><p>With a <a asp-controller="Provider" asp-action="Index">CATEGORY</a> you can create a transaction that will deposit or withdrawl money from ACCOUNTS.</p></li>
-                    <li class="accordian-List"><p>Each ACCOUNT will be represented in your monthly charts on the dashboard.</p></li>
+                    <li class="accordian-List"><p>A transaction status being "CLEARED" has several implications as it releates to your <a asp-controller="Account" asp-action="Index">ACCOUNTS</a>.</p></li>
+                    <li class="accordian-List"><p>When you first enter a transaction it may have a status of "DUE" this means that you know a deposit or withdrawal will be posting to your <a asp-controller="Account" asp-action="Index">ACCOUNT</a></a> in the future. Therefore no money will be added or removed from your account</p></li>
+                    <li class="accordian-List"><p>Later when you verify the transaction posted to your account you can update your transaction to relect this event by modifying the status to "CLEARED"</p></li>
+                    <li class="accordian-List"><p>When you do this the transaction amount will update your ACCOUNT.</p></li>
+                    <li class="accordian-List"><p>Also be aware that deleting CATEGORIES or ACCOUNTS will have a direct impact to your TRANSACTIONS! All related transaction will be deleted and account activity rolled back.</p></li>
                 </ul>
             </div>
         </div>
@@ -49,13 +49,13 @@
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="createTips" data-bs-parent="#createCategoryAccordian">
             <div class="accordion-body">
                 <ul class="fs-3">
-                    <li class="accordian-List"><p>To create an ACCOUNT use the CREATE button.</p></li>
-                    <li class="accordian-List"><p>You can review your ACCOUNT in DETAILS. While there, you can also EDIT and DELETE your ACCOUNT.</p></li>
-                    <li class="accordian-List"><p>You can create an ACCOUNT which will represent any quantity of value.</p></li>
-                    <li class="accordian-List"><p>Create ACCOUNTS for checking, savings, credit cards or any store of value such as your stacks of quarters you have been saving up for a rainy day! You can account for every cent if you wish.</p></li>
-                    <li class="accordian-List"><p>You may need to seed money to your account after creation since the current month probably will not contain the full financial history to lead up to the current amount.</p></li>
-                    <li class="accordian-List"><p>Be creative! You can also create savings goals for yourself such as Christmas savings! Even though this could represent a subset of your savings account you can still track it there.</p></li>
-                    <li class="accordian-List"><p>At anytime you can update and delete your ACCOUNTS, but remember all previous transactions will be changed, or removed completely, throwing off previous account activity!!</p></li>
+                    <li class="accordian-List"><p>To create an Transaction use the ADD TRANSACTION button.</p></li>
+                    <li class="accordian-List"><p>You can review your TRANSACTIONS in EDIT. While there, you can update the transactions. All activity will be reflected against your ACCOUNTS.</p></li>
+                    <li class="accordian-List"><p>You can create a TRANSACTION which will represent the direction of money from your CATEGORY to your ACCOUNTS.</p></li>
+                    <li class="accordian-List"><p>Remember that your CATEGORY represents a 3rd party that is withdrawaling or depositing money into your ACCOUNT.</p></li>
+                    <li class="accordian-List"><p>A Deposit Represents money added to your ACCOUNT.</p></li>
+                    <li class="accordian-List"><p>A Withdrawal Represents money subtracted from your ACCOUNT.</p></li>
+                    <li class="accordian-List"><p>Dollar Tracker does not require any negative numbers from the entry forms.</p></li>
                 </ul>
             </div>
         </div>
@@ -72,10 +72,11 @@
             <div class="accordion-body">
                 <ul class="fs-3">
                     <li class="accordian-List"><p>Some Common Examples below to help get you started!<p></li>
-                    <li class="accordian-List"><p>Name : MyBank Checking Account | Description: Where I keep at least $2000 to cover monthly expenses | Type: Checking | Balance: $2225.89<p></li>
-                    <li class="accordian-List"><p>Name : MyBank High Interest Savings Account | Description: The rest of my incoming money gets dumped here up to $100,000.00 for easy access | Type: Savings | Balance: $126,000.00<p></li>
-                    <li class="accordian-List"><p>Name : MyBank 401K | Description: Contributing 17% of salary to my work 401k | Type: Retirement | Balance $723,998.12<p></li>
-                    <li class="accordian-List"><p>Name : MyBank IRA | Description: Still unable to max out IRA so the rest of Salary goes here | Type: Retirement | Balance $129,555.12<p></li>
+                    <li class="accordian-List"><p>ACCOUNT: MyBank Checking | CATEGORY: Gas Company | TRANSFER DESCRIPTION: Bill  | WITHDRAWAL/ DEPOSIT: Withdrawal | AMOUNT DUE: 55.00 | DUE DATE: 10/1/23 | STATUS: Due<p></li>
+                    <li class="accordian-List"><p>ACCOUNT: MyBank Checking | CATEGORY: Income | TRANSFER DESCRIPTION: Paycheck  | WITHDRAWAL/ DEPOSIT: Deposit | AMOUNT DUE: 4235.23 | DUE DATE: 12/15/23 | STATUS: Cleared<p></li>
+                    <li class="accordian-List"><p>ACCOUNT: MyBank Savings | CATEGORY: Interest Accrual | TRANSFER DESCRIPTION: Interest  | WITHDRAWAL/ DEPOSIT: Deposit | AMOUNT DUE: 1.23 | DUE DATE: 5/1/23 | STATUS: Cleared<p></li>
+                    <li class="accordian-List"><p>ACCOUNT: MyBank Savings | CATEGORY: Transfer | TRANSFER DESCRIPTION: Transfer from Checking  | WITHDRAWAL/ DEPOSIT: Deposit | AMOUNT DUE: 1000.00 | DUE DATE: 1/1/23 | STATUS: Cleared<p></li>
+                    <li class="accordian-List"><p>ACCOUNT: MyBank Checking | CATEGORY: Transfer | TRANSFER DESCRIPTION: Transfer to Savings  | WITHDRAWAL/ DEPOSIT: Withdrawal | AMOUNT DUE: 1000.00 | DUE DATE: 1/1/23 | STATUS: Cleared<p></li>
                 </ul>
             </div>
         </div>

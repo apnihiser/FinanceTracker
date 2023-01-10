@@ -85,17 +85,6 @@ li.accordian-List {
     font-size: .9em;
 }
 
-li > ol > li {
-
-    list-style-position: inside;
-}
-
-li > ol > li::before {
-    content: "";
-    width: 10px;
-    display: inline-block;
-}
-
 main > .container {
     padding: 60px 15px 0;
     margin-bottom: 5rem;
