@@ -24,7 +24,7 @@ namespace FinanceTracker.Web.Controllers
         private readonly SignInManager<ApplicationUserIdentity> _signInManager;
         private readonly IDateTimeProvider _dateTime;
         private readonly IHttpContextAccessor _contextAccessor;
-        private readonly IRecordConsistency _recordConsistency;
+        private readonly IAccountBalanceService _accountBalanceServices;
         private readonly string userId;
 
         public TransactionController(
@@ -36,7 +36,7 @@ namespace FinanceTracker.Web.Controllers
             SignInManager<ApplicationUserIdentity> signInManager,
             IDateTimeProvider dateTime,
             IHttpContextAccessor contextAccessor,
-            IRecordConsistency recordConsistency
+            IAccountBalanceService recordConsistency
             )
             
         {
@@ -48,7 +48,7 @@ namespace FinanceTracker.Web.Controllers
             _signInManager = signInManager;
             _dateTime = dateTime;
             _contextAccessor = contextAccessor;
-            _recordConsistency = recordConsistency;
+            _accountBalanceServices = recordConsistency;
             userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
@@ -122,18 +122,19 @@ namespace FinanceTracker.Web.Controllers
             // Get Transaction by Id
             var transaction = await _transactionData.GetFullTransactionById(id);
 
-            // Check if Transaction Id is "Cleared"
-            if (transaction.Status == "Cleared")
+            TransactionUpdateViewModel outputForAccountBalance = new()
             {
-                // if cleared reverse Amount from status
-                var account = await _accountData.GetAccountByAccountId(transaction.AccountId);
+                Id = transaction.Id,
+                AccountId = transaction.AccountId,
+                PayeeId = transaction.PayeeId,
+                Type = transaction.Type,
+                AmountDue = transaction.Amount,
+                DueDate = transaction.DueDate,
+                Status = transaction.Status,
+                Reason = transaction.TransactionReason
+            };
 
-                // ex1: balance = 10.00 - (-1.00) = 11.00
-                // ex2: balance = 10.00 - (1.00) = 9.00
-                account.Balance -= transaction.Amount;
-
-                await _accountData.Update(account);
-            }
+            await _accountBalanceServices.DeleteActionAccountBalance(outputForAccountBalance);
 
             await _transactionData.DeleteTransactionById(id);
 
@@ -149,8 +150,7 @@ namespace FinanceTracker.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Deals with "cleared" status, will update accounts
-            await _recordConsistency.MaintainTransactionConsistencyFromChanges(input);
+            await _accountBalanceServices.UpdateActionAccountBalance(input);
 
             TransactionModel output = new TransactionModel()
             {
@@ -189,22 +189,21 @@ namespace FinanceTracker.Web.Controllers
                 Status = input.Status
             };
 
-            // Get Transaction by Id
-            int id = await _transactionData.CreateTransaction(output);
-            var transaction = await _transactionData.GetFullTransactionById(id);
+            await _transactionData.CreateTransaction(output);
 
-            // Check if Transaction Id is "Cleared"
-            if (output.Status == "Cleared")
+            TransactionUpdateViewModel outputForAccountBalance = new()
             {
-                // if cleared change Amount from status
-                var account = await _accountData.GetAccountByAccountId(transaction.AccountId);
+                Id = input.Id,
+                AccountId = input.AccountId,
+                PayeeId = input.PayeeId,
+                Type = input.Type,
+                AmountDue = input.AmountDue,
+                DueDate = input.DueDate,
+                Reason = input.Reason,
+                Status = input.Status
+            };
 
-                // ex1: balance = 10.00 + (-1.00) = 9.00
-                // ex2: balance = 10.00 + (1.00) = 11.00
-                account.Balance += output.Amount;
-
-                await _accountData.Update(account);
-            }    
+            await _accountBalanceServices.CreateActionAccountBalance(outputForAccountBalance);
 
             return RedirectToAction("Index");
         }

@@ -24,6 +24,8 @@ namespace FinanceTracker.Web.Models
         public string? Type { get; set; }
 
         [Required]
+        [DataType(DataType.Currency)]
+        [Range(0, int.MaxValue, ErrorMessage = "Only numbers greater than zero allowed.")]
         public decimal Balance { get; set; }
     }
 }

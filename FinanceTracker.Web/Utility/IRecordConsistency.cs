@@ -1,10 +1,13 @@
-﻿using FinanceTracker.Web.Models;
+﻿using FinanceTracker.Web.Enums;
+using FinanceTracker.Web.Models;
 
 namespace FinanceTracker.Web.Utility
 {
-    public interface IRecordConsistency
+    public interface IAccountBalanceService
     {
-        Task MaintainTransactionConsistencyFromChanges(TransactionUpdateViewModel input);
-        bool wasAccountChanged(int transactionId, int inputId);
+        Task UpdateActionAccountBalance(TransactionUpdateViewModel input);
+        Task CreateActionAccountBalance(TransactionUpdateViewModel input);
+        Task DeleteActionAccountBalance(TransactionUpdateViewModel input);
+        //bool wasAccountChanged(int transactionId, int inputId);
     }
 }

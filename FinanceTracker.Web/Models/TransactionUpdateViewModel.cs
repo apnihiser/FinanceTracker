@@ -16,6 +16,7 @@ namespace FinanceTracker.Web.Models
         public int PayeeId { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Only numbers greater than zero allowed.")]
         public decimal AmountDue { get; set; }
 
         [Required]
@@ -24,7 +25,7 @@ namespace FinanceTracker.Web.Models
 
         [Required]
         [StringLength(10, ErrorMessage = "{0} must be under 50 characters long.")]
-        public string Status { get; set; } = "Due";
+        public string Status { get; set; }
 
         [StringLength(50, ErrorMessage = "{0} must be under 50 characters long.")]
         [Required]

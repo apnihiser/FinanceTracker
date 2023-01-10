@@ -15,6 +15,7 @@ namespace FinanceTracker.Web.Models
         public int PayeeId { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Only numbers greater than zero allowed.")]
         [DataType(DataType.Currency)]
         public decimal AmountDue { get; set; }
 
