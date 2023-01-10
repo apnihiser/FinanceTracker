@@ -4,6 +4,7 @@ using FinanceTracker.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using FinanceTracker.Web.Utility;
 
 namespace FinanceTracker.Web.Controllers
 {
@@ -12,12 +13,16 @@ namespace FinanceTracker.Web.Controllers
     {
         private readonly IProviderData _providerData;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly ITransactionData _transaction;
+        private readonly IAccountBalanceService _accountBalance;
         private readonly string _userId;
 
-        public ProviderController(IProviderData providerData, IHttpContextAccessor contextAccessor)
+        public ProviderController(IProviderData providerData, IHttpContextAccessor contextAccessor, ITransactionData transaction, IAccountBalanceService accountBalance)
         {
             _providerData = providerData;
             _contextAccessor = contextAccessor;
+            _transaction = transaction;
+            _accountBalance = accountBalance;
             _userId = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
@@ -125,6 +130,39 @@ namespace FinanceTracker.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ProviderDisplayModel model)
         {
+            // steps...
+            // 1) look up all transactions with ProviderId.
+            // 2) foreach transaction
+            //     a. look up account by accountId
+            //     b. rollback deposit or withdrawal from the transaction
+            // 3) delete transaction
+            // 4) delete provider
+
+            //1)
+            var transactions = await _transaction.GetFullTransactionsByProviderId(model.Id);
+
+            //2)
+            foreach (var transaction in transactions)
+            {
+                TransactionUpdateViewModel output = new()
+                {
+                    AccountId = transaction.AccountId,
+                    PayeeId = transaction.PayeeId,
+                    AmountDue = transaction.Amount,
+                    DueDate = transaction.DueDate,
+                    Id = transaction.Id,
+                    Reason = transaction.TransactionReason,
+                    Status = transaction.Status,
+                    Type = transaction.Type
+                };
+
+                await _accountBalance.DeleteActionAccountBalance(output, true);
+
+                //3)
+                await _transaction.DeleteTransactionByProviderId(model.Id);
+            }
+
+            //4)
             await _providerData.DeleteProvider(model.Id);
 
             return RedirectToAction("Index");

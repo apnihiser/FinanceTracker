@@ -6,6 +6,9 @@ namespace FinanceTracker.DataAccess.Data
     {
         Task<int> CreateTransaction(TransactionModel input);
         Task DeleteTransactionById(int id);
+        Task<List<TransactionModel>> GetFullTransactionsByProviderId(int providerId);
+        Task DeleteTransactionByAccountId(int accountId);
+        Task DeleteTransactionByProviderId(int providerId);
         Task EditTransactionById(TransactionModel record);
         Task<List<TransactionModel>> GetAllFullTransactions();
         Task<List<TransactionModel>> GetAllFullTransactionsByUserIdAsync(string id);

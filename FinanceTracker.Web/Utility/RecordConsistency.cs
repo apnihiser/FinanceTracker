@@ -50,27 +50,34 @@ namespace FinanceTracker.Web.Utility
             }
         }
 
-        public async Task DeleteActionAccountBalance(TransactionUpdateViewModel input)
+        public async Task DeleteActionAccountBalance(TransactionUpdateViewModel input, bool requestfromProvider = false)
         {
-            var transaction = await GetExistingTransaction(input.Id);
+            if(requestfromProvider == false)
+            {
+                var transaction = await GetExistingTransaction(input.Id);
 
-            if(input.Status == cleared && input.Type == deposit)
-            {
-                await AccountDepositRollback(transaction.AccountId, transaction.Amount);
+                if (input.Status == cleared && input.Type == deposit)
+                {
+                    await AccountDepositRollback(transaction.AccountId, transaction.Amount);
+                }
+                else if (input.Status == cleared && input.Type == withdrawal)
+                {
+                    await AccountWithdrawalRollback(transaction.AccountId, transaction.Amount);
+                }
             }
-            else if(input.Status == cleared && input.Type == withdrawal)
+            else
             {
-                await AccountWithdrawalRollback(transaction.AccountId, transaction.Amount);
+                if (input.Status == cleared && input.Type == deposit)
+                {
+                    await AccountDepositRollback(input.AccountId, input.AmountDue);
+                }
+                else if (input.Status == cleared && input.Type == withdrawal)
+                {
+                    await AccountWithdrawalRollback(input.AccountId, input.AmountDue);
+                }
             }
+
         }
-
-        //public bool wasAccountChanged(int transactionId, int inputId)
-        //{
-        //    string recordOldAccountId = transactionId.ToString();
-        //    string recordNewInputId = inputId.ToString();
-
-        //    return areAttributesTheSame(recordOldAccountId, recordNewInputId);
-        //}
 
         private async Task<TransactionModel> GetExistingTransaction(int id)
         {

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using FinanceTracker.DataAccess.Database;
 using FinanceTracker.DataAccess.Models;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,6 +27,13 @@ namespace FinanceTracker.DataAccess.Data
             var rows = await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransaction_GetById", new { Id = id }, _connectionString.Name);
 
             return rows.FirstOrDefault();
+        }
+
+        public async Task<List<TransactionModel>> GetFullTransactionsByProviderId(int providerId)
+        {
+            var rows = await _db.LoadData<TransactionModel, dynamic>("dbo.spFullTransactions_GetByProviderId", new { ProviderId = providerId }, _connectionString.Name);
+
+            return rows.ToList();
         }
 
         public async Task<List<TransactionModel>> GetAllFullTransactions()
@@ -63,6 +71,16 @@ namespace FinanceTracker.DataAccess.Data
         public async Task DeleteTransactionById(int id)
         {
             await _db.SaveData("dbo.spFullTransaction_Delete", new { Id = id }, _connectionString.Name);
+        }
+
+        public async Task DeleteTransactionByAccountId(int accountId)
+        {
+            await _db.SaveData("dbo.spTransaction_DeleteByAccountId", new { AccountId = accountId }, _connectionString.Name);
+        }
+
+         public async Task DeleteTransactionByProviderId(int providerId)
+        {
+            await _db.SaveData("dbo.spTransaction_DeleteByProviderId", new { ProviderId = providerId }, _connectionString.Name);
         }
 
         public async Task EditTransactionById(TransactionModel record)

@@ -15,12 +15,14 @@ namespace FinanceTracker.Web.Controllers
     {
         private readonly IAccountData _accountData;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ITransactionData _transaction;
         private readonly string _userId;
 
-        public AccountController(IAccountData accountData, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IAccountData accountData, IHttpContextAccessor httpContextAccessor, ITransactionData transaction)
         {
             _accountData = accountData;
             _httpContextAccessor = httpContextAccessor;
+            _transaction = transaction;
             _userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
@@ -151,7 +153,10 @@ namespace FinanceTracker.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(AccountDisplayModel model)
         {
+            // if you delete the account, the related transaction record needs to be deleted. The provider can remain
             await _accountData.Delete(model.Id);
+
+            await _transaction.DeleteTransactionByAccountId(model.Id);
 
             return RedirectToAction("Index");
         }

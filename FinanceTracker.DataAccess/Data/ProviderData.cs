@@ -15,6 +15,7 @@ namespace FinanceTracker.DataAccess.Data
         private readonly IDatabaseAccess _db;
         private readonly ConnectionStringData _connectionString;
 
+
         public ProviderData(IDatabaseAccess db, ConnectionStringData connectionString)
         {
             _db = db;

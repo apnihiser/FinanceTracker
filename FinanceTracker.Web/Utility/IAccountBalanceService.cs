@@ -7,7 +7,6 @@ namespace FinanceTracker.Web.Utility
     {
         Task UpdateActionAccountBalance(TransactionUpdateViewModel input);
         Task CreateActionAccountBalance(TransactionUpdateViewModel input);
-        Task DeleteActionAccountBalance(TransactionUpdateViewModel input);
-        //bool wasAccountChanged(int transactionId, int inputId);
+        Task DeleteActionAccountBalance(TransactionUpdateViewModel input, bool requestFromProvider = false);
     }
 }
