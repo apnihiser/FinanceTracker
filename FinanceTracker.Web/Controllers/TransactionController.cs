@@ -233,6 +233,7 @@ namespace FinanceTracker.Web.Controllers
 
             return Ok(commonResponse);
         }
+
         public async Task<IActionResult> GetProviderTransactionWithdrawalResults(DateTime dateTime = default(DateTime))
         {
             CommonResponse<List<TransactionProviderChartData>> commonResponse = new CommonResponse<List<TransactionProviderChartData>>();

@@ -13,7 +13,7 @@ function drawSummaryDepositByProvider(chartData) {
     data.addRows(dataArray);
 
     var ProviderPieChartOptions = {
-        title: "Transaction Summary By Provider",
+        title: "Transaction Deposits Sum",
         backgroundColor: {
             fill: "#d7d8da"
         },
@@ -22,6 +22,31 @@ function drawSummaryDepositByProvider(chartData) {
 
     var pieChart = new google.visualization.PieChart(document
         .getElementById('pieChart_transactionDeposits'));
+
+    pieChart.draw(data, ProviderPieChartOptions);
+}
+
+function drawSummaryWithdrawalByProvider(chartData) {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Name');
+    data.addColumn('number', 'Amount');
+
+    var dataArray = [];
+    $.each(chartData, function (i, obj) {
+        dataArray.push([obj.name, Math.abs(obj.amount)]);
+    });
+    data.addRows(dataArray);
+
+    var ProviderPieChartOptions = {
+        title: "Transaction Withdrawal Sum",
+        backgroundColor: {
+            fill: "#d7d8da"
+        },
+        bar: { groupWidth: "20%" },
+    };
+
+    var pieChart = new google.visualization.PieChart(document
+        .getElementById('pieChart_transactionWithdrawals'));
 
     pieChart.draw(data, ProviderPieChartOptions);
 }

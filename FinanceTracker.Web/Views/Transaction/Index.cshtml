@@ -135,7 +135,9 @@ else
                     <!-- Transaction Pie Charts -->
                     <div class="row mt-5 mb-5 p-1">
                         <div class="col-xl-6 col-12" id="pieChart_transactionDeposits" align="center"></div>
+                        <div class="col-xl-6 col-12" id="pieChart_transactionWithdrawals" align="center"></div>
                         <div class="col-xl-6 col-12" id="pieChart_status" align="center"></div>
+                        <div class="col-xl-6 col-12" align="center"></div>
                     </div>
 
                 </div>
@@ -313,7 +315,8 @@ else
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
-        let providerData;
+        let providerDepositData;
+        let providerWithdrawalData;
         let statusData;
         let statusCountData;
         let accountTypeCostData;
@@ -333,11 +336,11 @@ else
               url: '@Url.Action("GetProviderTransactionDepositResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
               success: function (response) {
                 // load the scoped variable for redraw use
-                providerData = response.dataEnum;
+                    providerDepositData = response.dataEnum;
 
                 // Draw the Transaction Totals by Provider Pie Chart
                 google.charts.setOnLoadCallback(function () {
-                  drawSummaryDepositByProvider(providerData);
+                  drawSummaryDepositByProvider(providerDepositData);
                 });
               },
               error: function (xhr) {
@@ -345,7 +348,24 @@ else
               } 
             });
 
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              contentType: "application/json",
+              url: '@Url.Action("GetProviderTransactionWithdrawalResults", "Transaction", new { dateTime = @Model?.Transactions?.First().DueDate })',
+              success: function (response) {
+                // load the scoped variable for redraw use
+                    providerWithdrawalData = response.dataEnum;
 
+                // Draw the Transaction Totals by Provider Pie Chart
+                google.charts.setOnLoadCallback(function () {
+                        drawSummaryWithdrawalByProvider(providerWithdrawalData);
+                });
+              },
+              error: function (xhr) {
+                $.notify("Error", "error");
+              }
+            });
 
             $.ajax({
               type: "POST",
@@ -451,7 +471,8 @@ else
 
         // Redraw charts upon resize
         $(window).resize(function(){
-            drawSummaryByProvider(providerData);
+            drawSummaryDepositByProvider(providerDepositData);
+            drawSummaryWithdrawalByProvider(providerWithdrawalData);
             drawSummaryByStatus(statusData);
             drawTransactionStatusCount(statusCountData);
             drawSummaryByType(accountTypeCostData);

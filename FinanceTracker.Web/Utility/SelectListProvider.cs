@@ -14,7 +14,7 @@ namespace FinanceTracker.Web.Utility
         private static readonly string _cleared = "Cleared";
         private static readonly string _late = "Late";
         private static readonly string _deposit = "Deposit";
-        private static readonly string _withdrawal = "Withdrawl";
+        private static readonly string _withdrawal = "Withdrawal";
         private readonly string _userId;
 
         public SelectListProvider(IAccountData accountData, IProviderData providerData, IHttpContextAccessor contextAccessor)
